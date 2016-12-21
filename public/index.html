@@ -1,1 +1,53 @@
-<p>"Hello World!"</p>
+<!--<p>"Hello World!"</p>-->
+<!doctype html>
+<head>
+    <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat|Nunito+Sans" rel="stylesheet">
+    <link rel='stylesheet' href='main.css'>
+    <script src="//code.jquery.com/jquery-2.1.0.js"></script>
+    <script src="main.js"></script> 
+    <script src="/socket.io/socket.io.js"></script>
+    <title>ALCIS || Assisted Living Client Information System</title>
+</head>
+<body>
+    <!--Login page contains input area for user to input credentials and link to request access-->
+    <div id="login_page">
+        <h1>ALCIS || Assisted Living Client Information System</h1>
+        <form action="" method="post">
+            <fieldset>
+                <legend>Log In</legend>
+                <label>username</label>
+                <input type="text" id="username">
+                <label>password</label>
+                <input type="text" id="password">
+            </fieldset>
+        </form>
+        <p>
+            <a href="mailto:requestAccess@example.com">Email Administrator to Request Access</a>
+        </p>
+    </div>
+    <!--dashboard contains main navigational menu, search field for client lookup, option to enter new client-->
+    <div id="dashboard">
+        <h1 class="dash_nav_logo">ALCIS</h1>
+        <div id="search_entry_nav">
+            <form action="" method="post">
+                <fieldset>
+                    <legend>Client Search</legend>
+                    <label>Client Name</label>
+                    <input type="text" id="client_search">
+                </fieldset>
+            </form>
+            <form action="" method="post">
+                <fieldset>
+                    <legend>Enter New Client</legend>
+                    <label>Enter New Client</label>
+                    <input type="button" id="new_client_button">
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+    
+</body>
+
+
