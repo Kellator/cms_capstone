@@ -9,9 +9,9 @@ var app = server.app;
 chai.use(chaiHttp);
 
 describe('hello world', function() {
-    it('should return status code 200 and HTML on GET', function(done) {
+    it('returns status 200', function(done) {
         chai.request(app)
-        .get('')
+        .get()
         .end(function(err, res) {
             res.should.have.status(200);
             done();
