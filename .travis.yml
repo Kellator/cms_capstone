@@ -1,0 +1,17 @@
+language: node_js
+node_js: node
+services:
+- mongodb
+addons:
+  apt:
+    sources:
+    - mongodb-3.2-precise
+    packages:
+    - mongodb-org-server
+deploy:
+  provider: heroku
+  api_key:
+    secure: Dv93OLPGoeWb1w6EEQIEGbP4bd0YQqXmV+9upA9wj4W/UHalO+DjKyjNv6cpu98WHCAm0jdZUe8XuaWdgFtfAVyaCz74pstny8FBgcet56I5+iuGk/EN/kac4+eGA4xqzqcmIgXm3wOFzYs/a2Pz0jTSm+TdyCIr24xwc10kxThnP1LRGljQiMYhhw+KR++SGzuzE+QmvAqMBSS9TBU27xh7gOGeCMaNWOvbOSfTKa+P/+5SSfClz9/NSE5ubTQkJbd3slY7Sbcy9YUs1nfmdn7VDg4G0JvJ7DlbE41pKiKID332HrI3YVybWO6hpiDyThs3zuv+OGi3Ph30mNiQ5l9r8LtbWZ3ONUXR3gkSKJpswvd3iO0TykRprsrM81PnwH9Q2SepUEwMuexcAClY5mikB1zio9Fg7yyXrbts1pA87MiwAdTjWSQ3RgHBrVxAd8zd3gS8i+/zHMHy4axD1zugkxb4OZD5YdvTYXHOJVTqXj+VDxLkuEdRDuLDoQOj/pJEQrp491aUuH8vVxxb3zs0vDPiEZHSjV1HPVqVJ+do2R7186gY5bC35Nh/qSwLX4jAj01SwGca2thcRqX6gjFaQRaZYN4+oMlMkrJLhXjns4GEVLR/f3ROB7tSUOHs71p9umyPVXP3i0urGK6xGQnlpz9S4TKyRoxGN8+o3Yg=
+  app: secret-castle-60887
+  on:
+    repo: Kellator/cms_capstone
