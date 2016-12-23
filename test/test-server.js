@@ -8,10 +8,10 @@ var app = server.app;
 
 chai.use(chaiHttp);
 
-describe('hello world', function() {
+describe('initial test', function() {
     it('returns status 200', function(done) {
         chai.request(app)
-        .get()
+        .get("/")
         .end(function(err, res) {
             res.should.have.status(200);
             done();
