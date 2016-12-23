@@ -1,10 +1,10 @@
 //screen for user credentials entry
 //screen for dashboard controls
 //screens for client(new entry & existing): contact, prospect, housing, financials, medical. Comments = cumulative.
-
-//what api return data will look like:
+var index = 0;
+//what api return data will look like: /api/client_id 
 var Mock_Client_Data = {
-    "client_id": [ //should this be a separate client id?  one generated and stored by api/socket?
+    "client_id": [ 
         {
             "contact": {
                 "contactName": "Contact Name",
@@ -33,6 +33,7 @@ var Mock_Client_Data = {
                 "religion": "Religion",
                 "levelOfEducation": "Level of Education",
                 "currentHousing": "Current Living Situation", 
+                "leadStatus": "Lead Status",
                 "poa": {
                     "poaName": "POA Name",
                     "poaPhone": "POA Phone"
@@ -51,7 +52,8 @@ var Mock_Client_Data = {
                     "altContactPhone": "5085885334"
                 },
                 "prefHospital": "Preferred Hospital",
-                "followUpDate": "01012017" //8 digit date
+                "followUpDate": "01012017", //8 digit date
+                "dateAddedtoDB": "01012017"
             },
             "housingAssistance": {
                 "housingType": "Type of Housing", // radio Independent, Assisted Living, Memory Care, GAFC
@@ -143,5 +145,28 @@ var Mock_Client_Data = {
                 "commentDate": "01012017", //8 digit date comment entered
                 "commentText": "Comment Text"
             }
-        }]
+    }]
 };
+
+function getClientData(callbackFn) {
+    setTimeout(function(){ callbackFn(Mock_Client_Data)}, 100);
+}
+
+//would this function instead need to be multiple functions ?  displayClientDataContact, displayClientDataPropsect, displayClientDataFinancials etc?
+function displayClientData(data) {
+    console.log(data.client_id);
+    console.log(index);
+    for (index in data.client_id) {
+        $("#test_div").append(
+            "<p>" + data.client_id[index].text + "</p>");
+    //target area to append information e.g. contacts_block    
+    }
+}
+
+function getAndDisplayClientData() {
+    getClientData(displayClientData);
+}
+
+$(function() {
+    getAndDisplayClientData();
+});
