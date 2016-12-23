@@ -16,9 +16,9 @@
             <fieldset>
                 <legend>Log In</legend>
                 <label>username</label>
-                <input type="text" id="username">
+                <input type="text" id="username" placeholder="username">
                 <label>password</label>
-                <input type="text" id="password">
+                <input type="text" id="password" placeholder="password">
             </fieldset>
         </form>
         <p>
@@ -45,6 +45,10 @@
                 <label id="new_client_button">Enter New Client</label>
                 <button name="new_client_button" id="new_client_button">Enter New Client</button>
             </form>
+        </div>
+        <!--client_dash contains quick info including contactName & phone, prospectName & DOB, lead status, housing type, hospital-->
+        <div id="client_dash">
+            <h3 class="client_dash_head">Client Dashboard</h3>
         </div>
         <!--client nav bar is a horizontal navigational bar that is active for existing clients to display data and new clients to enter data-->
         <nav id="data_nav_bar">
@@ -76,6 +80,7 @@
             <div id="housing_block"></div>
             <div id="financials_block"></div>
             <div id="medical_block"></div>
+            <div id="test_div"></div>
             <!--<div id="comments_block"></div>
         </div>
         <!--comments div is a collapsible vertical window that logs user comments regarding client-->
