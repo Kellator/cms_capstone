@@ -1,23 +1,19 @@
 //screen for user credentials entry
 //screen for dashboard controls
 //screens for client(new entry & existing): contact, prospect, housing, financials, medical. Comments = cumulative.
+//new client entry data fields
 var newContactEntryMsg = 
-            "<div id='contact_name'>" +
+            "<div id='contact_information'>" +
                 "<form action='' method='post'>" +
                 "<fieldset>" +
-                    "<legend>Contact Name</legend>" +
+                    "<legend>Contact Information</legend>" +
                     "<label id='contact_last_name'>Last Name:  </label>" +
                     "<input type='text' required id='contact_last_name' placeholder='Johnson'>" +
                     "<label id='contact_first_name'>First Name:  </label>" +
                     "<input type='text' required id='contact_first_name' placeholder='Milly'>" +
                     "<label class='enter_button' id='enter_contact_name_button'></label>" +
                     "<button name='enter_contact_name_button' id='enter_contact_name'>Enter</button>" +
-                "</fieldset>" +
-                "</form>" +
-            "</div>" +
-            "<div id='contact_address'>" +
-                "<form action='' method='post'>" +
-                "<fieldset>" +
+
                     "<legend>Contact Address</legend>" +
                     "<label id='contact_street'>Street:  </label>" +
                     "<input type='text' id='contact_street' placeholder='123 Prospect St.'>" +
@@ -29,12 +25,7 @@ var newContactEntryMsg =
                     "<input type='number' id='contact_zipcode' placeholder='02301'>" +
                     "<label class='enter_button' id='enter_contact_address_button'></label>" +
                     "<button name='enter_contact_address_button' id='enter_contact_address'>Enter</button>" +
-                "</fieldset>" +
-                "</form>" +
-            "</div>" +
-            "<div id='contact_phone'>" +
-                "<form action='' method='post'>" +
-                "<fieldset>" +
+
                     "<legend>Contact Phone Numbers</legend>" +
                     "<label id='contact_primary_phone'>Primary Phone:  </label>" +
                     "<input type='number' maxlength='10' required id='contact_primary_phone' placeholder='508-588-5555'>" +
@@ -42,12 +33,7 @@ var newContactEntryMsg =
                     "<input type='number' maxlength='10' id='contact_alt_phone' placeholder='508-588-5858'>" +
                     "<label class='enter_button' id='enter_contact_phone_button'></label>" +
                     "<button name='enter_contact_phone_button' id='enter_contact_phone'>Enter</button>" +
-                "</fieldset>" +
-                "</form>" + 
-            "</div>" +
-            "<div id='contact_email'>" +
-                "<form action='' method='post'>" +
-                "<fieldset>" +
+
                     "<legend>Contact Email</legend>" +
                     "<label id='contact_email'>Email:  </label>" +
                     "<input type='email' id='contact_email' placeholder='name@email.com'>" +
@@ -67,9 +53,9 @@ var newContactEntryMsg =
                         "<li><input type='radio' value='Adult Child' id=rel_child'>Adult Child</> " +
                         "<li><input type='radio' value='Sibling' id=rel_sibling'>Sibling</> " +
                         "<li><input type='radio' value='Care Professional' id=rel_careProf'>Care Professional</> " +
-                        "<li><input type='radio' value='Other' id='rel_other'>Other</><br><input type='text' placeholder='other relationship'/>" +
+                        "<li><input type='radio' value='Other' id='rel_other'>Other</><br><input type='text' placeholder='Other'/>" +
                     "</ul>" +
-                    "<label id='referra_source'>Referral Source</label>" +
+                    "<label id='referral_source'>Referral Source</label>" +
                     "<ul>" + 
                         "<li><input type='radio' value='Self' id='ref_self' checked>Self</>" +
                         "<li><input type='radio' value='APFM' id='ref_apfm'>A Place For Mom</>" +
@@ -82,6 +68,187 @@ var newContactEntryMsg =
                 "</form>" +
             "</div>"
             ;
+
+var newProspectEntryMsg = 
+            "<div id='prospect_information'>" +
+                "<form action='' method='post'>" +
+                "<fieldset>" +
+                    "<legend>Prospect Contact Information</legend>" +
+                    "<label id='prospect_last_name'>Last Name:  </label>" +
+                    "<input type='text' required id='prospect_last_name' placeholder='Johnson'>" +
+                    "<label id='prospect_first_name'>First Name:  </label>" +
+                    "<input type='text' required id='prospect_first_name' placeholder='Joseph'>" +
+                    "<label class='enter_button' id='enter_prospect_name_button'></label>" +
+                    "<button name='enter_prospect_name_button' id='enter_prospect_name'>Enter</button>" +
+                    "<legend>Prospect Phone Numbers</legend>" +
+                    "<label id='prospect_primary_phone'>Primary Phone:  </label>" +
+                    "<input type='number' maxlength='10' required id='contact_primary_phone' placeholder='508-588-5555'>" +
+                    "<label id='prospect_alt_phone'>Alternate Phone:  </label>" +
+                    "<input type='number' maxlength='10' id='contact_alt_phone' placeholder='508-588-5858'>" +
+                    "<label class='enter_button' id='enter_prospect_phone_button'></label>" +
+                    "<button name='enter_prospect_phone_button' id='enter_prospect_phone'>Enter</button>" +
+                    "<legend>Prospect Address</legend>" +
+                    "<label id='prospect_street'>Street:  </label>" +
+                    "<input type='text' id='prospect_street' placeholder='123 Prospect St.'>" +
+                    "<label id='prospect_city'>City:  </label>" +
+                    "<input type='text' id='prospect_city' placeholder='Brockton'>" +
+                    "<label id='prospect_state'>State:  </label>" +
+                    "<input type='text' id='prospect_state' placeholder='MA'>" +
+                    "<label id='prospect_zipcode'>Zip:  </label>" +
+                    "<input type='number' id='prospect_zipcode' placeholder='02301'>" +
+                    "<label class='enter_button' id='enter_prospect_address_button'></label>" +
+                    "<button name='enter_prospect_address_button' id='enter_prospect_address'>Enter</button>" +
+                "</fieldset>" +
+                "</form>" +
+            "</div>" +
+            "<div id='prospect_identification'>" +
+                "<form action='' method='post'>" +
+                "<fieldset>" +
+                    "<legend>Prospect Identification</legend>" +
+                    "<label id='date_of_birth'>Date of Birth </label>" +
+                    "<input type='date' required name='date_of_birth'>" +
+                    "<label id='ssn'>Social Security Number </label>" +
+                    "<input type='number' maxlength='9' required placeholder='000112222'> " +
+                    "<label id='medicare'>Medicare Number </label>" +
+                    "<input type='text' required placeholder='000112222A'>" +
+                    "<label id='massHealth'>MassHealth Number </label>" +
+                    "<input type='text' placeholder='000111222333'>" +
+                    "<label id='other_ins'>Other Insurance </label>" +
+                    "<input type='text' placeholder='BCBS XX010101010'>" +
+                "</fieldset>" +
+                "</form>" +
+            "</div>" +
+            "<div id='prospect_addl_information'>" +
+                "<form action='' method='post'>" +
+                "<fieldset>" +
+                    "<legend>Additional Information</legend>" +
+                    "<label id='gender'>Gender</label>" +
+                    "<ul>" + 
+                        "<li><input type='radio' value='Male' id='male'>Male</>" +
+                        "<li><input type='radio' value='Female' id='female'>Female</>" +
+                    "</ul>" +
+                    "<label id='marital_status'>Marital Status</label>" +
+                    "<ul>" +
+                        "<li><input type='radio' value='single' id='single'>Single</>" +
+                        "<li><input type='radio' value='married' id='married'>Married</>" +
+                        "<li><input type='radio' value='widowed' id='widowed'>Widowed</>" +
+                        "<li><input type='radio' value='separated' id='separated'>Separated</>" +
+                    "</ul>" +
+                    "<label id='veteran_status'>Veteran Status</label>" +
+                    "<ul>" +
+                        "<li><input type='radio' value='veteran' id='veteran'>Veteran:  </>" + 
+                        "<label for='service_branch'>Branch of Service:  </label><input type='text' id='service_branch' placeholder='Navy'>" +
+                        "<li><input type='radio' value='Not a Veteran' id='notVet'>Not a Veteran</>" +
+                    "</ul>" +
+                    "<label id='religion'>Religion</label>" +
+                    "<input type='text' id='religion' placeholder='Lutheran'>" +
+                    "<label id='education'>Highest Level of Education</label>" +
+                    "<ul>" +
+                        "<li><input type='radio' value='grade_school' id='grade_school'>Grade School</>" +
+                        "<li><input type='radio' value='high_school' id='high_school'>High School</>" +
+                        "<li><input type='radio' value='trade' id='trade'>Trade School</>" +
+                        "<li><input type='radio' value='college' id='college'>College</>" +
+                        "<li><input type='radio' value='post_grad' id='post_grad'>Post Graduate</>" +
+                    "</ul>" +
+                    "<label id='current_housing'>Current Housing Situation</label>" +
+                    "<ul>" +
+                        "<li><input type='radio' value='Alone' id='housing_alone'>Alone</>" +
+                        "<li><input type='radio' value='With Spouse' id='housing_spouse'>With Spouse</>" +
+                        "<li><input type='radio' value='With Family' id='housing_family'>With Family</>" +
+                        "<li><input type='radio' value='Skilled Nursing Facility' id='housing_snf'>Skilled Nursing Facility</>" +
+                        "<li><input type='radio' value='Other Assisted Living Community' id='housing_alf'>Other Assisted Living Community</>" +
+                        "<li><input type='radio' value='Senior Housing' id='housing_senior'>Senior Housing</>" +
+                    "</ul>" +
+                    "<label id='lead_status'>Lead Status</label>" +
+                    "<ul>" +
+                        "<li><input type='radio' value='hot' id='lead_hot'>Hot</>" +
+                        "<p>Move-in within 1-3 months.</p>" +
+                        "<li><input type='radio' value='warm' id='lead_warm'>Warm</>" +
+                        "<p>Move-in within 3-6 months.</p>" +
+                        "<li><input type='radio' value='cool' id='lead_cool'>Cool</>" +
+                        "<p>Move-in after 6 months.</p>" +
+                    "</ul>" +
+                    "<label id='date_to_alcis'>Date Entered in ALCIS:  </label>" + //can date be entered by server not user?
+                    "<input type='date' name='date_to_alcis'>" +
+                    "<label id='follow_up'>Follow-up Date:  </label>" + //follow up assigned by server -e.g. dated added plus 3 months
+                    "<input type='date' name='follow_up_date'>" +
+                "</fieldset>" +
+                "</form>" +
+            "</div>" +
+            "<div id='prospect_emergency_info'>" +
+                "<form action='' method='post'>" +
+                "<fieldset>" +
+                    "<legend>Preferred Hospital</legend>" +
+                    "<ul>" +
+                        "<li><input type='radio' value='Brockton' id='hospital_brockton'>Signature Healthcare | Brockton Hospital</input>" +
+                        "<li><input type='radio' value='Good Samaritan id='hospital_goodsam'>Steward Healthcare | Good Samaritan Hospital</input>" +
+                    "</ul>" +
+                    "<legend>DNR Status</legend>" +
+                    "<ul>" +
+                        "<li><input type='radio' value='DNR Present' id='dnr_present'>DNR</input>" +
+                        "<li><input type='radio' value='DNR Not Present' id='dnr_not_present'>No DNR</input>" +
+                    "</ul>" +
+                    "<legend>Power of Attorney</legend>" + //need to include buttons for same as (econtact, poa, hcp, etc)
+                    "<label id='poa_last_name'>Last Name:  </label>" +
+                    "<input type='text' required id='poa_last_name' placeholder='Johnson'>" +
+                    "<label id='poa_first_name'>First Name:  </label>" +
+                    "<input type='text' required id='poa_first_name' placeholder='Milly'>" +
+                    "<label class='enter_button' id='enter_poa_name_button'></label>" +
+                    "<button name='enter_poa_name_button' id='enter_poa_name'>Enter</button>" +
+                    "<label id='poa_primary_phone'>Primary Phone:  </label>" +
+                    "<input type='number' maxlength='10' required id='poa_primary_phone' placeholder='508-588-5555'>" +
+                    "<label id='poa_alt_phone'>Alternate Phone:  </label>" +
+                    "<input type='number' maxlength='10' id='poa_alt_phone' placeholder='508-588-5858'>" +
+                    "<label class='enter_button' id='enter_poa_phone_button'></label>" +
+                    "<button name='enter_poa_phone_button' id='enter_poa_phone'>Enter</button>" +
+                    
+                    "<legend>Health Care Proxy</legend>" +
+                    "<label id='hcp_last_name'>Last Name:  </label>" +
+                    "<input type='text' required id='hcp_last_name' placeholder='Johnson'>" +
+                    "<label id='hcp_first_name'>First Name:  </label>" +
+                    "<input type='text' required id='hcp_first_name' placeholder='Milly'>" +
+                    "<label class='enter_button' id='enter_hcp_name_button'></label>" +
+                    "<button name='enter_hcp_name_button' id='enter_hcp_name'>Enter</button>" +
+                    "<label id='hcp_primary_phone'>Primary Phone:  </label>" +
+                    "<input type='number' maxlength='10' required id='hcp_primary_phone' placeholder='508-588-5555'>" +
+                    "<label id='hcp_alt_phone'>Alternate Phone:  </label>" +
+                    "<input type='number' maxlength='10' id='hcp_alt_phone' placeholder='508-588-5858'>" +
+                    "<label class='enter_button' id='enter_hcp_phone_button'></label>" +
+                    "<button name='enter_hcp_phone_button' id='enter_hcp_phone'>Enter</button>" +
+                   
+                    "<legend>Primary Emergency Contact</legend>" +
+                    "<label id='pec_last_name'>Last Name:  </label>" +
+                    "<input type='text' required id='pec_last_name' placeholder='Johnson'>" +
+                    "<label id='pec_first_name'>First Name:  </label>" +
+                    "<input type='text' required id='pec_first_name' placeholder='Milly'>" +
+                    "<label class='enter_button' id='enter_pec_name_button'></label>" +
+                    "<button name='enter_pec_name_button' id='enter_pec_name'>Enter</button>" +
+                    "<label id='pec_primary_phone'>Primary Phone:  </label>" +
+                    "<input type='number' maxlength='10' required id='pec_primary_phone' placeholder='508-588-5555'>" +
+                    "<label id='pec_alt_phone'>Alternate Phone:  </label>" +
+                    "<input type='number' maxlength='10' id='pec_alt_phone' placeholder='508-588-5858'>" +
+                    "<label class='enter_button' id='enter_pec_phone_button'></label>" +
+                    "<button name='enter_pec_phone_button' id='enter_pec_phone'>Enter</button>" +
+                    
+                    "<legend>Secondary Emergency Contact</legend>" +
+                    "<label id='sec_last_name'>Last Name:  </label>" +
+                    "<input type='text' required id='sec_last_name' placeholder='Johnson'>" +
+                    "<label id='sec_first_name'>First Name:  </label>" +
+                    "<input type='text' required id='sec_first_name' placeholder='Milly'>" +
+                    "<label class='enter_button' id='enter_sec_name_button'></label>" +
+                    "<button name='enter_sec_name_button' id='enter_sec_name'>Enter</button>" +
+                    "<label id='sec_primary_phone'>Primary Phone:  </label>" +
+                    "<input type='number' maxlength='10' required id='sec_primary_phone' placeholder='508-588-5555'>" +
+                    "<label id='sec_alt_phone'>Alternate Phone:  </label>" +
+                    "<input type='number' maxlength='10' id='sec_alt_phone' placeholder='508-588-5858'>" +
+                    "<label class='enter_button' id='enter_sec_phone_button'></label>" +
+                    "<button name='enter_sec_phone_button' id='enter_sec_phone'>Enter</button>" +
+                    
+                "</fieldset>" +
+                "</form>" +
+            "</div>"
+            ;
+
 
 
 //what api return data will look like: /api/client_id 
@@ -247,7 +414,7 @@ function displayClientData(data) {
         var financialsData = returnData.financials;
         var medicalData = returnData.medical;
         $("#contact_block").append(newContactEntryMsg);
-        $("#prospect_block").append();
+        $("#prospect_block").append(newProspectEntryMsg);
         $("#housing_block").append();
         $("#financials_block").append();
         $("#medical_block").append();
