@@ -141,7 +141,7 @@ var newProspectEntryMsg =
                 "<li><input type='radio' required name='veteran_status' value='Not a Veteran' id='notVet'>Not a Veteran</>" +
             "</ul>" +
             "<label id='religion'>Religion</label>" +
-            "<input type='text' id='religion' placeholder='Lutheran'>" +
+            "<input type='text' id='religion' placeholder='Lutheran'><br>" +
             
             "<label for='education'>Highest Level of Education</label>" +
             "<ul>" +
@@ -396,8 +396,8 @@ var newMedicalEntryMsg =
         "<form action='' method='post'>" +
         "<fieldset>" + 
             "<legend>Allergy Information</legend>" +
-            "<input type='checkbox' value='nkda' id='allergies_check'>No Known Drug Allergies</input>" +
-            "<label for='allergies'>Allergies</label>" +
+            "<input type='checkbox' value='nkda' id='allergies_check'>No Known Drug Allergies</input><br>" +
+            "<label for='allergies'>Allergies:  </label>" +
             "<input type='text' id='allergies' placeholder='penicillin'></input><br>" +
         "</fieldset>" +
         "</form>" +
@@ -561,7 +561,7 @@ var Mock_Client_Data = {
                 },
                 "bankReference": {
                     "bankRefName": "Bank Reference Name",
-                    "bankRefNumber": "Banke Reference Phone Number"   
+                    "bankRefNumber": "Bank Reference Phone Number"   
                 },
                 "landlordReference": {
                     "landlordRefName": "Landlord Reference Name",
