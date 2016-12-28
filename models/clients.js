@@ -1,14 +1,15 @@
 var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/');
+// mongoose.connect('mongodb://localhost/');
 
 mongoose.connection.on('error', function(err) {
     console.error('Could not connect.  Error:', err);
 });
-
+//can build into the Schema required, min/max validators, 
+//cannot make nested validators unless using nested schemas eg create new name schema with first and last name as values
+//would this whole schema be under client_id: _id?
 mongoose.connection.once('open', function() {
     var clientSchema = mongoose.Schema({
-        //here change to client data entry values with validation
         contact: {
             contactName: {
                 contactFirstName: String, 
@@ -193,7 +194,27 @@ mongoose.connection.once('open', function() {
             commentDate: Date, //8 digit date comment entered
             commentText: String
         }]
-});
+    });
 
     var Client = mongoose.model('Client', clientSchema);
+    
+    module.exports = Client;
+//what would be passed as the arguments to the create function? - example is name, content 2 keys in schema 
+    var create = function() {
+        var client = {
+            //specific data like id? contact name? contact number? etc
+        };
+        Client.create(client, function(err, client) {
+            if (err || !client) {
+                console.error("could not create client"); //example has , name
+                mongoose.disconnect();
+                return;
+            }
+            console.log("created client"); //example has snippet.name
+            mongoose.disconnect();
+        });
+ 
+    };
+    //find and findOne methods - specify query type
+
 });
