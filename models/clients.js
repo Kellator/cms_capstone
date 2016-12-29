@@ -202,6 +202,8 @@ mongoose.connection.once('open', function() {
 //what would be passed as the arguments to the create function? - example is name, content 2 keys in schema 
     var create = function() {
         var client = {
+
+            //constructor function - outside of this code - whereever calling create from - new client
             //specific data like id? contact name? contact number? etc
         };
         Client.create(client, function(err, client) {

@@ -13,7 +13,7 @@ var app = server.app;
 chai.use(chaiHttp);
 
 describe('Client DB', function() {
-    //add before(function(done) { with had coded data? then after(function(done) {remove
+    //add before(function(done) { with hard coded data? then after(function(done) {remove
     it('returns status 200', function(done) {
         chai.request(app)
         .get("/")

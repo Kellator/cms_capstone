@@ -1,6 +1,7 @@
 //screen for user credentials entry
 //screen for dashboard controls
 //screens for client(new entry & existing): contact, prospect, housing, financials, medical. Comments = cumulative.
+
 //new client entry data fields
 var newContactEntryMsg = 
     "<div id='contact_information'>" +
@@ -257,49 +258,49 @@ var newHousingEntryMsg =
             "<legend>Housing Type and Assistance Needed</legend>" +
             "<label for='type_of_housing'>Type of Housing</label>" +
             "<ul>" +
-                "<li><input type='radio' required name='type_of_housing' value='Independent' id='housing_ind'>Independent</input>" +
-                "<li><input type='radio' required name='type_of_housing' value='Assisted Living' id='housing_al'>Assisted Living</input>" +
-                "<li><input type='radio' required name='type_of_housing' value='Memory Care' id='housing_mc'>Memory Care</input>" +
-                "<li><input type='radio' required name='type_of_housing' value='GAFC' id='housing_gafc'>GAFC</input>" +
+                "<li><input type='radio' required name='type_of_housing' value='Independent' id='housing_ind'>Independent</input></li>" +
+                "<li><input type='radio' required name='type_of_housing' value='Assisted Living' id='housing_al'>Assisted Living</input></li>" +
+                "<li><input type='radio' required name='type_of_housing' value='Memory Care' id='housing_mc'>Memory Care</input></li>" +
+                "<li><input type='radio' required name='type_of_housing' value='GAFC' id='housing_gafc'>GAFC</input></li>" +
             "</ul>" +
             "<label id='assistance_needed'>Assistance Needed</label>" +
             "<ul>" +
-                "<li><input type='checkbox' value='bathing'>Bathing: </input>" + 
-                "<input type='text' id='bathing_detail' placeholder='Needs hands on assistance, lower body washing.'>" +
-                "<li><input type='checkbox' value='dressing'>Dressing: </input>" + 
-                "<input type='text' id='dressing_detail' placeholder='Needs assistance with lower body dressing and buttons.'>" +  
-                "<li><input type='checkbox' value='grooming'>Grooming: </input>" + 
-                "<input type='text' id='grooming_detail' placeholder='Needs cueing to soak dentures at night.'>" +
-                "<li><input type='checkbox' value='medication assistance'>Medication Assistance: </input>" + 
-                "<input type='text' id='med_assist_detail' placeholder='Needs SAMM reminders'>" +
-                "<li><input type='checkbox' value='ambulation'>Ambulation: </input>" + 
-                "<input type='text' id='Ambulation_detail' placeholder='Needs escorts to meals and activities.'>" +
-                "<li><input type='checkbox' value='toileting'>Toileting: </input>" + 
-                "<input type='text' id='toileting_detail' placeholder='Occasional incontinence of bladder; needs cueing to change depends.'>" +
+                "<li><input type='checkbox' value='bathing'>Bathing: </input></li>" + 
+                "<input type='text' id='bathing_detail' disabled='true' placeholder='Needs hands on assistance, lower body washing.'>" +
+                "<li><input type='checkbox' value='dressing'>Dressing: </input></li>" + 
+                "<input type='text' id='dressing_detail' disabled='true' placeholder='Needs assistance with lower body dressing and buttons.'>" +  
+                "<li><input type='checkbox' value='grooming'>Grooming: </input></li>" + 
+                "<input type='text' id='grooming_detail' disabled='true' placeholder='Needs cueing to soak dentures at night.'>" +
+                "<li><input type='checkbox' value='medication assistance'>Medication Assistance: </input></li>" + 
+                "<input type='text' id='med_assist_detail' disabled='true' placeholder='Needs SAMM reminders'>" +
+                "<li><input type='checkbox' value='ambulation'>Ambulation: </input></li>" + 
+                "<input type='text' id='Ambulation_detail' disabled='true' placeholder='Needs escorts to meals and activities.'>" +
+                "<li><input type='checkbox' value='toileting'>Toileting: </input></li>" + 
+                "<input type='text' id='toileting_detail' disabled='true' placeholder='Occasional incontinence of bladder; needs cueing to change depends.'>" +
             "</ul>" +
             "<label for='prim_apt_pref'>Primary Apartment Preference</label>" +
             "<ul>" +
-                "<li><input type='radio' required name='prim_apt_pref' value='Studio' id='prim_pref_studio'>Studio</input>" +
-                "<li><input type='radio' required name='prim_apt_pref' value='One Bedroom' id='prim_pref_onebed'>One Bedroom</input>" +
-                "<li><input type='radio' required name='prim_apt_pref' value='One Bedroom Center' id='prim_pref_onebedcenter'>One Bedroom Center</input>" +
-                "<li><input type='radio' required name='prim_apt_pref' value='One Bedroom Delux' id='prim_pref_onebeddelux'>One Bedroom Delux</input>" +
-                "<li><input type='radio' required name='prim_apt_pref' value='Two Bedroom' id='prim_pref_twobed'>Two Bedroom</input>" +
-                "<li><input type='radio' required name='prim_apt_pref' value='Cooperative Living' id='prim_pref_coop'>Cooperative Living</input>" +
+                "<li><input type='radio' required name='prim_apt_pref' value='Studio' id='prim_pref_studio'>Studio</input></li>" +
+                "<li><input type='radio' required name='prim_apt_pref' value='One Bedroom' id='prim_pref_onebed'>One Bedroom</input></li>" +
+                "<li><input type='radio' required name='prim_apt_pref' value='One Bedroom Center' id='prim_pref_onebedcenter'>One Bedroom Center</input></li>" +
+                "<li><input type='radio' required name='prim_apt_pref' value='One Bedroom Delux' id='prim_pref_onebeddelux'>One Bedroom Delux</input></li>" +
+                "<li><input type='radio' required name='prim_apt_pref' value='Two Bedroom' id='prim_pref_twobed'>Two Bedroom</input></li>" +
+                "<li><input type='radio' required name='prim_apt_pref' value='Cooperative Living' id='prim_pref_coop'>Cooperative Living</input></li>" +
             "</ul>" +
             "<label for='sec_apt_pref'>Secondary Apartment Preference</label>" +
             "<ul>" +
-                "<li><input type='radio' name='sec_apt_pref' value='Studio' id='sec_pref_studio'>Studio</input>" +
-                "<li><input type='radio' name='sec_apt_pref' value='One Bedroom' id='sec_pref_onebed'>One Bedroom</input>" +
-                "<li><input type='radio' name='sec_apt_pref' value='One Bedroom Center' id='sec_pref_onebedcenter'>One Bedroom Center</input>" +
-                "<li><input type='radio' name='sec_apt_pref' value='One Bedroom Delux' id='sec_pref_onebeddelux'>One Bedroom Delux</input>" +
-                "<li><input type='radio' name='sec_apt_pref' value='Two Bedroom' id='sec_pref_twobed'>Two Bedroom</input>" +
-                "<li><input type='radio' name='sec_apt_pref' value='Cooperative Living' id='sec_pref_coop'>Cooperative Living</input>" +
+                "<li><input type='radio' name='sec_apt_pref' value='Studio' id='sec_pref_studio'>Studio</input></li>" +
+                "<li><input type='radio' name='sec_apt_pref' value='One Bedroom' id='sec_pref_onebed'>One Bedroom</input></li>" +
+                "<li><input type='radio' name='sec_apt_pref' value='One Bedroom Center' id='sec_pref_onebedcenter'>One Bedroom Center</input></li>" +
+                "<li><input type='radio' name='sec_apt_pref' value='One Bedroom Delux' id='sec_pref_onebeddelux'>One Bedroom Delux</input></li>" +
+                "<li><input type='radio' name='sec_apt_pref' value='Two Bedroom' id='sec_pref_twobed'>Two Bedroom</input></li>" +
+                "<li><input type='radio' name='sec_apt_pref' value='Cooperative Living' id='sec_pref_coop'>Cooperative Living</input></li>" +
             "</ul>" +
             "<label id='additional_services'>Additional Services</label>" +
             "<ul>" +
-                "<li><input type='checkbox' value='Laundry' id='addt_laundry'>Laundry</input>" +
-                "<li><input type='checkbox' value='Housekeeping' id='addt_housekeeping'>Housekeeping</input>" +
-                "<li><input type='checkbox' value='Meals' id='addt_meals'>Meals</input>" +
+                "<li><input type='checkbox' value='Laundry' id='addt_laundry'>Laundry</input></li>" +
+                "<li><input type='checkbox' value='Housekeeping' id='addt_housekeeping'>Housekeeping</input></li>" +
+                "<li><input type='checkbox' value='Meals' id='addt_meals'>Meals</input></li>" +
             "</ul>" +
             "<label for='est_move_date'>Estimated Move-in Date: </label>" +
             "<input type='date' id='est_move_date'>" +
@@ -314,10 +315,10 @@ var newFinancialsEntryMsg =
             "<legend>Financial Information</legend>" +
             "<label for='payer_source'>Payer Source</label>" +
             "<ul>" +
-                "<li><input type='radio' required name='payer_source' value='Private' id='payer_private'>Private</input>" +
-                "<li><input type='radio' required name='payer_source' value='MassHealth' id='payer_masshealth'>MassHealth | GAFC</input>" +
-                "<li><input type='radio' required name='payer_source' value='SCP' id='payer_sco'>SCO: <span class='fade_text'>(Navicare, Senior Whole Health, Tufts, etc)</span></input>" +
-                "<li><input type='radio' required name='payer_source' value='Long Term Care Insurance' id='payer_ltc'>Long Term Care Insurance</input>" +
+                "<li><input type='radio' required name='payer_source' value='Private' id='payer_private'>Private</input></li>" +
+                "<li><input type='radio' required name='payer_source' value='MassHealth' id='payer_masshealth'>MassHealth | GAFC</input></li>" +
+                "<li><input type='radio' required name='payer_source' value='SCP' id='payer_sco'>SCO: <span class='fade_text'>(Navicare, Senior Whole Health, Tufts, etc)</span></input></li>" +
+                "<li><input type='radio' required name='payer_source' value='Long Term Care Insurance' id='payer_ltc'>Long Term Care Insurance</input></li>" +
             "</ul>" +
             "</fieldset>" +
         "</form>" +
@@ -379,15 +380,15 @@ var newMedicalEntryMsg =
             "<input type='text' id='assessed_by' placeholder='Jane Smith, R.N.'></input><br>" +
             "<label for='level_of_care'>Level Of Care</label>" +
             "<ul>" +
-                "<li><input type='radio' required name='level_of_care' id='care_ind' value='Independent'>Independent</input>" +
-                "<li><input type='radio' required name='level_of_care' id='care_traditional' value='Traditional'>Traditional</input>" +
-                "<li><input type='radio' required name='level_of_care' id='care_enhanced' value='Enhanced'>Enhanced</input>" +
-                "<li><input type='radio' required name='level_of_care' id='care_comprehensive' value='Comprehensive'>Comprehensive</input>" +
+                "<li><input type='radio' required name='level_of_care' id='care_ind' value='Independent'>Independent</input></li>" +
+                "<li><input type='radio' required name='level_of_care' id='care_traditional' value='Traditional'>Traditional</input></li>" +
+                "<li><input type='radio' required name='level_of_care' id='care_enhanced' value='Enhanced'>Enhanced</input></li>" +
+                "<li><input type='radio' required name='level_of_care' id='care_comprehensive' value='Comprehensive'>Comprehensive</input></li>" +
             "</ul>" +
             "<label for='other_plans'>Special Plans</label>" +
             "<ul>" +
-                "<li><input type='radio' name='other_plans' id='care_memory' value='Memory Care'>Memory Care</input>" +
-                "<li><input type='radio' name='other_plans' id='care_gafc' value='GAFC'>GAFC</input>" +
+                "<li><input type='radio' name='other_plans' id='care_memory' value='Memory Care'>Memory Care</input></li>" +
+                "<li><input type='radio' name='other_plans' id='care_gafc' value='GAFC'>GAFC</input></li>" +
             "</ul>" +
         "</fieldset>" +
         "</form>" +
@@ -419,13 +420,13 @@ var newMedicalEntryMsg =
         "<legend>Dietary Needs</legend>" +
         "<label for='dietary'>Diet and Consistency</label>" +
         "<ul>" +
-            "<li><input type='checkbox' required name='dietary' value='Regular' id='dietary_regular'>Regular</input>" +
-            "<li><input type='checkbox' required name='dietary' value='No Added Salt' id='dietary_nas'>No Added Salt</input>" +
-            "<li><input type='checkbox' required name='dietary' value='House Concentrated Carbohydrate' id='dietary_hcc'>House Concentrated Carbohydrate</input>" +
-            "<li><input type='checkbox' required name='dietary' value='Cut Up' id='dietary_cut'>Cut Up</input>" +
-            "<li><input type='checkbox' required name='dietary' value='Ground' id='dietary_ground'>Ground</input>" +
-            "<li><input type='checkbox' required name='dietary' value='Puree' id='dietary_puree'>Puree</input>" +
-            "<li><input type='checkbox' required name='dietary' value='Soft' id='dietary_soft'>Soft</input>" +
+            "<li><input type='checkbox' required name='dietary' value='Regular' id='dietary_regular'>Regular</input></li>" +
+            "<li><input type='checkbox' required name='dietary' value='No Added Salt' id='dietary_nas'>No Added Salt</input></li>" +
+            "<li><input type='checkbox' required name='dietary' value='House Concentrated Carbohydrate' id='dietary_hcc'>House Concentrated Carbohydrate</input></li>" +
+            "<li><input type='checkbox' required name='dietary' value='Cut Up' id='dietary_cut'>Cut Up</input></li>" +
+            "<li><input type='checkbox' required name='dietary' value='Ground' id='dietary_ground'>Ground</input></li>" +
+            "<li><input type='checkbox' required name='dietary' value='Puree' id='dietary_puree'>Puree</input></li>" +
+            "<li><input type='checkbox' required name='dietary' value='Soft' id='dietary_soft'>Soft</input></li>" +
         "</ul>" +
         "</fieldset>" +
         "</form>" +
@@ -462,11 +463,11 @@ var newMedicalEntryMsg =
             "<legend>Pharmacy</legend>" +
             "<label for='pharmacy_choice'>Pharmacy</label>" +
             "<ul>" +
-                "<li><input type='radio' required name='pharmacy_choice' id='pharmacy_gb' value='Greater Boston LTC'>Greater Boston</input>" +
-                "<li><input type='radio' required name='pharmacy_choice' id='pharmacy_apothecare' value='Apothecare'>Apothecare</input>" +
-                "<li><input type='radio' required name='pharmacy_choice' id='pharmacy_va' value='VA'>VA</input>" +
-                "<li><input type='radio' required name='pharmacy_choice' id='pharmacy_mail' value='Mail Order Pharmacy'>Mail Order Pharmacy</input>" +
-                "<li><input type='radio' required name='pharmacy_choice' id='pharmacy_other' value='Other Pharmacy'>Other Pharmacy</input>" +
+                "<li><input type='radio' required name='pharmacy_choice' id='pharmacy_gb' value='Greater Boston LTC'>Greater Boston</input></li>" +
+                "<li><input type='radio' required name='pharmacy_choice' id='pharmacy_apothecare' value='Apothecare'>Apothecare</input></li>" +
+                "<li><input type='radio' required name='pharmacy_choice' id='pharmacy_va' value='VA'>VA</input></li>" +
+                "<li><input type='radio' required name='pharmacy_choice' id='pharmacy_mail' value='Mail Order Pharmacy'>Mail Order Pharmacy</input></li>" +
+                "<li><input type='radio' required name='pharmacy_choice' id='pharmacy_other' value='Other Pharmacy'>Other Pharmacy</input></li>" +
             "</ul>" +
         "</fieldset>" +
         "</form>" +
@@ -477,17 +478,28 @@ var Mock_Client_Data = {
     "client_id": [ 
         {
             "contact": {
-                "contactName": "Contact Name",
+                "contactName": {
+                    "contactLastName": "Last Name",
+                    "contactFirstName": "First Name"
+                },
                 "contactPrimaryPhone": "5085885334", //10-digit numbers only
                 "contactSecondaryPhone": "5085885334",
-                "contactAddress": "Contact Address",
+                "contactAddress": {
+                    "contactStreet": "Street Address",
+                    "contactCity": "City",
+                    "contactState": "State",
+                    "contactZip": "02301"
+                },
                 "contactEmail": "contactemail@gmail.com",
                 "relationToProspect": "relationship to prospect", //radio with adult child, spouse, friend, guardian, etc
                 "referralSource": "Referral Source", //radio with APFM, SNF : "detail", VNA : "detail", WOM : "detail", etc
                 "dateOfFirstContact": "Date of first contact" //use date function
             },
             "prospect": {
-                "prospectName": "Prospective Resident Name",
+                "prospectName": {
+                    "prospectLastName": "Last Name",
+                    "prospectFirstName": "First Name"
+                },
                 "prospectPhone": "5085885334", // 10-digit numbers only ? same as contact button?
                 "prospectAddress": "Prospect Address",
                 "dateOfBirth": "01011920", //8 digit date - 2 digit month, 2 digit day, 4 digit year
@@ -617,6 +629,17 @@ var Mock_Client_Data = {
             }
     }]
 };
+//var client_id; //set this to id create by guid or mongoose?
+
+var clientData;
+
+clientData = {};
+
+var clientProspectDisplay;
+var clientHousingDisplay;
+var clientFinancialDisplay;
+var clientMedicalDisplay;
+var clientCommentsDisplay;
 
 //function to retrieve client_id data
 function getClientData(callbackFn) {
@@ -626,19 +649,82 @@ function getClientData(callbackFn) {
 //would this function instead need to be multiple functions ?  displayClientDataContact, displayClientDataPropsect, displayClientDataFinancials etc?
 function displayClientData(data) {
     console.log(data.client_id);
+    
     for (var index in data.client_id) {
         var returnData = data.client_id[index];
-        //variables separate returned data for API
+        //variables separate returned data for API  - 
         var contactData = returnData.contact;
+        var contactDataName = contactData.contactName;
+        
+        console.log(contactData);
+        var clientContactDisplay =
+        "<div id='contact_information'>" +
+                "<form action='' method='post'>" +
+                "<fieldset>" +
+                    "<legend>Contact Information</legend>" +
+                    "<label for='contact_last_name'>Last Name:  </label>" + 
+                    "<input type='text' required id='contact_last_name' disabled='true' value=' " + contactDataName.contactLastName + "'>" +
+                    "<label for='contact_first_name'>First Name:  </label>" +
+                    "<input type='text' required id='contact_first_name' disabled='true' value='" + contactDataName.contactFirstName + "'>" +
+        
+                    "<legend>Contact Address</legend>" +
+                    "<label for='contact_street'>Street:  </label>" +
+                    "<input type='text' id='contact_street' disabled='true' value='" + contactData.contactAddress.contactStreet +"'>" +
+                    "<label for='contact_city'>City:  </label>" +
+                    "<input type='text' id='contact_city' disabled='true' value='" + contactData.contactAddress.contactCity +"'>" +
+                    "<label for='contact_state'>State:  </label>" +
+                    "<input type='text' id='contact_state' disabled='true' value='" + contactData.contactAddress.contactState +"'>" +
+                    "<label for='contact_zipcode'>Zip:  </label>" +
+                    "<input type='number' id='contact_zipcode' disabled='true' value='" + contactData.contactAddress.contactZip +"'>" +
+
+                    "<legend>Contact Phone Numbers</legend>" +
+                    "<label for='contact_primary_phone'>Primary Phone:  </label>" +
+                    "<input type='number' maxlength='10' required id='contact_primary_phone' disabled='true' value='" + contactData.contactPrimaryPhone + "'>" +
+                    "<label for='contact_alt_phone'>Alternate Phone:  </label>" +
+                    "<input type='number' maxlength='10' id='contact_alt_phone' disabled='true' value='" + contactData.contactSecondaryPhone + "'>" +
+        
+                    "<legend>Contact Email</legend>" +
+                    "<label for='contact_email'>Email:  </label>" +
+                    "<input type='email' id='contact_email' disabled='true' value='" + contactData.contactEmail + "'><br>" +
+                    "<input type='button' id='edit_contact_button' class='edit_button' value='Edit Contact Information'></input>" +
+                "</fieldset>" +
+                "</form>" +
+            "</div>" +
+            "<div id='contact_addl_details'>" +
+                "<form action='' method='post'>" +
+                "<fieldset>" +
+                    "<legend>Additional Details</legend>" +
+                    "<label for='rel_to_prospect'>Relationship to Prospect</label>" +
+                    "<ul>" +
+                        "<li><input type='radio' required name='rel_to_prospect' value='Self' id=rel_self' checked>Self</> " +
+                        "<li><input type='radio' required name='rel_to_prospect' value='Spouse' id=rel_spouse'>Spouse</> " +
+                        "<li><input type='radio' required name='rel_to_prospect' value='Adult Child' id=rel_child'>Adult Child</> " +
+                        "<li><input type='radio' required name='rel_to_prospect' value='Sibling' id=rel_sibling'>Sibling</> " +
+                        "<li><input type='radio' required name='rel_to_prospect' value='Care Professional' id=rel_careProf'>Care Professional</> " +
+                        "<li><input type='radio' required name='rel_to_prospect' value='Other' id='rel_other'>Other</><br><input type='text' placeholder='Other'/>" +
+                    "</ul>" +
+                    "<label for='referral_source'>Referral Source</label>" +
+                    "<ul>" + 
+                        "<li><input type='radio' required name='referral_source' value='Self' id='ref_self' checked>Self</>" +
+                        "<li><input type='radio' required name='referral_source' value='APFM' id='ref_apfm'>A Place For Mom</>" +
+                        "<li><input type='radio' required name='referral_source' value='Word of Mouth' id='ref_wom'>Word of Mouth</><br><input type='text' placeholder='Referred by'/>" +
+                        "<li><input type='radio' required name='referral_source' value='Health Care Provider' id='ref_hcp'>Health Care Provider</><br><input type='text' placeholder='Referred by'/>" +
+                    "</ul>" +
+                    "<label for='first_contact_date'>Date of First Contact </label>" +
+                    "<input type='date' name='first_contact_date'>" +
+                "</fieldset>" +
+                "</form>" +
+            "</div>"
+            ;
         var prospectData = returnData.prospect;
         var housingData = returnData.housingAssistance;
         var financialsData = returnData.financials;
         var medicalData = returnData.medical;
-        $("#contact_block").append(newContactEntryMsg);
-        $("#prospect_block").append(newProspectEntryMsg);
-        $("#housing_block").append(newHousingEntryMsg);
-        $("#financials_block").append(newFinancialsEntryMsg);
-        $("#medical_block").append(newMedicalEntryMsg);
+        $("#contact_block").append(clientContactDisplay);
+        $("#prospect_block").append();
+        $("#housing_block").append();
+        $("#financials_block").append();
+        $("#medical_block").append();
         $("#comments_block").append();
             //"<p>" + contactData.contactName + "</p>");
         //target area to append information e.g. contacts_block    
