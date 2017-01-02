@@ -1,6 +1,7 @@
 //screen for user credentials entry
 //screen for dashboard controls
 //screens for client(new entry & existing): contact, prospect, housing, financials, medical. Comments = cumulative.
+var databaseUrl = 'https://node-unit-project-kellator.c9users.io/clients/';
 
 //new client entry data fields
 var newContactEntryMsg = 
@@ -202,7 +203,7 @@ var clientCommentsDisplay;
 //called at submit handler - displayClientList is callback function 
 function getClientList(query, type, callback) {
     var settings = {
-        url: 'https://node-unit-project-kellator.c9users.io/clients',
+        url: databaseUrl,
         dataType: 'json',
         success: function(data) {
             callback(data, type);
@@ -215,16 +216,14 @@ function getClientList(query, type, callback) {
 function displayClientList(data, type) {
     console.log('display list of names and id');
     var resultElement = '';
-    //type may be contact, prospect, financial etc
-    //display contact name, contact phone, rel to prospect; prospect name, dob, gender, housing type
     if (data) {
-        $('.client_search_results_list' ).append('<div id="search_display">Client Search List</div>');
+        $('.client_search_results_list' ).append('<div id="search_display">Client Search Results</div>'); 
         $.each(data, function(index, client) {
             console.log(index);
             console.log(client);
-            console.log(client.contact.contactName);
+            console.log(client._id);
             resultElement = 
-            '<div value="'+ index + '" class="search_result_return">' + //item url eg <a href= + item.url + target= block pages?>
+            '<div value="'+ index + '" class="search_result_return">' + '<a href= "' + databaseUrl + client._id +  '">' + 
                 '<ul>' +
                     '<li>Contact Name:  ' + client.contact.contactName.contactLastName + ', ' + client.contact.contactName.contactFirstName + '</li>' +
                     '<li>Contact Phone:  ' + client.contact.contactPrimaryPhone + '</li>' +
@@ -233,7 +232,7 @@ function displayClientList(data, type) {
                     // '<li>Prospect Gender:  ' + client.prospect.gender + '</li>' +
                     // '<li>Prospect Housing Type:  ' + client.housing.type_of_housing + '</li>' +
                 '</ul>' +
-            '</div>';
+            '</div></a>';
         });
         $('#search_display').append(resultElement);
     }

@@ -10,7 +10,7 @@
 </head>
 <body>
     <!--Login page contains input area for user to input credentials and link to request access-->
-    <div id="login_page">
+    <div id="login_page" class="hidden">
         <h1>ALCIS || Assisted Living Client Information System</h1>
         <form action="" method="post">
             <fieldset>
@@ -51,7 +51,7 @@
         <!--search display shows list of possible clients for user to select-->
         <div class="client_search_results_list"></div>
         <!--client_dash contains quick info including contactName & phone, prospectName & DOB, lead status, housing type, hospital-->
-        <div id="client_dash">
+        <div id="client_dash"  class="hidden">
             <h3 class="client_dash_head">Client Dashboard</h3>
             <div class='client_dash_info'>
                 <ul>
@@ -66,7 +66,7 @@
             </div>
         </div>
         <!--client nav bar is a horizontal navigational bar that is active for existing clients to display data and new clients to enter data-->
-        <nav id="data_nav_bar">
+        <nav id="data_nav_bar"  class="hidden">
             <div>
                 <span id="nav_contact_block">Contact Information</span>
 

@@ -42,6 +42,7 @@ if(require.main === module) {
 var Client = require('./models/clients');
 var User = require('./models/users');
 //api endpoint definition
+//retrieves list of clients from collection
 app.get('/clients', function(req, res) {
     Client.find().exec(function(err, clients) {
         if (err) {
@@ -52,9 +53,17 @@ app.get('/clients', function(req, res) {
         res.json(clients);
     });
 });
+//api endpoint to retrieve client document from collection
 app.get('/clients/:client_id', function(req, res) {
     console.log('you made it to client_id');
-    return res.sendStatus(200);
+    Client.findOne().exec(function(err, client) {
+        if (err) {
+            return res.status(500).json({
+                message: 'Internal Server Error'
+            });
+        }
+        res.json(client);
+    });
 })
 app.post('/clients/', function(req, res) {
     var create = function(ClientDataPackage) {
