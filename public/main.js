@@ -212,9 +212,36 @@ function getClientList(query, type, callback) {
     $.ajax(settings);
 }
 //displays list of search results in html - names as links to perform get of specific client information
-function displayClientList(data) {
+function displayClientList(data, type) {
     console.log('display list of names and id');
-}
+    var resultElement = '';
+    //type may be contact, prospect, financial etc
+    //display contact name, contact phone, rel to prospect; prospect name, dob, gender, housing type
+    if (data) {
+        $('.client_search_results_list' ).append('<div id="search_display">Client Search List</div>');
+        $.each(data, function(index, client) {
+            console.log(index);
+            console.log(client);
+            console.log(client.contact.contactName);
+            resultElement = 
+            '<div value="'+ index + '" class="search_result_return">' + //item url eg <a href= + item.url + target= block pages?>
+                '<ul>' +
+                    '<li>Contact Name:  ' + client.contact.contactName.contactLastName + ', ' + client.contact.contactName.contactFirstName + '</li>' +
+                    '<li>Contact Phone:  ' + client.contact.contactPrimaryPhone + '</li>' +
+                    // '<li>Prospect Name:  ' + client.prospect.prospectLastName + ', ' + client.prospect.prospectFirstName + '</li> ' +
+                    // '<li>Prospect DOB:  ' + client.prospect.date_of_birth + '</li>' +
+                    // '<li>Prospect Gender:  ' + client.prospect.gender + '</li>' +
+                    // '<li>Prospect Housing Type:  ' + client.housing.type_of_housing + '</li>' +
+                '</ul>' +
+            '</div>';
+        });
+        $('#search_display').append(resultElement);
+    }
+    else {
+            resultElement += '<p>Sorry.  There are no results for your search.  Try again with a different name.</p.';
+        }
+    }
+
 
 //function to retrieve client_id data
 function getClientData(callbackFn) {
@@ -235,7 +262,7 @@ function displayClientData(data) {
             var housingData = returnData.housingAssistance;
             var financialsData = returnData.financials;
             var medicalData = returnData.medical;
-            $("#contact_block").append(clientContactDisplay);
+            $("#contact_block").append();
             $("#prospect_block").append();
             $("#housing_block").append();
             $("#financials_block").append();
@@ -290,7 +317,7 @@ function submitClientSearchHandler() {
         event.preventDefault();
         console.log('submit search button pushed');
         var query = $('#last_name').val() + ', ' + $('#first_name').val();
-        var type = "contactName";
+        var type;
         console.log(query);
         getClientList(query, type, displayClientList);
     });
