@@ -40,12 +40,79 @@ if(require.main === module) {
 };
 //middlewares
 var Client = require('./models/clients');
-
-app.get('/', function(request, response) {
-    return response.sendStatus(200);
+var User = require('./models/users');
+//api endpoint definition
+app.get('/clients', function(req, res) {
+    Client.find().exec(function(err, clients) {
+        if (err) {
+            return res.status(500).json({
+            message: 'Internal Server Error'
+            });
+        }
+        res.json(clients);
+    });
 });
+app.get('/clients/:client_id', function(req, res) {
+    console.log('you made it to client_id');
+    return res.sendStatus(200);
+})
+app.post('/clients/', function(req, res) {
+    var create = function(ClientDataPackage) {
+        console.log(ClientDataPackage);
+        var client = ClientDataPackage
+                //constructor function - outside of this code - whereever calling create from - new client
+                //specific data like id? contact name? contact number? etc
+        ;
+        Client.create(client, function(err, client) {
+            if (err || !client) {
+                console.error("could not create client"); //example has , name
+                mongoose.disconnect();
+                return res.status(500).json({message: 'Internal Server Error'});
+            }
+            console.log("created client"); //example has snippet.name
+            res.status(201).json(client);
+            mongoose.disconnect();
+        });
+    };
+});
+app.use('*', function(req, res) {
+    res.status(404).json({
+        message: 'Not Found'
+    });
+});
+var sampleData =         {
+            "contact": {
+                "contactName": {
+                    "contactLastName": "Last Name",
+                    "contactFirstName": "First Name"
+                },
+                "contactPrimaryPhone": "5085885334", //10-digit numbers only
+                "contactSecondaryPhone": "5085885334",
+                "contactAddress": {
+                    "contactStreet": "Street Address",
+                    "contactCity": "City",
+                    "contactState": "State",
+                    "contactZip": "02301"
+                },
+                "contactEmail": "contactemail@gmail.com",
+                "relationToProspect": "relationship to prospect", //radio with adult child, spouse, friend, guardian, etc
+                "referralSource": "Referral Source",
+                "referredBy": "Referred By",
+                "dateOfFirstContact": "2017-01-01" //use date function
+            },
 
+    }
+    
+// Client.create(sampleData, function(err, client) {
+//             if (err || !client) {
+//                 console.error("could not create client"); //example has , name
+//                 mongoose.disconnect();
 
+//             }
+//             console.log("created client"); //example has snippet.name
+
+//             mongoose.disconnect();
+//         });
 exports.app = app;
 exports.runServer = runServer;
 

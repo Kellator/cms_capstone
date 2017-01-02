@@ -1,15 +1,25 @@
 var mongoose = require('mongoose');
-mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/');
+// mongoose.Promise = global.Promise;
+// mongoose.connect('mongodb://localhost/');
 
-mongoose.connection.on('error', function(err) {
-    console.error('Could not connect.  Error:', err);
+// mongoose.connection.on('error', function(err) {
+//     console.error('Could not connect.  Error:', err);
+// });
+
+
+var mongoose = require('mongoose');
+var UserSchema = new mongoose.Schema({
+    username: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    password: {
+        type: String,
+        required: true
+    }
 });
 
-mongoose.connection.once('open', function() {
-    var userSchema = mongoose.Schema({
-        userName: String, //set up as first initial +last name
-        passWord: String 
-        });
-    var User = mongoose.model('User', userSchema);
-});
+var User = mongoose.model('User', UserSchema);
+
+module.exports = User;

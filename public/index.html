@@ -37,6 +37,8 @@
                     <input type="text" id="last_name" placeholder="Last Name"><span>, </span>
                     <label id="first_name"></label>
                     <input type="text" id="first_name" placeholder="First Name">
+                    <label id="submit_search_button"></label>
+                    <button name="submit_search_button" id="submit_search">Submit Client Search</button>
                     <label id="reset_search_button"></label>
                     <button name="reset_search_button" id="reset_search">Reset Client Search</button>
                 </fieldset>
@@ -46,6 +48,8 @@
                 <button name="new_client_button" id="new_client_button" value="Enter New Client">Enter New Client</button>
             </form>
         </div>
+        <!--search display shows list of possible clients for user to select-->
+        <div id="search_display"></div>
         <!--client_dash contains quick info including contactName & phone, prospectName & DOB, lead status, housing type, hospital-->
         <div id="client_dash">
             <h3 class="client_dash_head">Client Dashboard</h3>
@@ -63,26 +67,20 @@
         </div>
         <!--client nav bar is a horizontal navigational bar that is active for existing clients to display data and new clients to enter data-->
         <nav id="data_nav_bar">
-            <ul>
-                <li>
-                    <a href="/contact_block">Contact Information</a>
-                </li>
-                <li>
-                    <a href="/prospect_block">Prospect Information</a>
-                </li>
-                <li>
-                    <a href="/housing_block">Housing & Assistance</a>
-                </li>
-                <li>
-                    <a href="/financials_block">Financials</a>
-                </li>
-                <li>
-                    <a href="/medical_block">Medical Information</a>
-                </li>
+            <div>
+                <span id="nav_contact_block">Contact Information</span>
+
+                <span id="nav_prospect_block">Prospect Information</span>
+
+                <span id="nav_housing_block">Housing & Assistance</span>
+
+                <span id="nav_financials_block">Financials</span>
+
+                <span id="nav_medical_block">Medical Information</span>
                 <!--<li>
                     <a href="/comments_block">Comments</a>
                 </li>-->
-            </ul>
+            </div>
         </nav>
         <!--data block displays information sections selected in nav bar for existing clients and through the data entry process for new clients-->
         <div id="data_block">
