@@ -14,3 +14,6 @@ fieldset {
 ul {
     list-style-type: none;
 }
+.search_link {
+    color: #0f475b;
+}

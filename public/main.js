@@ -133,6 +133,7 @@ ClientDataPackage.prototype.add_first_contact = function(date) {
 
 var contactDisplay = $(clientContactDisplay); //jquery object that has the HTML in it. contactDisplay.find('#contactLastName').val(data that you want to put in it)
 //this variable can be used to collect and display
+console.log(contactDisplay);
 var clientContactDisplay =
             "<div id='contact_information'>" +
                     "<form action='' method='post'>" +
@@ -202,9 +203,11 @@ var clientCommentsDisplay;
 //call to endpoint and render data in html - when you click on name then to clientdata function - use client_id to retrieve data\
 //called at submit handler - displayClientList is callback function 
 function getClientList(query, type, callback) {
+    console.log(query);
     var settings = {
         url: 'https://node-unit-project-kellator.c9users.io/clients/',
         dataType: 'json',
+        q: query, 
         success: function(data) {
             callback(data, type);
             console.log(data);
@@ -223,9 +226,9 @@ function displayClientList(data, type) {
             console.log(client);
             console.log(client._id);
             resultElement = 
-            '<div value="'+ index + '" class="search_result_return">' + '<a href= "' + databaseUrl + client._id +  '">' + 
+            '<div value="'+ index + '" class="search_result_return">' +  
                 '<ul>' +
-                    '<li>Contact Name:  ' + client.contact.contactName.contactLastName + ', ' + client.contact.contactName.contactFirstName + '</li>' +
+                    '<li><span class="search_link">Contact Name:  </sapan>' + client.contact.contactName.contactLastName + ', ' + client.contact.contactName.contactFirstName + '</li>' +
                     '<li>Contact Phone:  ' + client.contact.contactPrimaryPhone + '</li>' +
                     // '<li>Prospect Name:  ' + client.prospect.prospectLastName + ', ' + client.prospect.prospectFirstName + '</li> ' +
                     // '<li>Prospect DOB:  ' + client.prospect.date_of_birth + '</li>' +
@@ -262,7 +265,7 @@ function displayClientData(data) {
             var housingData = returnData.housingAssistance;
             var financialsData = returnData.financials;
             var medicalData = returnData.medical;
-            $("#contact_block").append();
+            $("#contact_block").append(clientContactDisplay);
             $("#prospect_block").append();
             $("#housing_block").append();
             $("#financials_block").append();
@@ -302,25 +305,39 @@ function editContactHandler() {
         console.log('edit contact button pushed');
     });
 }
-//resets client search fields
+//resets client search fields and removes any search list results
 function resetClientSearchHandler() {
     $('body').on('click', '#reset_search', function(event) {
         event.preventDefault();
         console.log('reset search button pushed');
         $('#last_name').val('');
         $('#first_name').val('');
+        $('.client_search_results_list' ).empty();
     });
 }
 //submits client search data
 function submitClientSearchHandler() {
-    $('body').on('click', '#submit_search', function(event) {
+    $('body').on('submit', '.client_search_form', function(event) {
         event.preventDefault();
         console.log('submit search button pushed');
-        var query;
+        var lastName = $(this).find('#last_name').val();
+        var firstName = $(this).find('#first_name').val();
+        var query = lastName + ', ' + firstName;
         var type;
         console.log(query);
         getClientList(query, type, displayClientList);
     });
+}
+//listener for call for specific client document
+function clientListSelectHandler() {
+    $('body').on('click', '.search_link', function(event) {
+        event.preventDefault();
+        console.log('search link clicked');
+        getAndDisplayClientData();
+        $('#contact_block').toggleClass('hidden');
+        $('#client_dash').toggleClass('hidden');
+        $('.client_search_results_list').toggleClass('hidden');
+    })
 }
 $(function() {
     getAndDisplayClientData();
@@ -328,6 +345,7 @@ $(function() {
     editContactHandler();
     resetClientSearchHandler();
     submitClientSearchHandler();
+    clientListSelectHandler();
 });
 
 

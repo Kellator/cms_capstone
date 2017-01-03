@@ -30,21 +30,21 @@
         <h1 class="dash_logo">ALCIS</h1>
         <!--search entry contains the main name search input fields and the button to select to enter a new client-->
         <div id="search_entry">
-            <form action="" method="post">
+            <form class="client_search_form" action="" method="post">
                 <fieldset>
                     <legend>Client Search</legend>
-                    <label id="last_name"></label>
+                    <label for="last_name"></label>
                     <input type="text" id="last_name" placeholder="Last Name"><span>, </span>
-                    <label id="first_name"></label>
+                    <label for="first_name"></label>
                     <input type="text" id="first_name" placeholder="First Name">
-                    <label id="submit_search_button"></label>
+                    <label for="submit_search_button"></label>
                     <button name="submit_search_button" id="submit_search">Submit Client Search</button>
-                    <label id="reset_search_button"></label>
+                    <label for="reset_search_button"></label>
                     <button name="reset_search_button" id="reset_search">Reset Client Search</button>
                 </fieldset>
             </form>
             <form action="" method="post">
-                <label id="new_client_button"></label>
+                <label for="new_client_button"></label>
                 <button name="new_client_button" id="new_client_button" value="Enter New Client">Enter New Client</button>
             </form>
         </div>
@@ -84,7 +84,7 @@
         </nav>
         <!--data block displays information sections selected in nav bar for existing clients and through the data entry process for new clients-->
         <div id="data_block">
-            <div id="contact_block" class=''></div>
+            <div id="contact_block" class='hidden'></div>
             <div id="prospect_block" class=''></div>
             <div id="housing_block" class=''></div>
             <div id="financials_block" class=''></div>
