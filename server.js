@@ -44,6 +44,7 @@ var User = require('./models/users');
 //api endpoint definition
 //retrieves list of clients from collection
 app.get('/clients', function(req, res) {
+    console.log(req.params);
     Client.find().exec(function(err, clients) {
         if (err) {
             return res.status(500).json({
@@ -56,13 +57,15 @@ app.get('/clients', function(req, res) {
 //api endpoint to retrieve client document from collection
 app.get('/clients/:client_id', function(req, res) {
     console.log('you made it to client_id');
-    Client.findOne().exec(function(err, client) {
+    var client_id = req.params.client_id;
+    console.log(client_id);
+    Client.findById(client_id, function(err, client) {
         if (err) {
             return res.status(500).json({
                 message: 'Internal Server Error'
             });
         }
-        res.json(client);
+        res.status(201).json(client);
     });
 })
 app.post('/clients/', function(req, res) {
@@ -111,8 +114,30 @@ var sampleData =         {
             },
 
     }
+var sampleData_2 =         {
+        "contact": {
+            "contactName": {
+                "contactLastName": "Standish",
+                "contactFirstName": "Myles"
+            },
+            "contactPrimaryPhone": "5088662526", //10-digit numbers only
+            "contactSecondaryPhone": "0",
+            "contactAddress": {
+                "contactStreet": "194 Cranberry Rd.",
+                "contactCity": "Carver",
+                "contactState": "MA",
+                "contactZip": "02330"
+            },
+            "contactEmail": "MStandish@gmail.com",
+            "relationToProspect": "friend", //radio with adult child, spouse, friend, guardian, etc
+            "referralSource": "friend",
+            "referredBy": "John Smith",
+            "dateOfFirstContact": "2017-01-01" //use date function
+        },
+
+}
     
-// Client.create(sampleData, function(err, client) {
+// Client.create(sampleData_2, function(err, client) {
 //             if (err || !client) {
 //                 console.error("could not create client"); //example has , name
 //                 mongoose.disconnect();

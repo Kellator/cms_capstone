@@ -203,7 +203,7 @@ var clientCommentsDisplay;
 //called at submit handler - displayClientList is callback function 
 function getClientList(query, type, callback) {
     var settings = {
-        url: databaseUrl,
+        url: 'https://node-unit-project-kellator.c9users.io/clients/',
         dataType: 'json',
         success: function(data) {
             callback(data, type);
@@ -233,8 +233,9 @@ function displayClientList(data, type) {
                     // '<li>Prospect Housing Type:  ' + client.housing.type_of_housing + '</li>' +
                 '</ul>' +
             '</div></a>';
-        });
+        
         $('#search_display').append(resultElement);
+    });
     }
     else {
             resultElement += '<p>Sorry.  There are no results for your search.  Try again with a different name.</p.';
@@ -256,7 +257,7 @@ function displayClientData(data) {
             //variables separate returned data for API  - 
             var contactData = returnData.contact;
             // var contactDataName = contactData.contactName;
-            console.log(contactData);
+            //console.log(contactData);
             var prospectData = returnData.prospect;
             var housingData = returnData.housingAssistance;
             var financialsData = returnData.financials;
@@ -315,7 +316,7 @@ function submitClientSearchHandler() {
     $('body').on('click', '#submit_search', function(event) {
         event.preventDefault();
         console.log('submit search button pushed');
-        var query = $('#last_name').val() + ', ' + $('#first_name').val();
+        var query;
         var type;
         console.log(query);
         getClientList(query, type, displayClientList);
