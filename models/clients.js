@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 
 
     var clientSchema = new mongoose.Schema({
+        deleted: Boolean,
         contact: {
             contactName: {
                 contactFirstName: String,
@@ -13,7 +14,7 @@ var mongoose = require('mongoose');
                 contactStreet: String,
                 contactCity: String,
                 contactState: String,
-                contactZip: Number
+                contactZip: String
             },
             contactEmail: String,
             relToProspect: String,

@@ -1,11 +1,11 @@
 //screen for user credentials entry
 //screen for dashboard controls
 //screens for client(new entry & existing): contact, prospect, housing, financials, medical. Comments = cumulative.
-var databaseUrl = 'https://node-unit-project-kellator.c9users.io/clients/';
 
+var databaseUrl = 'https://node-unit-project-kellator.c9users.io/clients/';
 //new client entry data fields
 var newContactEntryMsg = 
-    "<div id='contact_information'>" +
+    "<div data_type='contact' id='contact_information'>" +
         "<form action='' method='post'>" +
         "<fieldset>" +
             "<legend>Contact Information</legend>" +
@@ -13,8 +13,6 @@ var newContactEntryMsg =
             "<input type='text' required id='contact_last_name' placeholder='Johnson'>" +
             "<label for='contact_first_name'>First Name:  </label>" +
             "<input type='text' required id='contact_first_name' placeholder='Milly'>" +
-            "<label class='enter_button' for='enter_contact_name_button'></label>" +
-            "<button name='enter_contact_name_button' id='enter_contact_name'>Enter</button>" +
 
             "<legend>Contact Address</legend>" +
             "<label for='contact_street'>Street:  </label>" +
@@ -24,23 +22,19 @@ var newContactEntryMsg =
             "<label for='contact_state'>State:  </label>" +
             "<input type='text' id='contact_state' placeholder='MA'>" +
             "<label for='contact_zipcode'>Zip:  </label>" +
-            "<input type='number' id='contact_zipcode' placeholder='02301'>" +
-            "<label class='enter_button' for='enter_contact_address_button'></label>" +
-            "<button name='enter_contact_address_button' id='enter_contact_address'>Enter</button>" +
+            "<input type='number' id='contact_zipcode' pattern='[0-9]{5}' placeholder='02301'>" +
 
             "<legend>Contact Phone Numbers</legend>" +
             "<label for='contact_primary_phone'>Primary Phone:  </label>" +
-            "<input type='number' maxlength='10' required id='contact_primary_phone' placeholder='508-588-5555'>" +
+            "<input type='number' maxlength='10' required id='contact_primary_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='5085885555'>" +
             "<label for='contact_alt_phone'>Alternate Phone:  </label>" +
-            "<input type='number' maxlength='10' id='contact_alt_phone' placeholder='508-588-5858'>" +
-            "<label class='enter_button' for='enter_contact_phone_button'></label>" +
-            "<button name='enter_contact_phone_button' id='enter_contact_phone'>Enter</button>" +
+            "<input type='number' maxlength='10' id='contact_alt_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='5085885858'>" +
 
             "<legend>Contact Email</legend>" +
             "<label for='contact_email'>Email:  </label>" +
             "<input type='email' id='contact_email' placeholder='name@email.com'>" +
-            "<label class='enter_button' for='enter_contact_email_button'></label>" +
-            "<button name='enter_contact_email_button' id='enter_contact_email'>Enter</button>" +
+            "<label for='submit_data_button'></label>" +
+            "<input type='submit' name='submit_data_button' id='submit_data_button'></input>" +
         "</fieldset>" +
         "</form>" +
     "</div>" +
@@ -68,40 +62,13 @@ var newContactEntryMsg =
             "<input type='date' name='first_contact_date'>" +
         "</fieldset>" +
         "</form>" +
+
     "</div>"
     ;
-
-
-//what api return data will look like: /api/client_id 
-var Mock_Client_Data = {
-    "client_id": [ 
-        {
-            "contact": {
-                "contactName": {
-                    "contactLastName": "Last Name",
-                    "contactFirstName": "First Name"
-                },
-                "contactPrimaryPhone": "5085885334", //10-digit numbers only
-                "contactSecondaryPhone": "5085885334",
-                "contactAddress": {
-                    "contactStreet": "Street Address",
-                    "contactCity": "City",
-                    "contactState": "State",
-                    "contactZip": "02301"
-                },
-                "contactEmail": "contactemail@gmail.com",
-                "relationToProspect": "relationship to prospect", //radio with adult child, spouse, friend, guardian, etc
-                "referralSource": "Referral Source",
-                "referredBy": "Referred By",
-                "dateOfFirstContact": "2017-01-01" //use date function
-            },
-
-    }]
-};
-
 //constructor function to create client data package
 function ClientDataPackage(_id) {
     this.client_id = _id;
+    this.deleted = false;
 }
 ClientDataPackage.prototype.add_contact_name = function(lastName, firstName) { 
     this.contactName.contactLastName = lastName;
@@ -130,84 +97,76 @@ ClientDataPackage.prototype.add_contact_referral = function(source, referredBy) 
 ClientDataPackage.prototype.add_first_contact = function(date) {
     this.dateOfFirstContact = date;
 };
-
-var contactDisplay = $(clientContactDisplay); //jquery object that has the HTML in it. contactDisplay.find('#contactLastName').val(data that you want to put in it)
 //this variable can be used to collect and display
-console.log(contactDisplay);
 var clientContactDisplay =
-            "<div id='contact_information'>" +
-                    "<form action='' method='post'>" +
-                    "<fieldset>" +
-                        "<legend>Contact Information</legend>" +
-                        "<label for='contact_last_name'>Last Name:  </label>" + 
-                        "<input type='text' required id='contact_last_name' disabled='true' value=''>" +
-                        "<label for='contact_first_name'>First Name:  </label>" +
-                        "<input type='text' required id='contact_first_name' disabled='true' value=''>" +
-            
-                        "<legend>Contact Address</legend>" +
-                        "<label for='contact_street'>Street:  </label>" +
-                        "<input type='text' id='contact_street' disabled='true' value=''>" +
-                        "<label for='contact_city'>City:  </label>" +
-                        "<input type='text' id='contact_city' disabled='true' value=''>" +
-                        "<label for='contact_state'>State:  </label>" +
-                        "<input type='text' id='contact_state' disabled='true' value=''>" +
-                        "<label for='contact_zipcode'>Zip:  </label>" +
-                        "<input type='number' id='contact_zipcode' disabled='true' value=''>" +
+    "<div id='contact_information'>" +
+            "<form action='' method='post'>" +
+            "<fieldset>" +
+                "<legend>Contact Information</legend>" +
+                "<label for='contact_last_name'>Last Name:  </label>" + 
+                "<input type='text' required id='contact_last_name' disabled='true' value=''>" +
+                "<label for='contact_first_name'>First Name:  </label>" +
+                "<input type='text' required id='contact_first_name' disabled='true' value=''>" +
     
-                        "<legend>Contact Phone Numbers</legend>" +
-                        "<label for='contact_primary_phone'>Primary Phone:  </label>" +
-                        "<input type='number' maxlength='10' required id='contact_primary_phone' disabled='true' value=''>" +
-                        "<label for='contact_alt_phone'>Alternate Phone:  </label>" +
-                        "<input type='number' maxlength='10' id='contact_alt_phone' disabled='true' value=''>" +
-            
-                        "<legend>Contact Email</legend>" +
-                        "<label for='contact_email'>Email:  </label>" +
-                        "<input type='email' id='contact_email' disabled='true' value=''><br>" +
-                        "<input type='button' id='edit_contact_button' class='edit_button' value='Edit Contact Information'></input>" +
-                    "</fieldset>" +
-                    "</form>" +
-                "</div>" +
-                "<div id='contact_addl_details'>" +
-                    "<form action='' method='post'>" +
-                    "<fieldset>" +
-                        "<legend>Additional Details</legend>" +
-                        "<label for='rel_to_prospect'>Relationship to Prospect</label>" +
-                        "<ul>" +
-                            "<li><input type='radio' required name='rel_to_prospect' value='Self' id=rel_self' checked>Self</> " +
-                            "<li><input type='radio' required name='rel_to_prospect' value='Spouse' id=rel_spouse'>Spouse</> " +
-                            "<li><input type='radio' required name='rel_to_prospect' value='Adult Child' id=rel_child'>Adult Child</> " +
-                            "<li><input type='radio' required name='rel_to_prospect' value='Sibling' id=rel_sibling'>Sibling</> " +
-                            "<li><input type='radio' required name='rel_to_prospect' value='Care Professional' id=rel_careProf'>Care Professional</> " +
-                            "<li><input type='radio' required name='rel_to_prospect' value='Other' id='rel_other'>Other</><br><input type='text' placeholder='Other'/>" +
-                        "</ul>" +
-                        "<label for='referral_source'>Referral Source</label>" +
-                        "<ul>" + 
-                            "<li><input type='radio' required name='referral_source' value='Self' id='ref_self' checked>Self</>" +
-                            "<li><input type='radio' required name='referral_source' value='APFM' id='ref_apfm'>A Place For Mom</>" +
-                            "<li><input type='radio' required name='referral_source' value='Word of Mouth' id='ref_wom'>Word of Mouth</><br><input type='text' placeholder='Referred by'/>" +
-                            "<li><input type='radio' required name='referral_source' value='Health Care Provider' id='ref_hcp'>Health Care Provider</><br><input type='text' placeholder='Referred by'/>" +
-                        "</ul>" +
-                        "<label for='first_contact_date'>Date of First Contact </label>" +
-                        "<input type='date' name='first_contact_date' disabled='true' value=''>" +
-                    "</fieldset>" +
-                    "</form>" +
-                "</div>"
-                ;
+                "<legend>Contact Address</legend>" +
+                "<label for='contact_street'>Street:  </label>" +
+                "<input type='text' id='contact_street' disabled='true' value=''>" +
+                "<label for='contact_city'>City:  </label>" +
+                "<input type='text' id='contact_city' disabled='true' value=''>" +
+                "<label for='contact_state'>State:  </label>" +
+                "<input type='text' id='contact_state' disabled='true' value=''>" +
+                "<label for='contact_zipcode'>Zip:  </label>" +
+                "<input type='text' id='contact_zipcode' pattern='[0-9]{5}' disabled='true' value=''>" +
+
+                "<legend>Contact Phone Numbers</legend>" +
+                "<label for='contact_primary_phone'>Primary Phone:  </label>" +
+                "<input type='number' maxlength='10' required id='contact_primary_phone' disabled='true' value=''>" +
+                "<label for='contact_alt_phone'>Alternate Phone:  </label>" +
+                "<input type='number' maxlength='10' id='contact_alt_phone' disabled='true' value=''>" +
+    
+                "<legend>Contact Email</legend>" +
+                "<label for='contact_email'>Email:  </label>" +
+                "<input type='email' id='contact_email' disabled='true' value=''><br>" +
+                "<input type='button' id='edit_contact_button' class='edit_button' value='Edit Contact Information'></input>" +
+            "</fieldset>" +
+            "</form>" +
+        "</div>" +
+        "<div id='contact_addl_details'>" +
+            "<form action='' method='post'>" +
+            "<fieldset>" +
+                "<legend>Additional Details</legend>" +
+                "<label for='rel_to_prospect'>Relationship to Prospect</label>" +
+                "<ul>" +
+                    "<li><input type='radio' required name='rel_to_prospect' value='Self' id=rel_self' checked>Self</> " +
+                    "<li><input type='radio' required name='rel_to_prospect' value='Spouse' id=rel_spouse'>Spouse</> " +
+                    "<li><input type='radio' required name='rel_to_prospect' value='Adult Child' id=rel_child'>Adult Child</> " +
+                    "<li><input type='radio' required name='rel_to_prospect' value='Sibling' id=rel_sibling'>Sibling</> " +
+                    "<li><input type='radio' required name='rel_to_prospect' value='Care Professional' id=rel_careProf'>Care Professional</> " +
+                    "<li><input type='radio' required name='rel_to_prospect' value='Other' id='rel_other'>Other</><br><input type='text' placeholder='Other'/>" +
+                "</ul>" +
+                "<label for='referral_source'>Referral Source</label>" +
+                "<ul>" + 
+                    "<li><input type='radio' required name='referral_source' value='Self' id='ref_self' checked>Self</>" +
+                    "<li><input type='radio' required name='referral_source' value='APFM' id='ref_apfm'>A Place For Mom</>" +
+                    "<li><input type='radio' required name='referral_source' value='Word of Mouth' id='ref_wom'>Word of Mouth</><br><input type='text' placeholder='Referred by'/>" +
+                    "<li><input type='radio' required name='referral_source' value='Health Care Provider' id='ref_hcp'>Health Care Provider</><br><input type='text' placeholder='Referred by'/>" +
+                "</ul>" +
+                "<label for='first_contact_date'>Date of First Contact </label>" +
+                "<input type='date' name='first_contact_date' disabled='true' value=''>" +
+            "</fieldset>" +
+            "</form>" +
+        "</div>";
 var clientProspectDisplay;
 var clientHousingDisplay;
 var clientFinancialDisplay;
 var clientMedicalDisplay;
 var clientCommentsDisplay;
-
-//functions to search for and display list of names (hook up to get clients endpoint)
-//call to endpoint and render data in html - when you click on name then to clientdata function - use client_id to retrieve data\
-//called at submit handler - displayClientList is callback function 
-function getClientList(query, type, callback) {
-    console.log(query);
+//called at new client handler
+function createNewClient(type, callback) {
     var settings = {
         url: 'https://node-unit-project-kellator.c9users.io/clients/',
         dataType: 'json',
-        q: query, 
+        method: 'POST',
         success: function(data) {
             callback(data, type);
             console.log(data);
@@ -215,20 +174,74 @@ function getClientList(query, type, callback) {
     };
     $.ajax(settings);
 }
+//called at submit handler - displayClientList is callback function 
+function getClientList(searchName, type, callback) {
+    var settings = {
+        url: 'https://node-unit-project-kellator.c9users.io/clients/',
+        dataType: 'json',
+        data: searchName,
+        method: 'GET', 
+        success: function(data) {
+            callback(data, type);
+            console.log(data);
+        }
+    };
+    $.ajax(settings);
+}
+//ajax call for individual client information
+function getClientInformation(client_id, callback) {
+    var settings = {
+        url: 'https://node-unit-project-kellator.c9users.io/clients/' + client_id,
+        dataType: 'json',
+        method: 'GET',
+        success: function(data) {
+            callback(data);
+            console.log(data);
+        }
+    };
+    $.ajax(settings);
+}
+function updateClientInformation(client_id, callback) {
+    //get element's new value and save to document
+}
+function deleteClientData(client_id, callback) {
+    console.log(client_id);
+    var settings = {
+        url: 'https://node-unit-project-kellator.c9users.io/clients/' + client_id,
+        dataType: 'json',
+        method: 'DELETE',
+        success: function(data) {
+            callback(data);
+            console.log(data);
+        }
+    };
+    $.ajax(settings);
+}
+function alertForDeletedClient() {
+    alert("You have deleted the data for client");
+}
+function alertForCreatedClient() {
+    alert("you have created a new client");
+}
+function enterNewClientData() {
+    $("#contact_block").html(newContactEntryMsg);
+    $("#prospect_block").html();
+    $("#housing_block").html();
+    $("#financials_block").html();
+    $("#medical_block").html();
+    $("#comments_block").html();
+}
 //displays list of search results in html - names as links to perform get of specific client information
 function displayClientList(data, type) {
-    console.log('display list of names and id');
+    console.log('display client list');
     var resultElement = '';
     if (data) {
-        $('.client_search_results_list' ).append('<div id="search_display">Client Search Results</div>'); 
+        $('.client_search_results_list' ).html('<div id="search_display">Client Search Results</div>'); 
         $.each(data, function(index, client) {
-            console.log(index);
-            console.log(client);
-            console.log(client._id);
-            resultElement = 
-            '<div value="'+ index + '" class="search_result_return">' +  
+            resultElement += 
+            '<div client_id="'+ client._id + '" value="'+ index + '" class="search_result_return">' +  
                 '<ul>' +
-                    '<li><span class="search_link">Contact Name:  </sapan>' + client.contact.contactName.contactLastName + ', ' + client.contact.contactName.contactFirstName + '</li>' +
+                    '<li><span  class="search_link">Contact Name:  </span>' + client.contact.contactName.contactLastName + ', ' + client.contact.contactName.contactFirstName + '</li>' +
                     '<li>Contact Phone:  ' + client.contact.contactPrimaryPhone + '</li>' +
                     // '<li>Prospect Name:  ' + client.prospect.prospectLastName + ', ' + client.prospect.prospectFirstName + '</li> ' +
                     // '<li>Prospect DOB:  ' + client.prospect.date_of_birth + '</li>' +
@@ -236,72 +249,104 @@ function displayClientList(data, type) {
                     // '<li>Prospect Housing Type:  ' + client.housing.type_of_housing + '</li>' +
                 '</ul>' +
             '</div></a>';
-        
-        $('#search_display').append(resultElement);
+        $('#search_display').html(resultElement);
     });
     }
     else {
             resultElement += '<p>Sorry.  There are no results for your search.  Try again with a different name.</p.';
         }
     }
-
-
 //function to retrieve client_id data
-function getClientData(callbackFn) {
-    setTimeout(function(){ callbackFn(Mock_Client_Data)}, 100);
+function getClientData(callbackFn, client_id) {
+    getClientInformation(client_id, callbackFn);
 }
-
-//would this function instead need to be multiple functions ?  displayClientDataContact, displayClientDataPropsect, displayClientDataFinancials etc?
+//uses jQuery objects for data blocks to display returned client data
 function displayClientData(data) {
-    console.log(data.client_id);
+    console.log(data);
     if (data) {
-        for (var index in data.client_id) {
-            var returnData = data.client_id[index];
-            //variables separate returned data for API  - 
-            var contactData = returnData.contact;
-            // var contactDataName = contactData.contactName;
-            //console.log(contactData);
-            var prospectData = returnData.prospect;
-            var housingData = returnData.housingAssistance;
-            var financialsData = returnData.financials;
-            var medicalData = returnData.medical;
-            $("#contact_block").append(clientContactDisplay);
-            $("#prospect_block").append();
-            $("#housing_block").append();
-            $("#financials_block").append();
-            $("#medical_block").append();
-            $("#comments_block").append();
-        } 
-    }
-        else {
-            function enterNewClientData() {
-            //variables separate returned data for API
-            $("#contact_block").append(newContactEntryMsg);
-            $("#prospect_block").append(newProspectEntryMsg);
-            $("#housing_block").append(newHousingEntryMsg);
-            $("#financials_block").append(newFinancialsEntryMsg);
-            $("#medical_block").append(newMedicalEntryMsg);
-            $("#comments_block").append();
-        }
+        console.log(data);
+        console.log(data._id);
+        //information display variables - contain HTML
+        var clientDashDisplay =
+            "<div class='client_dash_display'>" +
+                "<h3 class='client_dash_head'>Client Dashboard</h3>" +
+                "<div class='client_dash_info'>" +
+                    "<ul>" +
+                        // "<li>Prospect Name:  </li>" +
+                        // "<li>DOB:  </li>" +
+                        "<li id='dash_contact_name'>Contact Name:  " + data.contact.contactName.contactFirstName + " " + data.contact.contactName.contactLastName + "</li>" +
+                        "<li>Contact Primary Phone:  " + data.contact.contactPrimaryPhone + "</li>" +
+                        // "<li id='dash_lead_status'>Lead Status:  </li>" +
+                        // "<li id='dash_hospital'>Hospital:  </li>" + 
+                        // "<li id='dash_dnr_status'>DNR Status:  </li>" +
+                    "</ul>" +
+                "</div>" +
+                "<form action='' method='post'>" +
+                    "<label for='delete_client_button'></label>" +
+                    "<button client_id='" + data._id + "' name='delete_client' id='client_delete_button' value='Delete All Client Information'>Delete Client</button>" +
+                "</form>" +
+            "</div>";
+        var contactDisplay = $(clientContactDisplay);
+        contactDisplay.find('#contact_first_name').val(data.contact.contactName.contactFirstName);
+        contactDisplay.find('#contact_last_name').val(data.contact.contactName.contactLastName);
+        contactDisplay.find('#contact_street').val(data.contact.contactAddress.contactStreet);
+        contactDisplay.find('#contact_city').val(data.contact.contactAddress.contactCity);
+        contactDisplay.find('#contact_state').val(data.contact.contactAddress.contactState);
+        contactDisplay.find('#contact_zipcode').val(data.contact.contactAddress.contactZip);
+        contactDisplay.find('#contact_primary_phone').val(data.contact.contactPrimaryPhone);
+        contactDisplay.find('#contact_alt_phone').val(data.contact.contactSecondaryPhone);
+        contactDisplay.find('#contact_email').val(data.contact.contactEmail);
+        contactDisplay.find('#rel_to_prospect').val(data.contact.relationToProspect);
+        contactDisplay.find('#first_contact_date').val(data.contact.dateOfFirstContact);
+        var prospectDisplay = $(clientProspectDisplay);
+        $("#contact_block").html(contactDisplay);
+        $("#prospect_block").html();
+        $("#housing_block").html();
+        $("#financials_block").html();
+        $("#medical_block").html();
+        $("#comments_block").html();
+        $("#client_dash").html(clientDashDisplay);
     }
 }
 //retrieves and displays client data
-function getAndDisplayClientData() {
-    getClientData(displayClientData);
+function getAndDisplayClientData(client_id) {
+    getClientData(displayClientData, client_id);
 }
-
 //button handlers
 //new client entry button
 function newClientHandler() {
     $('body').on('click', '#new_client_button', function(event) {
         event.preventDefault();
+        enterNewClientData();
+        $('#contact_block').removeClass('hidden');
         console.log('new client button pushed');
+    });
+}
+function dataSubmitHandler() {
+    $('body').on('submit', '#submit_data', function(event) {
+        event.PreventDefault();
+        var type;
+        createNewClient(type, ClientDataPackage);
+        console.log('new client created');
+        console.log('new data submit button clicked');
+    });
+}
+function deleteClientHandler(client_id) {
+    $('body').on('click', '#client_delete_button', function(event) {
+        event.preventDefault();
+        console.log(client_id);
+        console.log('delete client pushed');
+        alert("Are you sure you want to delete all client information?");
+        deleteClientData($(this).attr('client_id'), alertForDeletedClient);
+        // alert needs to give y/n options.  if y == true, delete information, otherwise not
     });
 }
 //allows user to enter previously entered contact information
 function editContactHandler() {
     $('body').on('click', '#edit_contact_button', function(event) {
         event.preventDefault();
+        $(this).children('form').removeProp('disabled');
+        //if prop disabled == true, remove disabled
         console.log('edit contact button pushed');
     });
 }
@@ -309,47 +354,75 @@ function editContactHandler() {
 function resetClientSearchHandler() {
     $('body').on('click', '#reset_search', function(event) {
         event.preventDefault();
-        console.log('reset search button pushed');
         $('#last_name').val('');
         $('#first_name').val('');
         $('.client_search_results_list' ).empty();
+        $('#data_block').children('div').empty();
+        $('#client_dash').empty();
+        console.log('reset search button pushed');
     });
 }
-//submits client search data
+//submits client search data - generates searchName object from input fields 
 function submitClientSearchHandler() {
     $('body').on('submit', '.client_search_form', function(event) {
         event.preventDefault();
-        console.log('submit search button pushed');
-        var lastName = $(this).find('#last_name').val();
-        var firstName = $(this).find('#first_name').val();
-        var query = lastName + ', ' + firstName;
+        var searchName = {firstName: $(this).find('#first_name').val(), lastName: $(this).find('#last_name').val()};
         var type;
-        console.log(query);
-        getClientList(query, type, displayClientList);
+        getClientList(searchName, type, displayClientList);
+        $('.client_search_results_list').removeClass('hidden');
+        console.log('submit search button pushed');
+        console.log(searchName);
     });
 }
 //listener for call for specific client document
 function clientListSelectHandler() {
-    $('body').on('click', '.search_link', function(event) {
+    $('body').on('click', '.search_result_return', function(event) {
         event.preventDefault();
-        console.log('search link clicked');
-        getAndDisplayClientData();
-        $('#contact_block').toggleClass('hidden');
-        $('#client_dash').toggleClass('hidden');
+        getAndDisplayClientData($(this).attr('client_id'));
+        $('#contact_block').removeClass('hidden');
         $('.client_search_results_list').toggleClass('hidden');
-    })
+        console.log('search link clicked');
+    });
 }
+//read function
 $(function() {
-    getAndDisplayClientData();
     newClientHandler();
+    dataSubmitHandler();
     editContactHandler();
     resetClientSearchHandler();
     submitClientSearchHandler();
     clientListSelectHandler();
+    deleteClientHandler();
 });
 
+ 
 
-//rest of mock data for when the code actually works
+//what api return data will look like: /api/client_id 
+// var Mock_Client_Data = {
+//     "client_id": [ 
+//         {
+//             "contact": {
+//                 "contactName": {
+//                     "contactLastName": "Last Name",
+//                     "contactFirstName": "First Name"
+//                 },
+//                 "contactPrimaryPhone": "5085885334", //10-digit numbers only
+//                 "contactSecondaryPhone": "5085885334",
+//                 "contactAddress": {
+//                     "contactStreet": "Street Address",
+//                     "contactCity": "City",
+//                     "contactState": "State",
+//                     "contactZip": "02301"
+//                 },
+//                 "contactEmail": "contactemail@gmail.com",
+//                 "relationToProspect": "relationship to prospect", //radio with adult child, spouse, friend, guardian, etc
+//                 "referralSource": "Referral Source",
+//                 "referredBy": "Referred By",
+//                 "dateOfFirstContact": "2017-01-01" //use date function
+//             },
+
+//     }]
+// };
     //         "prospect": {
     //             "prospectName": {
     //                 "prospectLastName": "Last Name",
