@@ -47,7 +47,7 @@ app.get('/clients', function(req, res) {
     console.log(req.query);
     var searchFirstName = req.query.firstName;
     var searchLastName = req.query.lastName;
-    Client.find({ $and: [ {'contact.contactName.contactLastName' : searchLastName}, {'contact.contactName.contactFirstName' : searchFirstName}, {'deleted': false}]}).exec(function(err, clients) {
+    Client.find({ $and: [ {'contact.contactName.contactLastName' : searchLastName}, {'contact.contactName.contactFirstName' : searchFirstName}]}).exec(function(err, clients) {
     // Client.find( {'contact.contactName.contactLastName' : { $regex: new RegExp('^' + searchLastName.toLowerCase()) } }).exec(function(err, clients) {
         if (err) {
             console.log(err);
@@ -80,24 +80,19 @@ app.get('/clients/:client_id', function(req, res) {
         }
         return res.send(client);
     });
-})
+});
 //creates new document for the collection
 app.post('/clients/', function(req, res) {
     console.log(req.body);
     console.log('POST: ');
-    // var create = function(ClientDataPackage) {
-    //     console.log(ClientDataPackage);
-        var client = new ClientDataPackage;
-    //             //constructor function - outside of this code - whereever calling create from - new client
-    //             //specific data like id? contact name? contact number? etc
-    //     ;
+    var client = req.body;
     Client.create(client, function(err, client) {
         if (err || !client) {
             console.error("could not create client"); //example has , name
             mongoose.disconnect();
             return res.status(500).json({message: 'Internal Server Error'});
         }
-        console.log("created client"); //example has snippet.name
+        console.log("created client " + client._id);
         res.status(201).json(client);
         mongoose.disconnect();
     });
@@ -108,7 +103,7 @@ app.put('/clients/:client_id', function(req, res) {
     console.log(req.params);
     var client_id = req.params.client_id;
     var update = req.body;
-    Client.findOneAndUpdate(client_id, update, function(err, clients) {
+    Client.findByIdAndUpdate(client_id, update, function(err, clients) {
         if (err) {
             return res.status(500).json({
                 message: 'Internal Server Error'
@@ -122,14 +117,13 @@ app.put('/clients/:client_id', function(req, res) {
 app.delete('/clients/:client_id', function(req, res) {
     var client_id = req.params.client_id;
     console.log(req.params);
-    Client.findOneAndRemove(client_id, function(err, client) {
+    Client.findByIdAndRemove(client_id, function(err, client) {
         if (err) {
-            console.log(err)
+            console.log(err);
             console.error('could not delete client');
-            mongoose.disconnect();
         }
         console.log('client deleted');
-        mongoose.disconnect();
+        return res.status(204).end();
     });
 });
 app.use('*', function(req, res) {
@@ -166,7 +160,7 @@ var sampleData_2 = {
             "contactLastName": "Standish",
             "contactFirstName": "Myles"
         },
-        "contactPrimaryPhone": "2222222222", //10-digit numbers only
+        "contactPrimaryPhone": "3333333333", //10-digit numbers only
         "contactSecondaryPhone": "0",
         "contactAddress": {
             "contactStreet": "194 Cranberry Rd.",
@@ -225,7 +219,7 @@ var sampleData_4 = {
         "dateOfFirstContact": "2017-01-01" //use date function
     },
 }; 
-// Client.create(sampleData_4, function(err, client) {
+// Client.create(sampleData_2, function(err, client) {
 //             if (err || !client) {
 //                 console.error("could not create client"); //example has , name
 //                 mongoose.disconnect();
@@ -235,6 +229,16 @@ var sampleData_4 = {
 
 //             mongoose.disconnect();
 //         });
+// Client.create(sampleData_3, function(err, client) {
+//     if (err || !client) {
+//         console.error("could not create client"); //example has , name
+//         mongoose.disconnect();
+
+//     }
+//     console.log("created client"); //example has snippet.name
+
+//     mongoose.disconnect();
+// });
 // var client_id = '586ef28463a142fa45005bd7'
 //     Client.findOneAndRemove(client_id, function(err, client) {
 //         if (err) {

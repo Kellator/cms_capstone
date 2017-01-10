@@ -33,8 +33,6 @@ var newContactEntryMsg =
             "<legend>Contact Email</legend>" +
             "<label for='contact_email'>Email:  </label>" +
             "<input type='email' id='contact_email' placeholder='name@email.com'>" +
-            "<label for='submit_data_button'></label>" +
-            "<input type='submit' name='submit_data_button' id='submit_data_button'></input>" +
         "</fieldset>" +
         "</form>" +
     "</div>" +
@@ -62,47 +60,48 @@ var newContactEntryMsg =
             "<input type='date' name='first_contact_date'>" +
         "</fieldset>" +
         "</form>" +
-
+        "<label for='submit_data_button'></label>" +
+        "<button name='submit_data_button' id='submit_data_button'>Submit</button>" +
     "</div>"
     ;
 //constructor function to create client data package
 function ClientDataPackage(_id) {
     this.client_id = _id;
-    this.deleted = false;
 }
-ClientDataPackage.prototype.add_contact_name = function(lastName, firstName) { 
-    this.contactName.contactLastName = lastName;
-    this.contactName.contactFirstName = firstName;
-};
-ClientDataPackage.prototype.add_contact_phone = function(primPhone, secPhone) {
-    this.contactPrimaryPhone = primPhone;
-    this.contactSecondaryPhone = secPhone;
-};
-ClientDataPackage.prototype.add_contact_address = function(street, city, state, zip) {
-    this.contactAddress.contactStreet = street;
-    this.contactAddress.contactCity = city;
-    this.contactAddress.contactState = state;
-    this.contactAddress.contactZip = zip;
-};
-ClientDataPackage.prototype.add_contact_email = function(email) {
-    this.contactEmail = email;
-};
-ClientDataPackage.prototype.add_contact_relationToProspect = function(relation) {
-    this.relationToProspect = relation;
-};
-ClientDataPackage.prototype.add_contact_referral = function(source, referredBy) {
-    this.referralSource = source;
-    this.referredBy = referredBy;
-};
-ClientDataPackage.prototype.add_first_contact = function(date) {
-    this.dateOfFirstContact = date;
-};
+// ClientDataPackage.prototype.add_contact_name = function(lastName, firstName) { 
+//     this.contactName.contactLastName = lastName;
+//     this.contactName.contactFirstName = firstName;
+// };
+// ClientDataPackage.prototype.add_contact_phone = function(primPhone, secPhone) {
+//     this.contactPrimaryPhone = primPhone;
+//     this.contactSecondaryPhone = secPhone;
+// };
+// ClientDataPackage.prototype.add_contact_address = function(street, city, state, zip) {
+//     this.contactAddress.contactStreet = street;
+//     this.contactAddress.contactCity = city;
+//     this.contactAddress.contactState = state;
+//     this.contactAddress.contactZip = zip;
+// };
+// ClientDataPackage.prototype.add_contact_email = function(email) {
+//     this.contactEmail = email;
+// };
+// ClientDataPackage.prototype.add_contact_relationToProspect = function(relation) {
+//     this.relationToProspect = relation;
+// };
+// ClientDataPackage.prototype.add_contact_referral = function(source, referredBy) {
+//     this.referralSource = source;
+//     this.referredBy = referredBy;
+// };
+// ClientDataPackage.prototype.add_first_contact = function(date) {
+//     this.dateOfFirstContact = date;
+// };
 //this variable can be used to collect and display
 var clientContactDisplay =
     "<div id='contact_information'>" +
             "<form action='' method='post'>" +
             "<fieldset>" +
                 "<legend>Contact Information</legend>" +
+                "<input type='button' id='edit_contact_button' class='edit_button' value='Edit Contact Information'></input><br>" +
                 "<label for='contact_last_name'>Last Name:  </label>" + 
                 "<input type='text' required id='contact_last_name' disabled='true' value=''>" +
                 "<label for='contact_first_name'>First Name:  </label>" +
@@ -127,7 +126,6 @@ var clientContactDisplay =
                 "<legend>Contact Email</legend>" +
                 "<label for='contact_email'>Email:  </label>" +
                 "<input type='email' id='contact_email' disabled='true' value=''><br>" +
-                "<input type='button' id='edit_contact_button' class='edit_button' value='Edit Contact Information'></input>" +
             "</fieldset>" +
             "</form>" +
         "</div>" +
@@ -152,7 +150,7 @@ var clientContactDisplay =
                     "<li><input type='radio' required name='referral_source' value='Health Care Provider' id='ref_hcp'>Health Care Provider</><br><input type='text' placeholder='Referred by'/>" +
                 "</ul>" +
                 "<label for='first_contact_date'>Date of First Contact </label>" +
-                "<input type='date' name='first_contact_date' disabled='true' value=''>" +
+                "<input type='date' name='first_contact_date' id='first_contact_date' disabled='true' value=''>" +
             "</fieldset>" +
             "</form>" +
         "</div>";
@@ -163,10 +161,19 @@ var clientMedicalDisplay;
 var clientCommentsDisplay;
 //called at new client handler
 function createNewClient(type, callback) {
+    var client = new ClientDataPackage();
+    // client.add_contact_name($('#contact_last_name').val(), $('#contact_first_name').val());
+    // client.add_contact_phone($('#contact_primary_phone').val(), $('#contact_alt_phone').val());
+    // client.add_contact_address($('#contact_street').val(), $('#contact_city').val(), $('#contact_state').val(), $('#contact_zipcode').val());
+    // client.add_contact_email($('#contact_email').val());
+    // client.add_contact_relationToProspect($('rel_to_prospect').val());
+    // client.add_contact_referral($('.referral_source').val());
+    // client.add_first_contact($('#first_contact_date').val());
     var settings = {
         url: 'https://node-unit-project-kellator.c9users.io/clients/',
         dataType: 'json',
         method: 'POST',
+        data: client,
         success: function(data) {
             callback(data, type);
             console.log(data);
@@ -212,7 +219,6 @@ function deleteClientData(client_id, callback) {
         method: 'DELETE',
         success: function(data) {
             callback(data);
-            console.log(data);
         }
     };
     $.ajax(settings);
@@ -318,15 +324,17 @@ function newClientHandler() {
     $('body').on('click', '#new_client_button', function(event) {
         event.preventDefault();
         enterNewClientData();
+        $('.client_search_results_list' ).empty();
+        $('#client_dash').empty();
         $('#contact_block').removeClass('hidden');
         console.log('new client button pushed');
     });
 }
 function dataSubmitHandler() {
-    $('body').on('submit', '#submit_data', function(event) {
-        event.PreventDefault();
+    $('body').on('click', '#submit_data_button', function(event) {
+        event.preventDefault();
         var type;
-        createNewClient(type, ClientDataPackage);
+        createNewClient(type, alertForCreatedClient);
         console.log('new client created');
         console.log('new data submit button clicked');
     });
