@@ -4,7 +4,7 @@
 
 var databaseUrl = 'https://node-unit-project-kellator.c9users.io/clients/';
 //new client entry data fields
-var newContactEntryMsg = 
+var newContactEntryMsg =
     "<div data_type='contact' id='contact_information'>" +
         "<form action='' method='post'>" +
         "<fieldset>" +
@@ -50,7 +50,7 @@ var newContactEntryMsg =
                 "<li><input type='radio' required name='rel_to_prospect' value='Other' id='rel_other'>Other</><br><input type='text' placeholder='Other'/>" +
             "</ul>" +
             "<label for='referral_source'>Referral Source</label>" +
-            "<ul>" + 
+            "<ul>" +
                 "<li><input type='radio' required name='referral_source' value='Self' id='ref_self' checked>Self</>" +
                 "<li><input type='radio' required name='referral_source' value='APFM' id='ref_apfm'>A Place For Mom</>" +
                 "<li><input type='radio' required name='referral_source' value='Word of Mouth' id='ref_wom'>Word of Mouth</><br><input type='text' placeholder='Referred by'/>" +
@@ -65,36 +65,38 @@ var newContactEntryMsg =
     "</div>"
     ;
 //constructor function to create client data package
-function ClientDataPackage(_id) {
-    this.client_id = _id;
+function ClientDataPackage() {
+    this.contact = {};
 }
-// ClientDataPackage.prototype.add_contact_name = function(lastName, firstName) { 
-//     this.contactName.contactLastName = lastName;
-//     this.contactName.contactFirstName = firstName;
-// };
-// ClientDataPackage.prototype.add_contact_phone = function(primPhone, secPhone) {
-//     this.contactPrimaryPhone = primPhone;
-//     this.contactSecondaryPhone = secPhone;
-// };
-// ClientDataPackage.prototype.add_contact_address = function(street, city, state, zip) {
-//     this.contactAddress.contactStreet = street;
-//     this.contactAddress.contactCity = city;
-//     this.contactAddress.contactState = state;
-//     this.contactAddress.contactZip = zip;
-// };
-// ClientDataPackage.prototype.add_contact_email = function(email) {
-//     this.contactEmail = email;
-// };
-// ClientDataPackage.prototype.add_contact_relationToProspect = function(relation) {
-//     this.relationToProspect = relation;
-// };
-// ClientDataPackage.prototype.add_contact_referral = function(source, referredBy) {
-//     this.referralSource = source;
-//     this.referredBy = referredBy;
-// };
-// ClientDataPackage.prototype.add_first_contact = function(date) {
-//     this.dateOfFirstContact = date;
-// };
+ClientDataPackage.prototype.add_contact_name = function(lastName, firstName) {
+    this.contact.contactName = {};
+    this.contact.contactName.contactLastName = lastName;
+    this.contact.contactName.contactFirstName = firstName;
+};
+ClientDataPackage.prototype.add_contact_phone = function(primPhone, secPhone) {
+    this.contact.contactPrimaryPhone = primPhone;
+    this.contact.contactSecondaryPhone = secPhone;
+};
+ClientDataPackage.prototype.add_contact_address = function(street, city, state, zip) {
+    this.contact.contactAddress = {};
+    this.contact.contactAddress.contactStreet = street;
+    this.contact.contactAddress.contactCity = city;
+    this.contact.contactAddress.contactState = state;
+    this.contact.contactAddress.contactZip = zip;
+};
+ClientDataPackage.prototype.add_contact_email = function(email) {
+    this.contact.contactEmail = email;
+};
+ClientDataPackage.prototype.add_contact_relationToProspect = function(relation) {
+    this.contact.relationToProspect = relation;
+};
+ClientDataPackage.prototype.add_contact_referral = function(source, referredBy) {
+    this.contact.referralSource = source;
+    this.contact.referredBy = referredBy;
+};
+ClientDataPackage.prototype.add_first_contact = function(date) {
+    this.contact.dateOfFirstContact = date;
+};
 //this variable can be used to collect and display
 var clientContactDisplay =
     "<div id='contact_information'>" +
@@ -102,11 +104,11 @@ var clientContactDisplay =
             "<fieldset>" +
                 "<legend>Contact Information</legend>" +
                 "<input type='button' id='edit_contact_button' class='edit_button' value='Edit Contact Information'></input><br>" +
-                "<label for='contact_last_name'>Last Name:  </label>" + 
+                "<label for='contact_last_name'>Last Name:  </label>" +
                 "<input type='text' required id='contact_last_name' disabled='true' value=''>" +
                 "<label for='contact_first_name'>First Name:  </label>" +
                 "<input type='text' required id='contact_first_name' disabled='true' value=''>" +
-    
+
                 "<legend>Contact Address</legend>" +
                 "<label for='contact_street'>Street:  </label>" +
                 "<input type='text' id='contact_street' disabled='true' value=''>" +
@@ -122,7 +124,7 @@ var clientContactDisplay =
                 "<input type='number' maxlength='10' required id='contact_primary_phone' disabled='true' value=''>" +
                 "<label for='contact_alt_phone'>Alternate Phone:  </label>" +
                 "<input type='number' maxlength='10' id='contact_alt_phone' disabled='true' value=''>" +
-    
+
                 "<legend>Contact Email</legend>" +
                 "<label for='contact_email'>Email:  </label>" +
                 "<input type='email' id='contact_email' disabled='true' value=''><br>" +
@@ -143,7 +145,7 @@ var clientContactDisplay =
                     "<li><input type='radio' required name='rel_to_prospect' value='Other' id='rel_other'>Other</><br><input type='text' placeholder='Other'/>" +
                 "</ul>" +
                 "<label for='referral_source'>Referral Source</label>" +
-                "<ul>" + 
+                "<ul>" +
                     "<li><input type='radio' required name='referral_source' value='Self' id='ref_self' checked>Self</>" +
                     "<li><input type='radio' required name='referral_source' value='APFM' id='ref_apfm'>A Place For Mom</>" +
                     "<li><input type='radio' required name='referral_source' value='Word of Mouth' id='ref_wom'>Word of Mouth</><br><input type='text' placeholder='Referred by'/>" +
@@ -160,34 +162,36 @@ var clientFinancialDisplay;
 var clientMedicalDisplay;
 var clientCommentsDisplay;
 //called at new client handler
-function createNewClient(type, callback) {
-    var client = new ClientDataPackage();
-    // client.add_contact_name($('#contact_last_name').val(), $('#contact_first_name').val());
-    // client.add_contact_phone($('#contact_primary_phone').val(), $('#contact_alt_phone').val());
-    // client.add_contact_address($('#contact_street').val(), $('#contact_city').val(), $('#contact_state').val(), $('#contact_zipcode').val());
-    // client.add_contact_email($('#contact_email').val());
-    // client.add_contact_relationToProspect($('rel_to_prospect').val());
-    // client.add_contact_referral($('.referral_source').val());
-    // client.add_first_contact($('#first_contact_date').val());
+function createNewClient(client_id, callback) {
+    var client = new ClientDataPackage(client_id);
+    client.add_contact_name($('#contact_last_name').val(), $('#contact_first_name').val());
+    client.add_contact_phone($('#contact_primary_phone').val(), $('#contact_alt_phone').val());
+    client.add_contact_address($('#contact_street').val(), $('#contact_city').val(), $('#contact_state').val(), $('#contact_zipcode').val());
+    client.add_contact_email($('#contact_email').val());
+    client.add_contact_relationToProspect($('rel_to_prospect').val());
+    client.add_contact_referral($('.referral_source').val());
+    client.add_first_contact($('#first_contact_date').val());
     var settings = {
         url: 'https://node-unit-project-kellator.c9users.io/clients/',
         dataType: 'json',
         method: 'POST',
-        data: client,
+        data: JSON.stringify(client),
+        processData: false,
+        contentType: 'application/json',
         success: function(data) {
-            callback(data, type);
+            callback(data);
             console.log(data);
         }
     };
     $.ajax(settings);
 }
-//called at submit handler - displayClientList is callback function 
+//called at submit handler - displayClientList is callback function
 function getClientList(searchName, type, callback) {
     var settings = {
         url: 'https://node-unit-project-kellator.c9users.io/clients/',
         dataType: 'json',
         data: searchName,
-        method: 'GET', 
+        method: 'GET',
         success: function(data) {
             callback(data, type);
             console.log(data);
@@ -229,6 +233,7 @@ function alertForDeletedClient() {
 function alertForCreatedClient() {
     alert("you have created a new client");
 }
+
 function enterNewClientData() {
     $("#contact_block").html(newContactEntryMsg);
     $("#prospect_block").html();
@@ -242,10 +247,10 @@ function displayClientList(data, type) {
     console.log('display client list');
     var resultElement = '';
     if (data) {
-        $('.client_search_results_list' ).html('<div id="search_display">Client Search Results</div>'); 
+        $('.client_search_results_list' ).html('<div id="search_display">Client Search Results</div>');
         $.each(data, function(index, client) {
-            resultElement += 
-            '<div client_id="'+ client._id + '" value="'+ index + '" class="search_result_return">' +  
+            resultElement +=
+            '<div client_id="'+ client._id + '" value="'+ index + '" class="search_result_return">' +
                 '<ul>' +
                     '<li><span  class="search_link">Contact Name:  </span>' + client.contact.contactName.contactLastName + ', ' + client.contact.contactName.contactFirstName + '</li>' +
                     '<li>Contact Phone:  ' + client.contact.contactPrimaryPhone + '</li>' +
@@ -283,7 +288,7 @@ function displayClientData(data) {
                         "<li id='dash_contact_name'>Contact Name:  " + data.contact.contactName.contactFirstName + " " + data.contact.contactName.contactLastName + "</li>" +
                         "<li>Contact Primary Phone:  " + data.contact.contactPrimaryPhone + "</li>" +
                         // "<li id='dash_lead_status'>Lead Status:  </li>" +
-                        // "<li id='dash_hospital'>Hospital:  </li>" + 
+                        // "<li id='dash_hospital'>Hospital:  </li>" +
                         // "<li id='dash_dnr_status'>DNR Status:  </li>" +
                     "</ul>" +
                 "</div>" +
@@ -292,7 +297,7 @@ function displayClientData(data) {
                     "<button client_id='" + data._id + "' name='delete_client' id='client_delete_button' value='Delete All Client Information'>Delete Client</button>" +
                 "</form>" +
             "</div>";
-        var contactDisplay = $(clientContactDisplay);
+        var contactDisplay = $(newContactEntryMsg);
         contactDisplay.find('#contact_first_name').val(data.contact.contactName.contactFirstName);
         contactDisplay.find('#contact_last_name').val(data.contact.contactName.contactLastName);
         contactDisplay.find('#contact_street').val(data.contact.contactAddress.contactStreet);
@@ -318,7 +323,10 @@ function displayClientData(data) {
 function getAndDisplayClientData(client_id) {
     getClientData(displayClientData, client_id);
 }
-//button handlers
+
+
+//EVENT HANDLERS
+
 //new client entry button
 function newClientHandler() {
     $('body').on('click', '#new_client_button', function(event) {
@@ -330,15 +338,14 @@ function newClientHandler() {
         console.log('new client button pushed');
     });
 }
-function dataSubmitHandler() {
+function dataSubmitHandler(client_id) {
     $('body').on('click', '#submit_data_button', function(event) {
         event.preventDefault();
-        var type;
-        createNewClient(type, alertForCreatedClient);
-        console.log('new client created');
+        createNewClient(client_id, alertForCreatedClient);
         console.log('new data submit button clicked');
     });
 }
+//calls delete HTTP Method
 function deleteClientHandler(client_id) {
     $('body').on('click', '#client_delete_button', function(event) {
         event.preventDefault();
@@ -349,12 +356,10 @@ function deleteClientHandler(client_id) {
         // alert needs to give y/n options.  if y == true, delete information, otherwise not
     });
 }
-//allows user to enter previously entered contact information
+//allows user to alter previously entered contact information - calling put HTTP Method
 function editContactHandler() {
     $('body').on('click', '#edit_contact_button', function(event) {
         event.preventDefault();
-        $(this).children('form').removeProp('disabled');
-        //if prop disabled == true, remove disabled
         console.log('edit contact button pushed');
     });
 }
@@ -370,7 +375,7 @@ function resetClientSearchHandler() {
         console.log('reset search button pushed');
     });
 }
-//submits client search data - generates searchName object from input fields 
+//submits client search data - generates searchName object from input fields
 function submitClientSearchHandler() {
     $('body').on('submit', '.client_search_form', function(event) {
         event.preventDefault();
@@ -403,11 +408,11 @@ $(function() {
     deleteClientHandler();
 });
 
- 
 
-//what api return data will look like: /api/client_id 
+
+//what api return data will look like: /api/client_id
 // var Mock_Client_Data = {
-//     "client_id": [ 
+//     "client_id": [
 //         {
 //             "contact": {
 //                 "contactName": {
@@ -443,14 +448,14 @@ $(function() {
     //             "insNumbers": {
     //                 "medicareNum": "011010111A", //9 digit number with one or two letters
     //                 "massHealth": "10101010101",
-    //                 "insuranceNum": "XX010101010"   
+    //                 "insuranceNum": "XX010101010"
     //             },
     //             "gender": "Gender", //radio male female
     //             "maritalStatus": "Marital Status",
     //             "veteranStatus": "Veteran Status", //radio yes vet - text input service
     //             "religion": "Religion",
     //             "levelOfEducation": "Level of Education",
-    //             "currentHousing": "Current Living Situation", 
+    //             "currentHousing": "Current Living Situation",
     //             "leadStatus": "Lead Status",
     //             "poa": {
     //                 "poaName": "POA Name",
@@ -482,7 +487,7 @@ $(function() {
     //                 "medAssist": "detail of medication assistance",
     //                 "ambulation": "detail of ambulation assistance"
     //             },
-    //             "primaryAptPref": "Primary Apartment Type Preference", 
+    //             "primaryAptPref": "Primary Apartment Type Preference",
     //             "secondaryAptPref": "Second Choice Apartment Preference",
     //             "estimatedMoveDate": "01012017", //8 digit date
     //             "additionalServices": "Additional Services incl. laundry, housekeeping, meals",
@@ -497,29 +502,29 @@ $(function() {
     //                 "socSecMonthly": "Monthly Social Security Wages",
     //                 "ssi": "SSI Income",
     //                 "vaBenefits": "Monthly VA Benefits",
-    //                 "otherIncome": "Other Monthly Income", 
-    //                 "otherIncomeSource": "Other Income Source" //text input    
+    //                 "otherIncome": "Other Monthly Income",
+    //                 "otherIncomeSource": "Other Income Source" //text input
     //             },
     //             "assets": {
     //                 "propertyValue": "Estimated Property Assets",
     //                 "bankAccounts": "Estimate Bank Account Amounts",
     //                 "lifeInsurance": "Estimated Value of Life Insurance",
     //                 "otherAssets": "Estimated value of other assets",
-    //                 "otherAssetsSource": "Source of other assets"   
+    //                 "otherAssetsSource": "Source of other assets"
     //             },
     //             "bankReference": {
     //                 "bankRefName": "Bank Reference Name",
-    //                 "bankRefNumber": "Bank Reference Phone Number"   
+    //                 "bankRefNumber": "Bank Reference Phone Number"
     //             },
     //             "landlordReference": {
     //                 "landlordRefName": "Landlord Reference Name",
-    //                 "landlordRefNum": "Landlord Reference Number"   
+    //                 "landlordRefNum": "Landlord Reference Number"
     //             }
     //         },
     //         "medical": {
     //             "initialAssessment": {
     //                 "assessSchedDate": "01012017", //8 digit date of initial assessment
-    //                 "assessCompDate": "01012017",  
+    //                 "assessCompDate": "01012017",
     //                 "assessedBy": "Name of Assessor"
     //             },
     //             "alfPlanType": "Care Plan Level",
@@ -565,7 +570,7 @@ $(function() {
     //         }
 
 // other code for when it actually does something
-//var newProspectEntryMsg = 
+//var newProspectEntryMsg =
 //     "<div id='prospect_information'>" +
 //         "<form action='' method='post'>" +
 //         "<fieldset>" +
@@ -619,7 +624,7 @@ $(function() {
 //         "<fieldset>" +
 //             "<legend>Additional Information</legend>" +
 //             "<label for='gender'>Gender</label>" +
-//             "<ul>" + 
+//             "<ul>" +
 //                 "<li><input type='radio' required name='gender' value='Male' id='male'>Male</>" +
 //                 "<li><input type='radio' required name='gender' value='Female' id='female'>Female</>" +
 //             "</ul>" +
@@ -632,13 +637,13 @@ $(function() {
 //             "</ul>" +
 //             "<label for='veteran_status'>Veteran Status</label>" +
 //             "<ul>" +
-//                 "<li><input type='radio' required name='veteran_status' value='veteran' id='veteran'>Veteran:  </>" + 
+//                 "<li><input type='radio' required name='veteran_status' value='veteran' id='veteran'>Veteran:  </>" +
 //                 "<label for='service_branch'>Branch of Service:  </label><input type='text' id='service_branch' placeholder='Navy'>" +
 //                 "<li><input type='radio' required name='veteran_status' value='Not a Veteran' id='notVet'>Not a Veteran</>" +
 //             "</ul>" +
 //             "<label id='religion'>Religion</label>" +
 //             "<input type='text' id='religion' placeholder='Lutheran'><br>" +
-            
+
 //             "<label for='education'>Highest Level of Education</label>" +
 //             "<ul>" +
 //                 "<li><input type='radio' required name='education' value='grade_school' id='grade_school'>Grade School</>" +
@@ -699,7 +704,7 @@ $(function() {
 //             "<input type='number' maxlength='10' id='poa_alt_phone' placeholder='508-588-5858'>" +
 //             "<label class='enter_button' for='enter_poa_phone_button'></label>" +
 //             "<button name='enter_poa_phone_button' id='enter_poa_phone'>Enter</button>" +
-            
+
 //             "<legend>Health Care Proxy</legend>" +
 //             "<label for='hcp_last_name'>Last Name:  </label>" +
 //             "<input type='text' required id='hcp_last_name' placeholder='Johnson'>" +
@@ -713,7 +718,7 @@ $(function() {
 //             "<input type='number' maxlength='10' id='hcp_alt_phone' placeholder='508-588-5858'>" +
 //             "<label class='enter_button' for='enter_hcp_phone_button'></label>" +
 //             "<button name='enter_hcp_phone_button' id='enter_hcp_phone'>Enter</button>" +
-           
+
 //             "<legend>Primary Emergency Contact</legend>" +
 //             "<label for='pec_last_name'>Last Name:  </label>" +
 //             "<input type='text' required id='pec_last_name' placeholder='Johnson'>" +
@@ -727,7 +732,7 @@ $(function() {
 //             "<input type='number' maxlength='10' id='pec_alt_phone' placeholder='508-588-5858'>" +
 //             "<label class='enter_button' for='enter_pec_phone_button'></label>" +
 //             "<button name='enter_pec_phone_button' id='enter_pec_phone'>Enter</button>" +
-            
+
 //             "<legend>Secondary Emergency Contact</legend>" +
 //             "<label for='sec_last_name'>Last Name:  </label>" +
 //             "<input type='text' required id='sec_last_name' placeholder='Johnson'>" +
@@ -741,12 +746,12 @@ $(function() {
 //             "<input type='number' maxlength='10' id='sec_alt_phone' placeholder='508-588-5858'>" +
 //             "<label class='enter_button' for='enter_sec_phone_button'></label>" +
 //             "<button name='enter_sec_phone_button' id='enter_sec_phone'>Enter</button>" +
-            
+
 //         "</fieldset>" +
 //         "</form>" +
 //     "</div>"
 //     ;
-// var newHousingEntryMsg = 
+// var newHousingEntryMsg =
 //     "<div id='housingAndAssist>" +
 //         "<form action='' method='post'>" +
 //         "<fieldset>" +
@@ -760,17 +765,17 @@ $(function() {
 //             "</ul>" +
 //             "<label id='assistance_needed'>Assistance Needed</label>" +
 //             "<ul>" +
-//                 "<li><input type='checkbox' value='bathing'>Bathing: </input></li>" + 
+//                 "<li><input type='checkbox' value='bathing'>Bathing: </input></li>" +
 //                 "<input type='text' id='bathing_detail' disabled='true' placeholder='Needs hands on assistance, lower body washing.'>" +
-//                 "<li><input type='checkbox' value='dressing'>Dressing: </input></li>" + 
-//                 "<input type='text' id='dressing_detail' disabled='true' placeholder='Needs assistance with lower body dressing and buttons.'>" +  
-//                 "<li><input type='checkbox' value='grooming'>Grooming: </input></li>" + 
+//                 "<li><input type='checkbox' value='dressing'>Dressing: </input></li>" +
+//                 "<input type='text' id='dressing_detail' disabled='true' placeholder='Needs assistance with lower body dressing and buttons.'>" +
+//                 "<li><input type='checkbox' value='grooming'>Grooming: </input></li>" +
 //                 "<input type='text' id='grooming_detail' disabled='true' placeholder='Needs cueing to soak dentures at night.'>" +
-//                 "<li><input type='checkbox' value='medication assistance'>Medication Assistance: </input></li>" + 
+//                 "<li><input type='checkbox' value='medication assistance'>Medication Assistance: </input></li>" +
 //                 "<input type='text' id='med_assist_detail' disabled='true' placeholder='Needs SAMM reminders'>" +
-//                 "<li><input type='checkbox' value='ambulation'>Ambulation: </input></li>" + 
+//                 "<li><input type='checkbox' value='ambulation'>Ambulation: </input></li>" +
 //                 "<input type='text' id='Ambulation_detail' disabled='true' placeholder='Needs escorts to meals and activities.'>" +
-//                 "<li><input type='checkbox' value='toileting'>Toileting: </input></li>" + 
+//                 "<li><input type='checkbox' value='toileting'>Toileting: </input></li>" +
 //                 "<input type='text' id='toileting_detail' disabled='true' placeholder='Occasional incontinence of bladder; needs cueing to change depends.'>" +
 //             "</ul>" +
 //             "<label for='prim_apt_pref'>Primary Apartment Preference</label>" +
@@ -803,10 +808,10 @@ $(function() {
 //         "</form>" +
 //     "</div>";
 
-// var newFinancialsEntryMsg = 
+// var newFinancialsEntryMsg =
 //     "<div id='gen_financial'>" +
 //         "<form action='' method='post'>" +
-//         "<fieldset>" + 
+//         "<fieldset>" +
 //             "<legend>Financial Information</legend>" +
 //             "<label for='payer_source'>Payer Source</label>" +
 //             "<ul>" +
@@ -820,7 +825,7 @@ $(function() {
 //     "</div>"+
 //     "<div id='detail_financial'>" +
 //         "<form action='' method='post'>" +
-//         "<fieldset>" + 
+//         "<fieldset>" +
 //             "<legend>Income and Assets</legend>" +
 //             "<label for='income_social'>Monthly Social Security Income:  $</label>" +
 //             "<input type='number' min='0.00' step='0.01' value='' id='income_social' placeholder='2000'></input><br>" +
@@ -847,7 +852,7 @@ $(function() {
 //     "</div>" +
 //         "<div id='references_financial'>" +
 //         "<form action='' method='post'>" +
-//         "<fieldset>" + 
+//         "<fieldset>" +
 //             "<legend>Financial References</legend>" +
 //             "<label for='bank_ref_name'>Bank Name:  </label>" +
 //             "<input type='text' id='bank_ref_name' placeholder='HarborOne'></input><br>" +
@@ -865,7 +870,7 @@ $(function() {
 // var newMedicalEntryMsg =
 //     "<div id='assessment_data'>" +
 //         "<form action='' method='post'>" +
-//         "<fieldset>" + 
+//         "<fieldset>" +
 //             "<legend>Assessment Information</legend>" +
 //             "<label for='assess_date'>Initial Assessment Scheduled:  </label>" +
 //             "<input type='date' id='assess_date'></input><br>" +
@@ -890,7 +895,7 @@ $(function() {
 //     "</div>" +
 //     "<div id='allergies_data'>" +
 //         "<form action='' method='post'>" +
-//         "<fieldset>" + 
+//         "<fieldset>" +
 //             "<legend>Allergy Information</legend>" +
 //             "<input type='checkbox' value='nkda' id='allergies_check'>No Known Drug Allergies</input><br>" +
 //             "<label for='allergies'>Allergies:  </label>" +
@@ -900,7 +905,7 @@ $(function() {
 //     "</div>" +
 //     "<div id='medical_data'>" +
 //         "<form action='' method='post'>" +
-//         "<fieldset>" + 
+//         "<fieldset>" +
 //             "<legend>Medical Information</legend>" +
 //             "<label for='meds_on_admit'>Medications Currently Taken:  </input>" +
 //             "<input type='text' id='meds_on_admit' placeholder='tylenol 500mg BID, lasix 40mg once daily'></input><br>" +
@@ -911,7 +916,7 @@ $(function() {
 //     "</div>" +
 //     "<div id='dietary_data'>" +
 //         "<form action='' method='post'>" +
-//         "<fieldset>" + 
+//         "<fieldset>" +
 //         "<legend>Dietary Needs</legend>" +
 //         "<label for='dietary'>Diet and Consistency</label>" +
 //         "<ul>" +
@@ -928,7 +933,7 @@ $(function() {
 //     "</div>" +
 //     "<div id='pcp_data'>" +
 //         "<form action='' method='post'>" +
-//         "<fieldset>" + 
+//         "<fieldset>" +
 //         "<legend>Primary Care Provider Information</legend>" +
 //         "<label for='pcp_name'>Primary Care Physician:  </label>" +
 //         "<input type='text' id='pcp_name' placeholder='Dr.John Smith'></input><br>" +
@@ -954,7 +959,7 @@ $(function() {
 //     "</div>" +
 //     "<div id='pcp_data'>" +
 //         "<form action='' method='post'>" +
-//         "<fieldset>" + 
+//         "<fieldset>" +
 //             "<legend>Pharmacy</legend>" +
 //             "<label for='pharmacy_choice'>Pharmacy</label>" +
 //             "<ul>" +
@@ -966,5 +971,5 @@ $(function() {
 //             "</ul>" +
 //         "</fieldset>" +
 //         "</form>" +
-//     "</div>" 
+//     "</div>"
 //     ;

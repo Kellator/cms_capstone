@@ -47,19 +47,8 @@ app.get('/clients', function(req, res) {
     console.log(req.query);
     var searchFirstName = req.query.firstName;
     var searchLastName = req.query.lastName;
-    Client.find({ $and: [ {'contact.contactName.contactLastName' : searchLastName}, {'contact.contactName.contactFirstName' : searchFirstName}]}).exec(function(err, clients) {
-    // Client.find( {'contact.contactName.contactLastName' : { $regex: new RegExp('^' + searchLastName.toLowerCase()) } }).exec(function(err, clients) {
-        if (err) {
-            console.log(err);
-            return res.status(500).json({
-            message: 'Internal Server Error'
-            });
-        }
-        res.json(clients);
-    });
-});
-//test find
-//     Client.find().exec(function(err, clients) {
+//     Client.find({ $and: [ {'contact.contactName.contactLastName' : searchLastName}, {'contact.contactName.contactFirstName' : searchFirstName}]}).exec(function(err, clients) {
+//     // Client.find( {'contact.contactName.contactLastName' : { $regex: new RegExp('^' + searchLastName.toLowerCase()) } }).exec(function(err, clients) {
 //         if (err) {
 //             console.log(err);
 //             return res.status(500).json({
@@ -69,6 +58,17 @@ app.get('/clients', function(req, res) {
 //         res.json(clients);
 //     });
 // });
+//test find
+    Client.find().exec(function(err, clients) {
+        if (err) {
+            console.log(err);
+            return res.status(500).json({
+            message: 'Internal Server Error'
+            });
+        }
+        res.json(clients);
+    });
+});
 //api endpoint to retrieve client document from collection for search list results
 app.get('/clients/:client_id', function(req, res) {
     var client_id = req.params.client_id;
@@ -89,14 +89,11 @@ app.post('/clients/', function(req, res) {
     Client.create(client, function(err, client) {
         if (err || !client) {
             console.error("could not create client"); //example has , name
-            mongoose.disconnect();
             return res.status(500).json({message: 'Internal Server Error'});
         }
         console.log("created client " + client._id);
         res.status(201).json(client);
-        mongoose.disconnect();
     });
-    // };
 });
 //makes a change to an existing document in the collection
 app.put('/clients/:client_id', function(req, res) {
@@ -222,31 +219,21 @@ var sampleData_4 = {
 // Client.create(sampleData_2, function(err, client) {
 //             if (err || !client) {
 //                 console.error("could not create client"); //example has , name
-//                 mongoose.disconnect();
-
 //             }
 //             console.log("created client"); //example has snippet.name
-
-//             mongoose.disconnect();
 //         });
 // Client.create(sampleData_3, function(err, client) {
 //     if (err || !client) {
 //         console.error("could not create client"); //example has , name
-//         mongoose.disconnect();
-
 //     }
 //     console.log("created client"); //example has snippet.name
-
-//     mongoose.disconnect();
 // });
-// var client_id = '586ef28463a142fa45005bd7'
+// var client_id = '58758ca12f842c9d0bb8a627'
 //     Client.findOneAndRemove(client_id, function(err, client) {
 //         if (err) {
 //             console.error('could not delete client');
-//             mongoose.disconnect();
 //         }
 //         console.log('client deleted');
-//         mongoose.disconnect();
 //     });
 
 exports.app = app;
