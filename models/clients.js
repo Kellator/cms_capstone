@@ -8,8 +8,8 @@ var mongoose = require('mongoose');
                 contactFirstName: String,
                 contactLastName: String
             },
-            contactPrimaryPhone: Number,
-            contactSecondaryPhone: Number,
+            contactPrimaryPhone: String,
+            contactSecondaryPhone: String,
             contactAddress: {
                 contactStreet: String,
                 contactCity: String,

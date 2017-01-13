@@ -43,23 +43,12 @@ var User = require('./models/users');
 //api endpoint definition
 //performs initial search of collection based on search name criteria and retrieves list of clients from collection
 app.get('/clients', function(req, res) {
-    console.log(JSON.stringify(req.query));
-    console.log(req.query);
+    // console.log(JSON.stringify(req.query));
+    // console.log(req.query);
     var searchFirstName = req.query.firstName;
     var searchLastName = req.query.lastName;
-//     Client.find({ $and: [ {'contact.contactName.contactLastName' : searchLastName}, {'contact.contactName.contactFirstName' : searchFirstName}]}).exec(function(err, clients) {
-//     // Client.find( {'contact.contactName.contactLastName' : { $regex: new RegExp('^' + searchLastName.toLowerCase()) } }).exec(function(err, clients) {
-//         if (err) {
-//             console.log(err);
-//             return res.status(500).json({
-//             message: 'Internal Server Error'
-//             });
-//         }
-//         res.json(clients);
-//     });
-// });
-//test find
-    Client.find().exec(function(err, clients) {
+    Client.find({ $and: [ {'contact.contactName.contactLastName' : searchLastName}, {'contact.contactName.contactFirstName' : searchFirstName}]}).exec(function(err, clients) {
+    // Client.find( {'contact.contactName.contactLastName' : { $regex: new RegExp('^' + searchLastName.toLowerCase()) } }).exec(function(err, clients) {
         if (err) {
             console.log(err);
             return res.status(500).json({
@@ -69,6 +58,17 @@ app.get('/clients', function(req, res) {
         res.json(clients);
     });
 });
+//test find
+//     Client.find().exec(function(err, clients) {
+//         if (err) {
+//             console.log(err);
+//             return res.status(500).json({
+//             message: 'Internal Server Error'
+//             });
+//         }
+//         res.json(clients);
+//     });
+// });
 //api endpoint to retrieve client document from collection for search list results
 app.get('/clients/:client_id', function(req, res) {
     var client_id = req.params.client_id;
@@ -98,6 +98,7 @@ app.post('/clients/', function(req, res) {
 //makes a change to an existing document in the collection
 app.put('/clients/:client_id', function(req, res) {
     console.log(req.params);
+    console.log(req.body);
     var client_id = req.params.client_id;
     var update = req.body;
     Client.findByIdAndUpdate(client_id, update, function(err, clients) {
@@ -106,7 +107,8 @@ app.put('/clients/:client_id', function(req, res) {
                 message: 'Internal Server Error'
             });
         }
-        console.log(clients);
+        // console.log('change made to client data');
+        // console.log(clients);
         return res.status(201).json(clients);
     });
 });
