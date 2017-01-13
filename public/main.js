@@ -108,7 +108,9 @@ var clientContactDisplay =
     "<label for='submit_data_button'></label>" +
     "<button name='submit_data_button' id='submit_data_button' class='hidden'>Submit</button>" +
     "<label for='edit_data_button'></label>" +
-    "<button name='edit_data_button' id='edit_data_button' class=''>Edit</button>"
+    "<button name='edit_data_button' id='edit_data_button' class=''>Edit</button>" +
+    "<label for='submit_changes_button'></label>" +
+    "<button name='submit_changes_button' id='submit_changes_button' class='hidden'>Submit Changes</button>" 
 ;
 //variable for prospect data display - used in data collection and display
 var clientProspectDisplay;
@@ -120,10 +122,7 @@ var clientFinancialDisplay;
 var clientMedicalDisplay;
 //var for comments display - used for displaying and adding comments
 var clientCommentsDisplay;
-
-//API CALLS
-//(CREATE) creates the new client data package by pulling form values 
-function createNewClient(client_id, callback) {
+function genClientDataPackage(client_id) {
     var client = new ClientDataPackage(client_id);
     client.add_contact_name($('#contact_last_name').val(), $('#contact_first_name').val());
     client.add_contact_phone($('#contact_primary_phone').val(), $('#contact_alt_phone').val());
@@ -131,7 +130,13 @@ function createNewClient(client_id, callback) {
     client.add_contact_email($('#contact_email').val());
     client.add_contact_relationToProspect($('rel_to_prospect').val());
     client.add_contact_referral($('.referral_source').val());
-    client.add_first_contact($('#first_contact_date').val());
+    client.add_first_contact($('#first_contact_date').val());  
+    return client;
+}
+//API CALLS
+//(CREATE) creates the new client data package by pulling form values 
+function createNewClient(client_id, callback) {
+    var client = genClientDataPackage(client_id);
     var settings = {
         url: 'https://node-unit-project-kellator.c9users.io/clients/',
         dataType: 'json',
@@ -176,7 +181,7 @@ function getClientInformation(client_id, callback) {
 //(UPDATE) updates components of client data document per user input
 function updateClientInformation(client_id, callback) {
     console.log(client_id);
-    var update; //eg{'contactLastName': contactLastName} update from function that gets current field data
+    var update = genClientDataPackage(client_id);
     var settings = {
         url: databaseUrl + client_id,
         dataType: 'json',
@@ -223,17 +228,6 @@ function getClientData(callbackFn, client_id) {
 //triggers functions to get client document and display data in DOM
 function getAndDisplayClientData(client_id) {
     getClientData(displayClientData, client_id);
-}
-//sends update 
-function sendClientUpdate(client_id) {
-    updateClientInformation(client_id, alertForUpdatedClient);
-}
-//function to create update object 
-function createUpdateObject(){
-   //{target currently active field: field value on enter} 
-    var currentElement = document.activeELement();
-    var currentElementValue = currentElement.val();
-    console.log(currentElement, currentElementValue);
 }
 //render functions
 //renders input forms to the DOM 
@@ -325,7 +319,7 @@ function newClientHandler() {
     $('body').on('click', '#new_client_button', function(event) {
         event.preventDefault();
         enterNewClientData();
-        $("#contact_information :input").prop("disabled", false);
+        $('.display_area :input').prop('disabled', false);
         $('#submit_data_button').removeClass('hidden');
         $('#edit_data_button').addClass('hidden');
         $('.client_search_results_list' ).empty();
@@ -359,7 +353,7 @@ function clientListSelectHandler() {
     $('body').on('click', '.search_result_return', function(event) {
         event.preventDefault();
         getAndDisplayClientData($(this).attr('client_id'));
-        $("#contact_information :input").prop("disabled", true);
+        $('.display_area :input').prop('disabled', true);
         $('#contact_block').removeClass('hidden');
         $('#submit_data_button').addClass('hidden');
         $('#edit_data_button').removeClass('hidden');
@@ -373,13 +367,20 @@ function editContactHandler() {
         event.preventDefault();
         if (confirm("Are you sure you want to change client information?")) {
             console.log("you opted to change data");
-            //toggle disable for input fields and display edit document control
-            //new submit button control for editting - calls PUT api, triggers createUpdateObject when clicked
-            //trigger function to generate update object
-            //createUpdateObject();
+            $('.display_area :input').prop('disabled', false);
+            $('#submit_changes_button').removeClass('hidden');
+            $('#edit_data_button').addClass('hidden');
         } else {
             console.log("you don't want to make a change");
         }
+    });
+}
+//handler for submitChanges button
+function submitChangesHandler() {
+    $('body').on('click', '#submit_changes_button', function(event) {
+        event.preventDefault();
+        var client_id = $('#client_delete_button').attr('client_id');
+        updateClientInformation(client_id, alertForUpdatedClient);
     });
 }
 //handler for delete client document button
@@ -411,6 +412,7 @@ function resetClientSearchHandler() {
 $(function() {
     newClientHandler();
     dataSubmitHandler();
+    submitChangesHandler();
     editContactHandler();
     resetClientSearchHandler();
     submitClientSearchHandler();
