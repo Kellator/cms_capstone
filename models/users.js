@@ -1,13 +1,6 @@
 var mongoose = require('mongoose');
-// mongoose.Promise = global.Promise;
-// mongoose.connect('mongodb://localhost/');
+var bcrypt = require('bcryptjs');
 
-// mongoose.connection.on('error', function(err) {
-//     console.error('Could not connect.  Error:', err);
-// });
-
-
-var mongoose = require('mongoose');
 var UserSchema = new mongoose.Schema({
     username: {
         type: String,
@@ -19,7 +12,15 @@ var UserSchema = new mongoose.Schema({
         required: true
     }
 });
-
+UserSchema.methods.validatePassword = function(password, callback) {
+    bcrypt.compare(password, this.password, function(err, isValid) {
+        if (err) {
+            callback(err);
+            return;
+        }
+        callback(null, isValid);
+    });
+};
 var User = mongoose.model('User', UserSchema);
 
 module.exports = User;

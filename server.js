@@ -5,16 +5,17 @@ var mongoose = require('mongoose');
 var config = require('./config');
 
 var app = express();
+var bcrypt = require('bcryptjs');
 
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
-// var socket_io = require('socket.io');
 var http = require('http');
 
 var server = http.Server(app);
-// var io = socket_io(server);
-
+//middlewares
+var Client = require('./models/clients');
+var User = require('./models/users');
 //coordinates the connection to the database, and the running on the HTTP server
 var runServer = function(callback) {
     mongoose.connect(config.DATABASE_URL, function(err) {
@@ -36,30 +37,13 @@ if(require.main === module) {
             console.error(err);
         }
     });
-};
-//middlewares
-var Client = require('./models/clients');
-var User = require('./models/users');
-//api endpoint definition
+}
 //performs initial search of collection based on search name criteria and retrieves list of clients from collection
 app.get('/clients', function(req, res) {
-    // console.log(JSON.stringify(req.query));
-    // console.log(req.query);
     var searchFirstName = req.query.firstName;
     var searchLastName = req.query.lastName;
-    Client.find({ $and: [ {'contact.contactName.contactLastName' : searchLastName}, {'contact.contactName.contactFirstName' : searchFirstName}]}).exec(function(err, clients) {
-    // Client.find( {'contact.contactName.contactLastName' : { $regex: new RegExp('^' + searchLastName.toLowerCase()) } }).exec(function(err, clients) {
-        if (err) {
-            console.log(err);
-            return res.status(500).json({
-            message: 'Internal Server Error'
-            });
-        }
-        res.json(clients);
-    });
-});
-//test find
-//     Client.find().exec(function(err, clients) {
+//     Client.find({ $and: [ {'contact.contactName.contactLastName' : searchLastName}, {'contact.contactName.contactFirstName' : searchFirstName}]}).exec(function(err, clients) {
+//     // Client.find( {'contact.contactName.contactLastName' : { $regex: new RegExp('^' + searchLastName.toLowerCase()) } }).exec(function(err, clients) {
 //         if (err) {
 //             console.log(err);
 //             return res.status(500).json({
@@ -69,6 +53,17 @@ app.get('/clients', function(req, res) {
 //         res.json(clients);
 //     });
 // });
+//test find
+    Client.find().exec(function(err, clients) {
+        if (err) {
+            console.log(err);
+            return res.status(500).json({
+            message: 'Internal Server Error'
+            });
+        }
+        res.json(clients);
+    });
+});
 //api endpoint to retrieve client document from collection for search list results
 app.get('/clients/:client_id', function(req, res) {
     var client_id = req.params.client_id;
@@ -86,9 +81,11 @@ app.post('/clients/', function(req, res) {
     console.log(req.body);
     console.log('POST: ');
     var client = req.body;
+    console.log(client._id);
     Client.create(client, function(err, client) {
         if (err || !client) {
-            console.error("could not create client"); //example has , name
+            console.error("could not create client");
+            console.log(err);
             return res.status(500).json({message: 'Internal Server Error'});
         }
         console.log("created client " + client._id);
@@ -107,8 +104,6 @@ app.put('/clients/:client_id', function(req, res) {
                 message: 'Internal Server Error'
             });
         }
-        // console.log('change made to client data');
-        // console.log(clients);
         return res.status(201).json(clients);
     });
 });
@@ -130,94 +125,72 @@ app.use('*', function(req, res) {
         message: 'Not Found'
     });
 });
-var sampleData = {
-    "deleted": false,
-    "contact": {
-        "contactName": {
-            "contactLastName": "Last Name",
-            "contactFirstName": "First Name"
-        },
-        "contactPrimaryPhone": "5085885334", //10-digit numbers only
-        "contactSecondaryPhone": "5085885334",
-        "contactAddress": {
-            "contactStreet": "Street Address",
-            "contactCity": "City",
-            "contactState": "State",
-            "contactZip": "02301"
-        },
-        "contactEmail": "contactemail@gmail.com",
-        "relationToProspect": "relationship to prospect", //radio with adult child, spouse, friend, guardian, etc
-        "referralSource": "Referral Source",
-        "referredBy": "Referred By",
-        "dateOfFirstContact": "2017-01-01" //use date function
-    },
-};
-var sampleData_2 = {
-    "deleted": false,
-    "contact": {
-        "contactName": {
-            "contactLastName": "Standish",
-            "contactFirstName": "Myles"
-        },
-        "contactPrimaryPhone": "3333333333", //10-digit numbers only
-        "contactSecondaryPhone": "0",
-        "contactAddress": {
-            "contactStreet": "194 Cranberry Rd.",
-            "contactCity": "Carver",
-            "contactState": "MA",
-            "contactZip": "02330"
-        },
-        "contactEmail": "MStandish@gmail.com",
-        "relationToProspect": "friend", //radio with adult child, spouse, friend, guardian, etc
-        "referralSource": "friend",
-        "referredBy": "John Smith",
-        "dateOfFirstContact": "2017-01-01" //use date function
-    },
-};
-var sampleData_3 = {
-    "deleted": false,
-    "contact": {
-        "contactName": {
-            "contactLastName": "Smith",
-            "contactFirstName": "John"
-        },
-        "contactPrimaryPhone": "3333333333", //10-digit numbers only
-        "contactSecondaryPhone": "0",
-        "contactAddress": {
-            "contactStreet": "143 Pocahontas Way",
-            "contactCity": "Plymouth",
-            "contactState": "MA",
-            "contactZip": "02360"
-        },
-        "contactEmail": "JSmith.theOriginal@gmail.com",
-        "relationToProspect": "self", //radio with adult child, spouse, friend, guardian, etc
-        "referralSource": "APFM",
-        "referredBy": "Maureen",
-        "dateOfFirstContact": "2017-01-01" //use date function
-    },
-};  
-var sampleData_4 = {
-    "deleted": true,
-    "contact": {
-        "contactName": {
-            "contactLastName": "Johnson",
-            "contactFirstName": "Howard"
-        },
-        "contactPrimaryPhone": "7815856581", //10-digit numbers only
-        "contactSecondaryPhone": "0",
-        "contactAddress": {
-            "contactStreet": "23 Summer St.",
-            "contactCity": "Kingston",
-            "contactState": "MA",
-            "contactZip": "02364"
-        },
-        "contactEmail": "HoJo@gmail.com",
-        "relationToProspect": "self", //radio with adult child, spouse, friend, guardian, etc
-        "referralSource": "APFM",
-        "referredBy": "Maureen",
-        "dateOfFirstContact": "2017-01-01" //use date function
-    },
-}; 
+//userName & password endpoints
+app.post('/users', function(req,res) {
+    if (!req.body) {
+        return res.status(400).json({
+            message: "No Request Body"
+        });
+    }
+    if (!('username' in req.body)) {
+        return res.status(422).json({
+            message: "Missing Field: username"
+        });
+    }
+    var username = req.body.username;
+    if (typeof username !== 'string') {
+        return res.status(422).json({
+            message: "Incorrect Field Type: username'"
+        });
+    }
+    username = username.trim();
+    if (username === '') {
+        return res.status(422).json({
+            message: "Incorrect Field Length: username"
+        });
+    }
+    var password = req.body.password;
+    if (typeof password !=='string') {
+        return res.status(422).json({
+            message: "Incorrect Field Type: password"
+        });
+    }
+    password = password.trim();
+    if (password === '') {
+        return res.status(422).json({
+            message: "Incorrect Field Length: password"
+        });
+    }
+    bcrypt.genSalt(10, function(err, salt) {
+        if (err) {
+            return res.status(500).json({
+                message: "Internal Server Error"
+            });
+        }
+        bcrypt.hash(password, salt, function(err, hash) {
+            if (err) {
+                return res.status(500).json({
+                    message: "Internal Server Error"
+                });
+            }
+            var user = new User ({
+                username: username,
+                password: hash
+            });
+            user.save(function(err) {
+                if (err) {
+                    return res.status(500).json({
+                        message: "Internal Server Error"
+                    });
+                }
+                return res.status(201).json({});
+            });
+        });
+    });
+});
+exports.app = app;
+exports.runServer = runServer;
+
 // Client.create(sampleData_2, function(err, client) {
 //             if (err || !client) {
 //                 console.error("could not create client"); //example has , name
@@ -230,7 +203,7 @@ var sampleData_4 = {
 //     }
 //     console.log("created client"); //example has snippet.name
 // });
-// var client_id = '58758ca12f842c9d0bb8a627'
+// var client_id = '587598012512db4f2be3ad0a'
 //     Client.findOneAndRemove(client_id, function(err, client) {
 //         if (err) {
 //             console.error('could not delete client');
@@ -238,7 +211,93 @@ var sampleData_4 = {
 //         console.log('client deleted');
 //     });
 
-exports.app = app;
-exports.runServer = runServer;
 
 //app.listen(process.env.PORT ||8080);
+// var sampleData = {
+//     "deleted": false,
+//     "contact": {
+//         "contactName": {
+//             "contactLastName": "Last Name",
+//             "contactFirstName": "First Name"
+//         },
+//         "contactPrimaryPhone": "5085885334", //10-digit numbers only
+//         "contactSecondaryPhone": "5085885334",
+//         "contactAddress": {
+//             "contactStreet": "Street Address",
+//             "contactCity": "City",
+//             "contactState": "State",
+//             "contactZip": "02301"
+//         },
+//         "contactEmail": "contactemail@gmail.com",
+//         "relationToProspect": "relationship to prospect", //radio with adult child, spouse, friend, guardian, etc
+//         "referralSource": "Referral Source",
+//         "referredBy": "Referred By",
+//         "dateOfFirstContact": "2017-01-01" //use date function
+//     },
+// };
+// var sampleData_2 = {
+//     "deleted": false,
+//     "contact": {
+//         "contactName": {
+//             "contactLastName": "Standish",
+//             "contactFirstName": "Myles"
+//         },
+//         "contactPrimaryPhone": "3333333333", //10-digit numbers only
+//         "contactSecondaryPhone": "0",
+//         "contactAddress": {
+//             "contactStreet": "194 Cranberry Rd.",
+//             "contactCity": "Carver",
+//             "contactState": "MA",
+//             "contactZip": "02330"
+//         },
+//         "contactEmail": "MStandish@gmail.com",
+//         "relationToProspect": "friend", //radio with adult child, spouse, friend, guardian, etc
+//         "referralSource": "friend",
+//         "referredBy": "John Smith",
+//         "dateOfFirstContact": "2017-01-01" //use date function
+//     },
+// };
+// var sampleData_3 = {
+//     "deleted": false,
+//     "contact": {
+//         "contactName": {
+//             "contactLastName": "Smith",
+//             "contactFirstName": "John"
+//         },
+//         "contactPrimaryPhone": "3333333333", //10-digit numbers only
+//         "contactSecondaryPhone": "0",
+//         "contactAddress": {
+//             "contactStreet": "143 Pocahontas Way",
+//             "contactCity": "Plymouth",
+//             "contactState": "MA",
+//             "contactZip": "02360"
+//         },
+//         "contactEmail": "JSmith.theOriginal@gmail.com",
+//         "relationToProspect": "self", //radio with adult child, spouse, friend, guardian, etc
+//         "referralSource": "APFM",
+//         "referredBy": "Maureen",
+//         "dateOfFirstContact": "2017-01-01" //use date function
+//     },
+// };  
+// var sampleData_4 = {
+//     "deleted": true,
+//     "contact": {
+//         "contactName": {
+//             "contactLastName": "Johnson",
+//             "contactFirstName": "Howard"
+//         },
+//         "contactPrimaryPhone": "7815856581", //10-digit numbers only
+//         "contactSecondaryPhone": "0",
+//         "contactAddress": {
+//             "contactStreet": "23 Summer St.",
+//             "contactCity": "Kingston",
+//             "contactState": "MA",
+//             "contactZip": "02364"
+//         },
+//         "contactEmail": "HoJo@gmail.com",
+//         "relationToProspect": "self", //radio with adult child, spouse, friend, guardian, etc
+//         "referralSource": "APFM",
+//         "referredBy": "Maureen",
+//         "dateOfFirstContact": "2017-01-01" //use date function
+//     },
+// }; 

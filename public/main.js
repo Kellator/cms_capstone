@@ -1,13 +1,14 @@
 //screen for user credentials entry
 /*global $*/
-var databaseUrl = 'https://node-unit-project-kellator.c9users.io/clients/';
+var databaseUrl = 'https://node-unit-project-kellator.c9users.io/';
 //constructor function to create client data package
 function ClientDataPackage() {
     this.contact = {};
     this.prospect = {};
-    this.housing = {};
+    this.housingAssistance = {};
     this.financials = {};
     this.medical = {};
+    this.comments = {};
 }
 //constructor components for contact data
 ClientDataPackage.prototype.add_contact_name = function(lastName, firstName) {
@@ -30,7 +31,7 @@ ClientDataPackage.prototype.add_contact_email = function(email) {
     this.contact.contactEmail = email;
 };
 ClientDataPackage.prototype.add_contact_relationToProspect = function(relation) {
-    this.contact.relationToProspect = relation;
+    this.contact.relToProspect = relation;
 };
 ClientDataPackage.prototype.add_contact_referral = function(source, referredBy) {
     this.contact.referralSource = source;
@@ -40,13 +41,201 @@ ClientDataPackage.prototype.add_first_contact = function(date) {
     this.contact.dateOfFirstContact = date;
 };
 //constructor components for prospect data
-
+ClientDataPackage.prototype.add_prospect_name = function(lastName, firstName) {
+    this.prospect.prospectName = {};
+    this.prospect.prospectName.prospectLastName = lastName;
+    this.prospect.prospectName.prospectFirstName = firstName;
+};
+ClientDataPackage.prototype.add_prospect_phone = function(phone) {
+    this.prospect.prospectPhone = phone;
+};
+ClientDataPackage.prototype.add_prospect_address = function(street, city, state, zip) {
+    this.prospect.prospectAddress = {};
+    this.prospect.prospectAddress.prospectStreet = street;
+    this.prospect.prospectAddress.prospectCity = city;
+    this.prospect.prospectAddress.prospectState = state;
+    this.prospect.prospectAddress.prospectZip = zip; 
+};
+ClientDataPackage.prototype.add_dob = function(date) {
+    this.prospect.dateOfBirth = date;
+};
+ClientDataPackage.prototype.add_ssn = function(ssn) {
+    this.prospect.socialSecurityNum = ssn;
+};
+ClientDataPackage.prototype.add_insurance = function(medicare, masshealth, alternate) {
+    this.prospect.insuranceNums = {};
+    this.prospect.insuranceNums.medicareNum = medicare;
+    this.prospect.insuranceNums.massHealth = masshealth;
+    this.prospect.insuranceNums.insuranceNum = alternate;
+};
+ClientDataPackage.prototype.add_gender = function(gender) {
+    this.prospect.gender = gender;
+};
+ClientDataPackage.prototype.add_marital_status = function(status) {
+    this.prospect.maritalStatus = status;
+};
+ClientDataPackage.prototype.add_veteran = function(status, branch) {
+    this.prospect.veteranStatus = status;
+    this.prospect.serviceBranch = branch;
+};
+ClientDataPackage.prototype.add_religion = function(religion) {
+    this.prospect.religion = religion;
+};
+ClientDataPackage.prototype.add_education_level = function(education) {
+    this.prospect.levelOfEducation = education;
+};
+ClientDataPackage.prototype.add_current_housing = function(current) {
+    this.prospect.currentHousing = current;
+};
+ClientDataPackage.prototype.add_lead_status = function(lead) {
+    this.prospect.leadStatus = lead;
+};
+ClientDataPackage.prototype.add_poa = function(firstName, lastName, phone, secPhone) {
+    this.prospect.poa = {};
+    this.prospect.poa.poaName = {};
+    this.prospect.poa.poaName.poaFirstName = firstName;
+    this.prospect.poa.poaName.poaLastName = lastName;
+    this.prospect.poa.poaPhone = phone;
+    this.prospect.poa.poaSecPhone = secPhone;
+};
+ClientDataPackage.prototype.add_hcp = function(firstName, lastName, phone, secPhone) {
+    this.prospect.hcp = {};
+    this.prospect.hcp.hcpName = {};
+    this.prospect.hcp.hcpName.hcpFirstName = firstName;
+    this.prospect.hcp.hcpName.hcpLastName = lastName;
+    this.prospect.hcp.hcpPhone = phone;
+    this.prospect.hcp.hcpSecPhone = secPhone;
+};
+ClientDataPackage.prototype.add_dnr = function(dnr) {
+    this.prospect.dnr = dnr;
+};
+ClientDataPackage.prototype.add_emergency_contact = function(firstName, lastName, phone, secPhone) {
+    this.prospect.eContact = {};
+    this.prospect.eContact.eContactName = {};
+    this.prospect.eContact.eContactName.eContactFirstName = firstName;
+    this.prospect.eContact.eContactName.eContactLastName = lastName;
+    this.prospect.eContact.eContactPhone = phone;
+    this.prospect.eContact.eContactAltPhone = secPhone;
+};
+ClientDataPackage.prototype.add_alt_contact = function(firstName, lastName, phone, secPhone) {
+    this.prospect.altEmergContact = {};
+    this.prospect.altEmergContact.altContactName = {};
+    this.prospect.altEmergContact.altContactName.altContactFirstName = firstName;
+    this.prospect.altEmergContact.altContactName.altContactLastName = lastName;
+    this.prospect.altEmergContact.altContactPhone = phone;
+    this.prospect.altEmergContact.altContactAltPhone = secPhone;
+};
+ClientDataPackage.prototype.add_hospital = function(hospital) {
+    this.prospect.prefHospital = hospital;
+};
+ClientDataPackage.prototype.add_followup_date = function(date) {
+    this.prospect.followUpDate = date;
+};
+ClientDataPackage.prototype.add_date_added = function(date) {
+    this.prospect.dateAddedtoDB = date;
+};
 //constructor components for housing data
-
+ClientDataPackage.prototype.add_housing_type = function(housing) {
+    this.housingAssistance.housingType = housing;
+};
+ClientDataPackage.prototype.add_assistance = function(bath, dress, groom, med, amb) {
+    this.housingAssistance.assistanceNeeded = {};
+    this.housingAssistance.assistanceNeeded.bathing = bath;
+    this.housingAssistance.assistanceNeeded.dressing = dress;
+    this.housingAssistance.assistanceNeeded.grooming = groom;
+    this.housingAssistance.assistanceNeeded.medAssist = med;
+    this.housingAssistance.assistanceNeeded.ambulation = amb;
+};
+ClientDataPackage.prototype.add_apt_preference = function(primary, secondary) {
+    this.housingAssistance.primaryAptPref = primary;
+    this.housingAssistance.secondaryAptPref = secondary;
+};
+ClientDataPackage.prototype.add_move_date = function(date) {
+    this.housingAssistance.estimatedMoveDate = date;
+};
+ClientDataPackage.prototype.add_additional_service = function(services) {
+    this.housingAssistance.additionalServices = services;
+};
 //constructor components for financial data
-
+ClientDataPackage.prototype.add_payer_source = function(payer) {
+    this.financials.payerSource = payer;
+};
+ClientDataPackage.prototype.add_income = function(monthly, pension, social, ssi, va, other, otherSource) {
+    this.financials.income = {};
+    this.financials.income.monthlyIncome = monthly;
+    this.financials.income.pension = pension;
+    this.financials.income.socSecMonthly = social;
+    this.financials.income.ssi = ssi;
+    this.financials.income.vaBenefits = va;
+    this.financials.income.otherIncome = other;
+    this.financials.income.otherIncomeSources = otherSource;
+};
+ClientDataPackage.prototype.add_assets = function(property, bank, life, other, otherSource) {
+    this.financials.assets = {};
+    this.financials.assets.propertyValue = property;
+    this.financials.assets.bankAccounts = bank;
+    this.financials.assets.lifeInsurance = life;
+    this.financials.assets.otherAssets = other;
+    this.financials.assets.otherAssetsSource = otherSource;
+};
+ClientDataPackage.prototype.add_references = function(bankName, bankNumber, llName, llNumber) {
+    this.financials.bankReference = {};
+    this.financials.bankReference.bankRefName = bankName;
+    this.financials.bankReference.bankRefNumber = bankNumber;
+    this.financials.landlordReference = {};
+    this.financials.landlordReference.landlordRefName = llName;
+    this.financials.landlordReference.landlordRefNum = llNumber;
+};
 //constructor components for medical data
-
+ClientDataPackage.prototype.add_initial_assessment = function(schedDate, compDate, assessor) {
+    this.medical.initialAssessment = {};
+    this.medical.initialAssessment.assessSchedDate = schedDate;
+    this.medical.initialAssessment.assessCompDate = compDate;
+    this.medical.initialAssessment.assessedBy = assessor;
+};
+ClientDataPackage.prototype.add_alf_plan = function(planType) {
+    this.medical.alfPlanType = planType;
+};
+ClientDataPackage.prototype.add_allergies = function(allergies) {
+    this.medical.allergies = allergies;
+};
+ClientDataPackage.prototype.add_oxygen = function(oxygen) {
+    this.medical.oxygenStatus = oxygen;
+};
+ClientDataPackage.prototype.add_admit_meds = function(meds) {
+    this.medical.medsOnAdmit = meds;
+};
+ClientDataPackage.prototype.add_health_history = function(health) {
+    this.medical.healthIssues = health;
+};
+ClientDataPackage.prototype.add_ambulation = function(amb) {
+    this.medical.ambulation = amb;
+};
+ClientDataPackage.prototype.add_admit_homecare = function(homecare) {
+    this.medical.homeCareOnAdmit = homecare;
+};
+ClientDataPackage.prototype.add_diet = function(diet) {
+    this.medical.diet = diet;
+};
+ClientDataPackage.prototype.add_pcp = function(name, num, fax, address) {
+    this.medical.pcp = {};
+    this.medical.pcp.pcpName = name;
+    this.medical.pcp.pcpNum = num;
+    this.medical.pcp.pcpFax = fax;
+    this.medical.pcp.pcpAddress = address;
+};
+ClientDataPackage.prototype.add_physForm_received = function(date) {
+    this.medical.physFormRec = date;
+};
+ClientDataPackage.prototype.add_pharmacy = function(name) {
+    this.medical.pharmacy = name;
+};
+//constructor function for comments
+// ClientDataPackage.prototype.add_comments = function(user, text, date) {
+//     this.comments.user = user;
+//     this.comments.commentDate = date;
+//     this.comments.commentText = text;
+// };
 //variable to display contact form fields - used in data collection and presentation
 var clientContactDisplay =
     "<div data_type='contact' id='contact_information'>" +
@@ -84,8 +273,8 @@ var clientContactDisplay =
         "<form action='' method='post'>" +
         "<fieldset>" +
             "<legend>Additional Details</legend>" +
-            "<label for='rel_to_prospect'>Relationship to Prospect</label>" +
-            "<ul>" +
+            "<label for='rel_to_prospect' >Relationship to Prospect</label>" +
+            "<ul id='relation_to_prospect_list'>" +
                 "<li><input type='radio' disabled='' required name='rel_to_prospect' value='Self' id=rel_self' checked>Self</> " +
                 "<li><input type='radio' disabled='' required name='rel_to_prospect' value='Spouse' id=rel_spouse'>Spouse</> " +
                 "<li><input type='radio' disabled='' required name='rel_to_prospect' value='Adult Child' id=rel_child'>Adult Child</> " +
@@ -110,35 +299,467 @@ var clientContactDisplay =
     "<label for='edit_data_button'></label>" +
     "<button name='edit_data_button' id='edit_data_button' class=''>Edit</button>" +
     "<label for='submit_changes_button'></label>" +
-    "<button name='submit_changes_button' id='submit_changes_button' class='hidden'>Submit Changes</button>" 
+    "<button name='submit_changes_button' id='submit_changes_button' class='hidden'>Submit Changes</button>"
 ;
 //variable for prospect data display - used in data collection and display
-var clientProspectDisplay;
+var clientProspectDisplay = 
+    "<div id='prospect_information'>" +
+        "<form action='' method='post'>" +
+        "<fieldset>" +
+            "<legend>Prospect Contact Information</legend>" +
+            "<label for='prospect_last_name'>Last Name:  </label>" +
+            "<input type='text' disabled='' required id='prospect_last_name' placeholder='Johnson'>" +
+            "<label for='prospect_first_name'>First Name:  </label>" +
+            "<input type='text' disabled='' required id='prospect_first_name' placeholder='Joseph'>" +
+            
+            "<legend>Prospect Phone Numbers</legend>" +
+            "<label for='prospect_phone'>Prospect Phone:  </label>" +
+            "<input type='number' disabled='' maxlength='10' required id='prospect_primary_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='508-588-5555'>" +
+            
+            "<legend>Prospect Address</legend>" +
+            "<label for='prospect_street'>Street:  </label>" +
+            "<input type='text' disabled='' id='prospect_street' placeholder='123 Prospect St.'>" +
+            "<label for='prospect_city'>City:  </label>" +
+            "<input type='text' disabled='' id='prospect_city' placeholder='Brockton'>" +
+            "<label for='prospect_state'>State:  </label>" +
+            "<input type='text' disabled='' id='prospect_state' placeholder='MA'>" +
+            "<label for='prospect_zipcode'>Zip:  </label>" +
+            "<input type='number' disabled='' id='prospect_zipcode' placeholder='02301'>" +
+        "</fieldset>" +
+        "</form>" +
+    "</div>" +
+    "<div id='prospect_identification'>" +
+        "<form action='' method='post'>" +
+        "<fieldset>" +
+            "<legend>Prospect Identification</legend>" +
+            "<label for='date_of_birth'>Date of Birth </label>" +
+            "<input type='date' disabled='' id='date_of_birth' required name='date_of_birth'>" +
+            "<label for='ssn'>Social Security Number </label>" +
+            "<input type='number' disabled='' id='ssn' maxlength='9' required placeholder='000112222'> " +
+            "<label for='medicare'>Medicare Number </label>" +
+            "<input type='text' disabled='' id='medicare' required placeholder='000112222A'>" +
+            "<label for='massHealth'>MassHealth Number </label>" +
+            "<input type='text' disabled='' id='massHealth' placeholder='000111222333'>" +
+            "<label for='other_ins'>Other Insurance </label>" +
+            "<input type='text' disabled='' id='other_ins' placeholder='BCBS XX010101010'>" +
+        "</fieldset>" +
+        "</form>" +
+    "</div>" +
+    "<div id='prospect_addl_information'>" +
+        "<form action='' method='post'>" +
+        "<fieldset>" +
+            "<legend>Additional Information</legend>" +
+            "<label for='gender'>Gender</label>" +
+            "<ul>" +
+                "<li><input type='radio' disabled='' required name='gender' value='Male' id='male'>Male</>" +
+                "<li><input type='radio' disabled='' required name='gender' value='Female' id='female'>Female</>" +
+            "</ul>" +
+            "<label for='marital_status'>Marital Status</label>" +
+            "<ul>" +
+                "<li><input type='radio' disabled='' required name='marital_status' value='single' id='single'>Single</>" +
+                "<li><input type='radio' disabled='' required name='marital_status' value='married' id='married'>Married</>" +
+                "<li><input type='radio' disabled='' required name='marital_status' value='widowed' id='widowed'>Widowed</>" +
+                "<li><input type='radio' disabled='' required name='marital_status' value='separated' id='separated'>Separated</>" +
+            "</ul>" +
+            "<label for='veteran_status'>Veteran Status</label>" +
+            "<ul>" +
+                "<li><input type='radio' disabled='' required name='veteran_status' value='veteran' id='veteran'>Veteran:  </>" +
+                "<label for='service_branch'>Branch of Service:  </label><input type='text' id='service_branch' placeholder='Navy'>" +
+                "<li><input type='radio' disabled='' required name='veteran_status' value='Not a Veteran' id='notVet'>Not a Veteran</>" +
+            "</ul>" +
+            "<label id='religion'>Religion</label>" +
+            "<input type='text' disabled='' id='religion' placeholder='Lutheran'><br>" +
+
+            "<label for='education'>Highest Level of Education</label>" +
+            "<ul>" +
+                "<li><input type='radio' disabled='' required name='education' value='grade_school' id='grade_school'>Grade School</>" +
+                "<li><input type='radio' disabled='' required name='education' value='high_school' id='high_school'>High School</>" +
+                "<li><input type='radio' disabled='' required name='education' value='trade' id='trade'>Trade School</>" +
+                "<li><input type='radio' disabled='' required name='education' value='college' id='college'>College</>" +
+                "<li><input type='radio' disabled='' required name='education' value='post_grad' id='post_grad'>Post Graduate</>" +
+            "</ul>" +
+            "<label for='current_housing'>Current Housing Situation</label>" +
+            "<ul>" +
+                "<li><input type='radio' disabled='' required name='current_housing' value='Alone' id='housing_alone'>Alone</>" +
+                "<li><input type='radio' disabled='' required name='current_housing' value='With Spouse' id='housing_spouse'>With Spouse</>" +
+                "<li><input type='radio' disabled='' required name='current_housing' value='With Family' id='housing_family'>With Family</>" +
+                "<li><input type='radio' disabled='' required name='current_housing' value='Skilled Nursing Facility' id='housing_snf'>Skilled Nursing Facility</>" +
+                "<li><input type='radio' disabled='' required name='current_housing' value='Other Assisted Living Community' id='housing_alf'>Other Assisted Living Community</>" +
+                "<li><input type='radio' disabled='' required name='current_housing' value='Senior Housing' id='housing_senior'>Senior Housing</>" +
+            "</ul>" +
+            "<label for='lead_status'>Lead Status</label>" +
+            "<ul>" +
+                "<li><input type='radio' disabled='' name='lead_status' value='hot' id='lead_hot'>Hot</>" +
+                "<p>Move-in within 1-3 months.</p>" +
+                "<li><input type='radio' disabled='' name='lead_status' value='warm' id='lead_warm'>Warm</>" +
+                "<p>Move-in within 3-6 months.</p>" +
+                "<li><input type='radio' disabled='' name='lead_status' value='cool' id='lead_cool'>Cool</>" +
+                "<p>Move-in after 6 months.</p>" +
+            "</ul>" +
+            "<label for='date_to_alcis'>Date Entered in ALCIS:  </label>" + //can date be entered by server not user?
+            "<input type='date' disabled='' id='date_to_alcis' name='date_to_alcis'>" +
+            "<label for='follow_up_date'>Follow-up Date:  </label>" + //follow up assigned by server -e.g. dated added plus 3 months
+            "<input type='date' disabled='' id='follow_up_date' name='follow_up_date'>" +
+        "</fieldset>" +
+        "</form>" +
+    "</div>" +
+    "<div id='prospect_emergency_info'>" +
+        "<form action='' method='post'>" +
+        "<fieldset>" +
+            "<legend>Emergency Information</legend>" +
+            "<label id='pref_hospital'>Preferred Hospital</label>" +
+            "<ul>" +
+                "<li><input type='radio' disabled='' required name='pref_hospital' value='Brockton' id='hospital_brockton'>Signature Healthcare | Brockton Hospital</input>" +
+                "<li><input type='radio' disabled='' required name='pref_hospital' value='Good Samaritan id='hospital_goodsam'>Steward Healthcare | Good Samaritan Hospital</input>" +
+            "</ul>" +
+            "<legend>DNR Status</legend>" +
+            "<ul>" +
+                "<li><input type='radio' disabled='' name='dnr_status' value='DNR Present' id='dnr_present'>DNR</input>" +
+                "<li><input type='radio' disabled='' name='dnr_status' value='DNR Not Present' id='dnr_not_present'>No DNR</input>" +
+            "</ul>" +
+            "<legend>Power of Attorney</legend>" + //need to include buttons for same as (econtact, poa, hcp, etc)
+            "<label for='poa_last_name'>Last Name:  </label>" +
+            "<input type='text' disabled='' required id='poa_last_name' placeholder='Johnson'>" +
+            "<label for='poa_first_name'>First Name:  </label>" +
+            "<input type='text' disabled='' required id='poa_first_name' placeholder='Milly'>" +
+            "<label for='poa_primary_phone'>Primary Phone:  </label>" +
+            "<input type='number' disabled='' maxlength='10' required id='poa_primary_phone'pattern='\d{3}[\-]\d{3}[\-]\d{4}'  placeholder='508-588-5555'>" +
+            "<label for='poa_alt_phone'>Alternate Phone:  </label>" +
+            "<input type='number' disabled='' maxlength='10' id='poa_alt_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='508-588-5858'>" +
+
+            "<legend>Health Care Proxy</legend>" +
+            "<label for='hcp_last_name'>Last Name:  </label>" +
+            "<input type='text' disabled='' required id='hcp_last_name' placeholder='Johnson'>" +
+            "<label for='hcp_first_name'>First Name:  </label>" +
+            "<input type='text' disabled='' required id='hcp_first_name' placeholder='Milly'>" +
+            "<label for='hcp_primary_phone'>Primary Phone:  </label>" +
+            "<input type='number' disabled='' maxlength='10' required id='hcp_primary_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='508-588-5555'>" +
+            "<label for='hcp_alt_phone'>Alternate Phone:  </label>" +
+            "<input type='number' disabled='' maxlength='10' id='hcp_alt_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='508-588-5858'>" +
+
+            "<legend>Primary Emergency Contact</legend>" +
+            "<label for='pec_last_name'>Last Name:  </label>" +
+            "<input type='text' disabled='' required id='pec_last_name' placeholder='Johnson'>" +
+            "<label for='pec_first_name'>First Name:  </label>" +
+            "<input type='text' disabled='' required id='pec_first_name' placeholder='Milly'>" +
+            "<label for='pec_primary_phone'>Primary Phone:  </label>" +
+            "<input type='number' disabled='' maxlength='10' required id='pec_primary_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='508-588-5555'>" +
+            "<label for='pec_alt_phone'>Alternate Phone:  </label>" +
+            "<input type='number' disabled='' maxlength='10' id='pec_alt_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='508-588-5858'>" +
+
+            "<legend>Secondary Emergency Contact</legend>" +
+            "<label for='sec_last_name'>Last Name:  </label>" +
+            "<input type='text' disabled='' required id='sec_last_name' placeholder='Johnson'>" +
+            "<label for='sec_first_name'>First Name:  </label>" +
+            "<input type='text' disabled='' required id='sec_first_name' placeholder='Milly'>" +
+            "<label for='sec_primary_phone'>Primary Phone:  </label>" +
+            "<input type='number'disabled=''  maxlength='10' required id='sec_primary_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='508-588-5555'>" +
+            "<label for='sec_alt_phone'>Alternate Phone:  </label>" +
+            "<input type='number' disabled='' maxlength='10' id='sec_alt_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='508-588-5858'>" +
+        "</fieldset>" +
+        "</form>" +
+    "</div>"
+    ;
 //variable for housing data display - used in data collection and display
-var clientHousingDisplay;
+var clientHousingDisplay =
+    "<div id='housingAndAssist>" +
+        "<form action='' method='post'>" +
+        "<fieldset>" +
+            "<legend>Housing Type and Assistance Needed</legend>" +
+            "<label for='type_of_housing'>Type of Housing</label>" +
+            "<ul>" +
+                "<li><input type='radio' required name='type_of_housing' value='Independent' id='housing_ind'>Independent</input></li>" +
+                "<li><input type='radio' required name='type_of_housing' value='Assisted Living' id='housing_al'>Assisted Living</input></li>" +
+                "<li><input type='radio' required name='type_of_housing' value='Memory Care' id='housing_mc'>Memory Care</input></li>" +
+                "<li><input type='radio' required name='type_of_housing' value='GAFC' id='housing_gafc'>GAFC</input></li>" +
+            "</ul>" +
+            "<label id='assistance_needed'>Assistance Needed</label>" +
+            "<ul>" +
+                "<li><input type='checkbox' value='bathing'>Bathing: </input></li>" +
+                "<input type='text' id='bathing_detail' disabled=''  placeholder='Needs hands on assistance, lower body washing.'>" +
+                "<li><input type='checkbox' value='dressing'>Dressing: </input></li>" +
+                "<input type='text' id='dressing_detail' disabled=''  placeholder='Needs assistance with lower body dressing and buttons.'>" +
+                "<li><input type='checkbox' value='grooming'>Grooming: </input></li>" +
+                "<input type='text' id='grooming_detail' disabled='' placeholder='Needs cueing to soak dentures at night.'>" +
+                "<li><input type='checkbox' value='medication assistance'>Medication Assistance: </input></li>" +
+                "<input type='text' id='med_assist_detail' disabled='' placeholder='Needs SAMM reminders'>" +
+                "<li><input type='checkbox' value='ambulation'>Ambulation: </input></li>" +
+                "<input type='text' id='ambulation_detail' disabled='' placeholder='Needs escorts to meals and activities.'>" +
+                "<li><input type='checkbox' value='toileting'>Toileting: </input></li>" +
+                "<input type='text' id='toileting_detail' disabled='' placeholder='Occasional incontinence of bladder; needs cueing to change depends.'>" +
+            "</ul>" +
+            "<label for='prim_apt_pref'>Primary Apartment Preference</label>" +
+            "<ul>" +
+                "<li><input type='radio' disabled='' required name='prim_apt_pref' value='Studio' id='prim_pref_studio'>Studio</input></li>" +
+                "<li><input type='radio' disabled='' required name='prim_apt_pref' value='One Bedroom' id='prim_pref_onebed'>One Bedroom</input></li>" +
+                "<li><input type='radio' disabled='' required name='prim_apt_pref' value='One Bedroom Center' id='prim_pref_onebedcenter'>One Bedroom Center</input></li>" +
+                "<li><input type='radio' disabled='' required name='prim_apt_pref' value='One Bedroom Delux' id='prim_pref_onebeddelux'>One Bedroom Delux</input></li>" +
+                "<li><input type='radio' disabled='' required name='prim_apt_pref' value='Two Bedroom' id='prim_pref_twobed'>Two Bedroom</input></li>" +
+                "<li><input type='radio' disabled='' required name='prim_apt_pref' value='Cooperative Living' id='prim_pref_coop'>Cooperative Living</input></li>" +
+            "</ul>" +
+            "<label for='sec_apt_pref'>Secondary Apartment Preference</label>" +
+            "<ul>" +
+                "<li><input type='radio' disabled='' name='sec_apt_pref' value='Studio' id='sec_pref_studio'>Studio</input></li>" +
+                "<li><input type='radio' disabled='' name='sec_apt_pref' value='One Bedroom' id='sec_pref_onebed'>One Bedroom</input></li>" +
+                "<li><input type='radio' disabled='' name='sec_apt_pref' value='One Bedroom Center' id='sec_pref_onebedcenter'>One Bedroom Center</input></li>" +
+                "<li><input type='radio' disabled='' name='sec_apt_pref' value='One Bedroom Delux' id='sec_pref_onebeddelux'>One Bedroom Delux</input></li>" +
+                "<li><input type='radio' disabled='' name='sec_apt_pref' value='Two Bedroom' id='sec_pref_twobed'>Two Bedroom</input></li>" +
+                "<li><input type='radio' disabled='' name='sec_apt_pref' value='Cooperative Living' id='sec_pref_coop'>Cooperative Living</input></li>" +
+            "</ul>" +
+            "<label for='additional_services'>Additional Services</label>" +
+            "<ul>" +
+                "<li><input type='checkbox' disabled='' name='additional_services' value='Laundry' id='addt_laundry'>Laundry</input></li>" +
+                "<li><input type='checkbox' disabled='' name='additional_services' value='Housekeeping' id='addt_housekeeping'>Housekeeping</input></li>" +
+                "<li><input type='checkbox' disabled='' name='additional_services' value='Meals' id='addt_meals'>Meals</input></li>" +
+            "</ul>" +
+            "<label for='est_move_date'>Estimated Move-in Date: </label>" +
+            "<input type='date' id='est_move_date'>" +
+        "</fieldset>" +
+        "</form>" +
+    "</div>";
 //var for financial data display - used in data collection and display
-var clientFinancialDisplay;
+var clientFinancialDisplay = 
+    "<div id='gen_financial'>" +
+        "<form action='' method='post'>" +
+        "<fieldset>" +
+            "<legend>Financial Information</legend>" +
+            "<label for='payer_source'>Payer Source</label>" +
+            "<ul>" +
+                "<li><input type='radio' disabled='' required name='payer_source' value='Private' id='payer_private'>Private</input></li>" +
+                "<li><input type='radio' disabled='' required name='payer_source' value='MassHealth' id='payer_masshealth'>MassHealth | GAFC</input></li>" +
+                "<li><input type='radio' disabled='' required name='payer_source' value='SCP' id='payer_sco'>SCO: <span class='fade_text'>(Navicare, Senior Whole Health, Tufts, etc)</span></input></li>" +
+                "<li><input type='radio' disabled='' required name='payer_source' value='Long Term Care Insurance' id='payer_ltc'>Long Term Care Insurance</input></li>" +
+            "</ul>" +
+            "</fieldset>" +
+        "</form>" +
+    "</div>"+
+    "<div id='detail_financial'>" +
+        "<form action='' method='post'>" +
+        "<fieldset>" +
+            "<legend>Income and Assets</legend>" +
+            "<label for='income_social'>Monthly Social Security Income:  $</label>" +
+            "<input type='number'disabled=''  min='0.00' step='0.01' value='' id='income_social' placeholder='2000'></input><br>" +
+            "<label for='income_pension'>Monthly Pension Income:  $</label>" +
+            "<input type='number' disabled='' min='0.00' step='0.01' value='' id='income_pension' placeholder='2000'></input><br>" +
+            "<label for='income_ssi'>Monthly Supplemental Security (SSI) Income:  $</label>" +
+            "<input type='number' disabled='' min='0.00' step='0.01' value='' id='income_ssi' placeholder='2000'></input><br>" +
+            "<label for='income_va'>Monthly VA Benefits Income:  $</label>" +
+            "<input type='number' disabled='' min='0.00' step='0.01' value='' id='income_va' placeholder='2000'></input><br>" +
+            "<label for='income_other'>Other Monthly Income:  $</label>" +
+            "<input type='number' disabled='' min='0.00' step='0.01' value='' id='income_other' placeholder='2000'></input><br>" +
+            "<label for='income_other_source'>Source:  </label><input type='text' id='income_other_source' placeholder='alimony'></input><br>"+
+            "<label for='property_value'>Estimated Property Value: $</label>" +
+            "<input type='number' disabled='' min='0.00' step='0.01' value='' id='property_value' placeholder='2000'></input><br>" +
+            "<label for='bank_value'>Estimated Bank Accounts Value: $</label>" +
+            "<input type='number' disabled='' min='0.00' step='0.01' value='' id='bank_value' placeholder='2000'></input><br>" +
+            "<label for='life_ins_value'>Estimated Life Insurance Value: $</label>" +
+            "<input type='number' disabled='' min='0.00' step='0.01' value='' id='life_ins_value' placeholder='2000'></input><br>" +
+            "<label for='other_value'>Other Estimated Assets: $</label>" +
+            "<input type='number' disabled='' min='0.00' step='0.01' value='' id='other_value' placeholder='2000'></input><br>" +
+            "<label for='other_value_source'>Source:  </label><input type='text' id='other_value_source' placeholder='rental income'></input>"+
+        "</fieldset>" +
+        "</form>" +
+    "</div>" +
+        "<div id='references_financial'>" +
+        "<form action='' method='post'>" +
+        "<fieldset>" +
+            "<legend>Financial References</legend>" +
+            "<label for='bank_ref_name'>Bank Name:  </label>" +
+            "<input type='text' disabled='' id='bank_ref_name' placeholder='HarborOne'></input><br>" +
+            "<label for='bank_ref_number'>Bank Phone Number:  </label>" +
+            "<input type='number' disabled='' id=bank_ref_number' maxlength='10' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='5085885858'></input><br>" +
+            "<label for='landlord_ref_name'>Landlord Name:  </label>" +
+            "<input type='text' disabled='' id='landlord_ref_name' placeholder='Jim Smith'></input><br>" +
+            "<label for='landlord_ref_number'>Landlord Phone Number:  </label>" +
+            "<input type='number' disabled='' id=landlord_ref_number' maxlength='10' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='5085885858'></input>" +
+        "</fieldset>" +
+        "</form>" +
+    "</div>"
+    ;
 //var for medical data display - used in data collection and display
-var clientMedicalDisplay;
+var clientMedicalDisplay = 
+    "<div id='assessment_data'>" +
+        "<form action='' method='post'>" +
+        "<fieldset>" +
+            "<legend>Assessment Information</legend>" +
+            "<label for='assess_date'>Initial Assessment Scheduled:  </label>" +
+            "<input type='date' disabled='' id='assess_date'></input><br>" +
+            "<label for='assess_date_completed'>Initial Assessment Completed:  </label>" +
+            "<input type='date' disabled='' id='assess_dat_completed'></input><br>" +
+            "<label for='assessed_by'>Initial Assessment Completed By:  </label>" +
+            "<input type='text' disabled='' id='assessed_by' placeholder='Jane Smith, R.N.'></input><br>" +
+            "<label for='level_of_care'>Level Of Care</label>" +
+            "<ul>" +
+                "<li><input type='radio' disabled='' required name='level_of_care' id='care_ind' value='Independent'>Independent</input></li>" +
+                "<li><input type='radio' disabled='' required name='level_of_care' id='care_traditional' value='Traditional'>Traditional</input></li>" +
+                "<li><input type='radio' disabled='' required name='level_of_care' id='care_enhanced' value='Enhanced'>Enhanced</input></li>" +
+                "<li><input type='radio' disabled='' required name='level_of_care' id='care_comprehensive' value='Comprehensive'>Comprehensive</input></li>" +
+            "</ul>" +
+            "<label for='other_plans'>Special Plans</label>" +
+            "<ul>" +
+                "<li><input type='radio' disabled='' name='other_plans' id='care_memory' value='Memory Care'>Memory Care</input></li>" +
+                "<li><input type='radio' disabled='' name='other_plans' id='care_gafc' value='GAFC'>GAFC</input></li>" +
+            "</ul>" +
+        "</fieldset>" +
+        "</form>" +
+    "</div>" +
+    "<div id='allergies_data'>" +
+        "<form action='' method='post'>" +
+        "<fieldset>" +
+            "<legend>Allergy Information</legend>" +
+            "<input type='checkbox' disabled='' value='nkda' id='allergies_check'>No Known Drug Allergies</input><br>" +
+            "<label for='allergies'>Allergies:  </label>" +
+            "<input type='text' disabled='' id='allergies' placeholder='penicillin'></input><br>" +
+        "</fieldset>" +
+        "</form>" +
+    "</div>" +
+    "<div id='medical_data'>" +
+        "<form action='' method='post'>" +
+        "<fieldset>" +
+            "<legend>Medical Information</legend>" +
+            "<label for='meds_on_admit'>Medications Currently Taken:  </input>" +
+            "<input type='text' disabled='' id='meds_on_admit' placeholder='tylenol 500mg BID, lasix 40mg once daily'></input><br>" +
+            "<label for='health_issues'>Major Health Issues:  </input>" +
+            "<input type='text' disabled='' id='health_issues' placeholder='h/o TIA, s/p hip replacement, COPD'></input><br>" +
+        "</fieldset>" +
+        "</form>" +
+    "</div>" +
+    "<div id='dietary_data'>" +
+        "<form action='' method='post'>" +
+        "<fieldset>" +
+        "<legend>Dietary Needs</legend>" +
+        "<label for='dietary'>Diet and Consistency</label>" +
+        "<ul>" +
+            "<li><input type='checkbox' disabled='' required name='dietary' value='Regular' id='dietary_regular'>Regular</input></li>" +
+            "<li><input type='checkbox' disabled='' required name='dietary' value='No Added Salt' id='dietary_nas'>No Added Salt</input></li>" +
+            "<li><input type='checkbox' disabled='' required name='dietary' value='House Concentrated Carbohydrate' id='dietary_hcc'>House Concentrated Carbohydrate</input></li>" +
+            "<li><input type='checkbox' disabled='' required name='dietary' value='Cut Up' id='dietary_cut'>Cut Up</input></li>" +
+            "<li><input type='checkbox' disabled='' required name='dietary' value='Ground' id='dietary_ground'>Ground</input></li>" +
+            "<li><input type='checkbox' disabled='' required name='dietary' value='Puree' id='dietary_puree'>Puree</input></li>" +
+            "<li><input type='checkbox' disabled='' required name='dietary' value='Soft' id='dietary_soft'>Soft</input></li>" +
+        "</ul>" +
+        "</fieldset>" +
+        "</form>" +
+    "</div>" +
+    "<div id='pcp_data'>" +
+        "<form action='' method='post'>" +
+        "<fieldset>" +
+        "<legend>Primary Care Provider Information</legend>" +
+        "<label for='pcp_name'>Primary Care Physician:  </label>" +
+        "<input type='text' disabled='' id='pcp_name' placeholder='Dr.John Smith'></input><br>" +
+        "<label for='pcp_phone'>PCP Phone Number:  </label>" +
+        "<input type='number' disabled='' id='pcp_phone' maxlength='10' placeholder='5085558888'></input>" +
+        "<label for='pcp_fax'>PCP Fax Number:  </label>" +
+        "<input type='number' disabled='' id='pcp_fax' maxlength='10' placeholder='5088885555'></input><br>" +
+        "<label for='pcp_street'>Street:  </label>" +
+        "<input type='text' disabled='' id='pcp_street' placeholder='123 Prospect St.'>" +
+        "<label for='pcp_city'>City:  </label>" +
+        "<input type='text' disabled='' id='pcp_city' placeholder='Brockton'>" +
+        "<label for='pcp_state'>State:  </label>" +
+        "<input type='text' disabled='' id='pcp_state' placeholder='MA'>" +
+        "<label for='pcp_zipcode'>Zip:  </label>" +
+        "<input type='number' disabled='' id='pcp_zipcode' placeholder='02301'>" +
+        "<label for='phys_form'>Physician Form Received</input>" +
+        "<input type='checkbox' disabled='' name='phys_form' id='phys_form_box' value='Physician Form Received'></input>" +
+        "<input type='date' disabled='' name='phys_form' id='phys_form_date'></input>" +
+        "</fieldset>" +
+        "</form>" +
+    "</div>" +
+    "<div id='pcp_data'>" +
+        "<form action='' method='post'>" +
+        "<fieldset>" +
+            "<legend>Pharmacy</legend>" +
+            "<label for='pharmacy_choice'>Pharmacy</label>" +
+            "<ul>" +
+                "<li><input type='radio' disabled='' required name='pharmacy_choice' id='pharmacy_gb' value='Greater Boston LTC'>Greater Boston</input></li>" +
+                "<li><input type='radio' disabled='' required name='pharmacy_choice' id='pharmacy_apothecare' value='Apothecare'>Apothecare</input></li>" +
+                "<li><input type='radio' disabled='' required name='pharmacy_choice' id='pharmacy_va' value='VA'>VA</input></li>" +
+                "<li><input type='radio' disabled='' required name='pharmacy_choice' id='pharmacy_mail' value='Mail Order Pharmacy'>Mail Order Pharmacy</input></li>" +
+                "<li><input type='radio' disabled='' required name='pharmacy_choice' id='pharmacy_other' value='Other Pharmacy'>Other Pharmacy</input></li>" +
+            "</ul>" +
+        "</fieldset>" +
+        "</form>" +
+    "</div>"
+    ;
 //var for comments display - used for displaying and adding comments
 var clientCommentsDisplay;
-function genClientDataPackage(client_id) {
+// var dataManipButtons = 
+//     "<label for='submit_data_button'></label>" +
+//     "<button name='submit_data_button' id='submit_data_button' class='hidden'>Submit</button>" +
+//     "<label for='edit_data_button'></label>" +
+//     "<button name='edit_data_button' id='edit_data_button' class=''>Edit</button>" +
+//     "<label for='submit_changes_button'></label>" +
+//     "<button name='submit_changes_button' id='submit_changes_button' class='hidden'>Submit Changes</button>"
+//     ;
+//used for update commands to document for contact data
+function generateClientPackage(client_id) {
+    console.log(client_id);
     var client = new ClientDataPackage(client_id);
     client.add_contact_name($('#contact_last_name').val(), $('#contact_first_name').val());
     client.add_contact_phone($('#contact_primary_phone').val(), $('#contact_alt_phone').val());
     client.add_contact_address($('#contact_street').val(), $('#contact_city').val(), $('#contact_state').val(), $('#contact_zipcode').val());
     client.add_contact_email($('#contact_email').val());
-    client.add_contact_relationToProspect($('rel_to_prospect').val());
-    client.add_contact_referral($('.referral_source').val());
-    client.add_first_contact($('#first_contact_date').val());  
+    client.add_contact_relationToProspect($('input[name="rel_to_prospect"]:checked').val());
+    client.add_contact_referral($('input[name="referral_source"]:checked').val());
+    client.add_first_contact($('#first_contact_date').val());
+    // prospect data
+    client.add_prospect_name($('#prospect_last_name').val(), $('#prospect_first_name').val());
+    client.add_prospect_phone($('#prospect_primary_phone').val());
+    client.add_prospect_address($('#prospect_street').val(), $('#prospect_city').val(), $('#prospect_state').val(), $('#prospect_zipcode').val());
+    client.add_dob($('#date_of_birth').val());
+    client.add_ssn($('#ssn').val());
+    client.add_insurance($('#medicare').val(), $('#massHealth').val(), $('#other_ins').val());
+    client.add_gender($('input[name="gender"]:checked').val());
+    client.add_marital_status($('input[name="marital_status"]:checked').val());
+    client.add_veteran($('input[name="veteran_status"]:checked').val(), $('#service_branch').val());
+    client.add_religion($('#religion').val());
+    client.add_education_level($('input[name="education"]:checked').val());
+    client.add_current_housing($('input[name="current_housing"]:checked').val());
+    client.add_lead_status($('input[name="lead_status"]:checked').val());
+    client.add_poa($('#poa_last_name').val(), $('#poa_first_name').val(), $('#poa_primary_phone').val(), $('#poa_alt_phone').val());
+    client.add_hcp($('#hcp_last_name').val(), $('#hcp_first_name').val(), $('#hcp_primary_phone').val(), $('#hcp_alt_phone').val());
+    client.add_dnr($('input[name="dnr_status"]:checked').val());
+    client.add_emergency_contact($('#pec_last_name').val(), $('#pec_first_name').val(), $('#pec_primary_phone').val(), $('#pec_alt_phone').val());
+    client.add_alt_contact($('#sec_last_name').val(), $('#sec_first_name').val(), $('#sec_primary_phone').val(), $('#sec_alt_phone').val());
+    client.add_hospital($('input[name="pref_hospital"]:checked').val());
+    client.add_followup_date($('#follow_up_date').val());
+    client.add_date_added($('#date_to_alcis').val());
+    //housing data
+    client.add_housing_type($('input[name="type_of_housing"]:checked').val());
+    client.add_assistance($('#bathing_detail').val(), $('#dressing_detail').val(), $('#grooming_detail').val(), $('#med_assist_detail').val(), 
+    $('#ambulation_detail').val(), $('#toileting_detail').val());
+    client.add_apt_preference($('input[name="prim_apt_pref"]:checked').val(), $('input[name="sec_apt_pref"]:checked').val());
+    client.add_move_date($('#est_move_date').val());
+    client.add_additional_service($('input[name="additional_services"]:checked').val());
+    //financial data
+    client.add_payer_source($('input[name="payer_source"]:checked').val());
+    client.add_income($('#income_social').val(), $('#income_pension').val(), $('#income_ssi').val(), $('#income_va').val(), $('#income_other').val(), $('#income_other_source').val());
+    client.add_assets($('#property_value').val(), $('#bank_value').val(), $('#life_ins_value').val(), $('#other_value').val());
+    client.add_references($('#bank_ref_name').val(), $('#bank_ref_number').val(), $('#landlord_ref_name').val(), $('#landlord_ref_number').val());
+    //medical
+    client.add_initial_assessment($('#assess_date').val(), $('assess_date_completed').val(), $('#assessed_by').val());
+    client.add_alf_plan($('input[name="level_of_care"]:checked').val(), $('input[name="other_plans"]:checked').val());
+    client.add_allergies($('#allergies').val(), $('#allergies_check'));
+    client.add_oxygen();
+    client.add_admit_meds($('#meds_on_admit').val());
+    client.add_health_history($('#health_issues').val());
+    client.add_ambulation();
+    client.add_admit_homecare();
+    client.add_diet($('input[name="dietary"]:checked').val());
+    client.add_pcp($('#pcp_name').val(), $('#pcp_phone').val(), $('#pcp_fax').val(), $('#pcp_street').val(), $('#pcp_city').val(), $('#pcp_state').val(), $('#pcp_zipcode').val());
+    client.add_physForm_received($('#phys_form_date').val(), $('input[name="phys_form_box"]:checked').val());
+    client.add_pharmacy($('input[name="pharmacy_choice"]:checked').val());
+    //comments
+    // client.add_comments();
     return client;
 }
 //API CALLS
 //(CREATE) creates the new client data package by pulling form values 
 function createNewClient(client_id, callback) {
-    var client = genClientDataPackage(client_id);
+    var client = generateClientPackage(client_id);
+    console.log(client);
     var settings = {
-        url: 'https://node-unit-project-kellator.c9users.io/clients/',
+        url: databaseUrl + 'clients/',
         dataType: 'json',
         method: 'POST',
         data: JSON.stringify(client),
@@ -154,7 +775,7 @@ function createNewClient(client_id, callback) {
 //(READ) searches complete client collection based on specified criteria and returns matching list
 function getClientList(searchName, callback) {
     var settings = {
-        url: databaseUrl,
+        url: databaseUrl + 'clients/',
         dataType: 'json',
         data: searchName,
         method: 'GET',
@@ -168,7 +789,7 @@ function getClientList(searchName, callback) {
 //(READ) pulls specific client document from collection to display client data package to user
 function getClientInformation(client_id, callback) {
     var settings = {
-        url: databaseUrl + client_id,
+        url: databaseUrl + 'clients/' + client_id,
         dataType: 'json',
         method: 'GET',
         success: function(data) {
@@ -181,9 +802,9 @@ function getClientInformation(client_id, callback) {
 //(UPDATE) updates components of client data document per user input
 function updateClientInformation(client_id, callback) {
     console.log(client_id);
-    var update = genClientDataPackage(client_id);
+    var update = generateClientPackage(client_id);
     var settings = {
-        url: databaseUrl + client_id,
+        url: databaseUrl + 'clients/' + client_id,
         dataType: 'json',
         method: 'PUT',
         data: JSON.stringify(update),
@@ -200,7 +821,7 @@ function updateClientInformation(client_id, callback) {
 function deleteClientData(client_id, callback) {
     console.log(client_id);
     var settings = {
-        url: databaseUrl + client_id,
+        url: databaseUrl + 'clients/' + client_id,
         dataType: 'json',
         method: 'DELETE',
         success: function(data) {
@@ -211,11 +832,13 @@ function deleteClientData(client_id, callback) {
 }
 //alert callback for creation of new client document
 function alertForCreatedClient() {
-    alert("you have created a new client");
+    alert("You have created a new client.");
+    $('.display_area :input').prop('disabled', true);
 }
 //alert callback for update of client document
 function alertForUpdatedClient() {
     alert("You have changed client information.");
+    $('.display_area :input').prop('disabled', true);
 }
 //alert callback for removal of client document
 function alertForDeletedClient() {
@@ -233,10 +856,10 @@ function getAndDisplayClientData(client_id) {
 //renders input forms to the DOM 
 function enterNewClientData() {
     $("#contact_block").html(clientContactDisplay);
-    $("#prospect_block").html();
-    $("#housing_block").html();
-    $("#financials_block").html();
-    $("#medical_block").html();
+    $("#prospect_block").html(clientProspectDisplay);
+    $("#housing_block").html(clientHousingDisplay);
+    $("#financials_block").html(clientFinancialDisplay);
+    $("#medical_block").html(clientMedicalDisplay);
     $("#comments_block").html();
 }
 //renders list of search results from READ call in html - client names are rendered as links to collection documents
@@ -276,13 +899,13 @@ function displayClientData(data) {
                 "<h3 class='client_dash_head'>Client Dashboard</h3>" +
                 "<div class='client_dash_info'>" +
                     "<ul>" +
-                        // "<li>Prospect Name:  </li>" +
-                        // "<li>DOB:  </li>" +
+                        // "<li>Prospect Name:  " + data.prospect.prospectName.prospectFirstName + " " + data.prospect.prospectName.prospectLastName + "</li>" +
+                        // "<li>DOB:  " + data.prospect.dateOfBirth + "</li>" +
                         "<li id='dash_contact_name'>Contact Name:  " + data.contact.contactName.contactFirstName + " " + data.contact.contactName.contactLastName + "</li>" +
                         "<li>Contact Primary Phone:  " + data.contact.contactPrimaryPhone + "</li>" +
-                        // "<li id='dash_lead_status'>Lead Status:  </li>" +
-                        // "<li id='dash_hospital'>Hospital:  </li>" +
-                        // "<li id='dash_dnr_status'>DNR Status:  </li>" +
+                        // "<li id='dash_lead_status'>Lead Status:  " + data.prospect.leadStatus + "</li>" +
+                        // "<li id='dash_hospital'>Hospital:  " + data.prospect.prefHospital + "</li>" +
+                        // "<li id='dash_dnr_status'>DNR Status:  " + data.prospect.dnr + "</li>" +
                     "</ul>" +
                 "</div>" +
                 "<form action='' method='post'>" +
@@ -303,14 +926,55 @@ function displayClientData(data) {
         contactDisplay.find('#rel_to_prospect').val(data.contact.relationToProspect);
         contactDisplay.find('#first_contact_date').val(data.contact.dateOfFirstContact);
         console.log(data.contact.dateOfFirstContact);
+        console.log(data.prospect);
         var prospectDisplay = $(clientProspectDisplay);
-        $("#contact_block").html(contactDisplay);
-        $("#prospect_block").html();
-        $("#housing_block").html();
-        $("#financials_block").html();
-        $("#medical_block").html();
-        $("#comments_block").html();
-        $("#client_dash").html(clientDashDisplay);
+        // prospectDisplay.find('#prospect_first_name').val(data.prospect.prospectName.prospectFirstName);
+        // prospectDisplay.find('#prospect_last_name').val(data.prospect.prospectName.prospectLastName);
+        // prospectDisplay.find('#prospect_phone').val(data.prospect.prospectPhone);
+        // prospectDisplay.find('#prospect_street').val(data.prospect.prospectAddress.prospectStreet);
+        // prospectDisplay.find('#prospect_city').val(data.prospect.prospectAddress.prospectCity);
+        // prospectDisplay.find('#prospect_state').val(data.prospect.prospectAddress.prospectState);
+        // prospectDisplay.find('#prospect_zipcode').val(data.prospect.prospectAddress.prospectZip);
+        // prospectDisplay.find('#date_of_birth').val(data.prospect.dateOfBirth);
+        // prospectDisplay.find('#ssn').val(data.prospect.socialSecurityNum);
+        // prospectDisplay.find('#medicare').val(data.prospect.insuranceNums.medicareNum);
+        // prospectDisplay.find('#masshealth').val(data.prospect.insuranceNums.massHealth);
+        // prospectDisplay.find('#other_ins').val(data.prospect.insuranceNums.insuranceNum);
+        // prospectDisplay.find('gender').val(data.prospect.gender);
+        // prospectDisplay.find('marital_status').val(data.prospect.maritalStatus);
+        // prospectDisplay.find('veteran_status').val(data.prospect.veteranStatus);
+        // prospectDisplay.find('#service_branch').val(data.prospect.serviceBranch);
+        // prospectDisplay.find('#religion').val(data.prospect.religion);
+        // prospectDisplay.find('education').val(data.prospect.levelOfEducation);
+        // prospectDisplay.find('current_housing').val(data.prospect.currentHousing);
+        // prospectDisplay.find('lead_status').val(data.prospect.leadStatus);
+        // prospectDisplay.find('#poa_first_name').val(data.prospect.poa.poaName.poaFirstName);
+        // prospectDisplay.find('#poa_last_name').val(data.prospect.poa.poaName.poaLastName);
+        // prospectDisplay.find('#poa_primary_phone').val(data.prospect.poa.poaPhone);
+        // prospectDisplay.find('#poa_alt_phone').val(data.prospect.poa.poaSecPhone);
+        // prospectDisplay.find('#hcp_first_name').val(data.prospect.hcp.hcpName.hcpFirstName);
+        // prospectDisplay.find('hcp_last_name').val(data.prospect.hcp.hcpName.hcpLastName);
+        // prospectDisplay.find('#hcp_primary_phone').val(data.prospect.hcp.hcpPhone);
+        // prospectDisplay.find('#hcp_alt_phone').val(data.prospect.hcp.hcpSecPhone);
+        // prospectDisplay.find('#pec_first_name').val(data.prospect.eContact.eContactName.eContactFirstName);
+        // prospectDisplay.find('#pec_last_name').val(data.prospect.eContact.eContactName.eContactLastName);
+        // prospectDisplay.find('#pec_primary_phone').val(data.prospect.eContact.eContacPhone);
+        // prospectDisplay.find('#pec_alt_phone').val(data.prospect.eContact.eContactAltPhone);
+        // prospectDisplay.find('#sec_first_name').val(data.prospect.altEmergContact.altContactName.altContactFirstName);
+        // prospectDisplay.find('#sec_last_name').val(data.prospect.altEmergContact.altContactName.altContactLastName);
+        // prospectDisplay.find('#sec_primary_phone').val(data.prospect.altEmergContact.altContactPhone);
+        // prospectDisplay.find('#sec_alt_phone').val(data.prospect.altEmergContact.altContactAltPhone);
+        var housingDisplay = $(clientHousingDisplay);
+        var financialDisplay = $(clientFinancialDisplay);
+        var medicalDisplay = $(clientMedicalDisplay);
+        var commentsDisplay;
+        $('#contact_block').html(contactDisplay);
+        $('#prospect_block').html(prospectDisplay);
+        $('#housing_block').html(housingDisplay);
+        $('#financials_block').html(financialDisplay);
+        $('#medical_block').html(medicalDisplay);
+        $('#comments_block').html(commentsDisplay);
+        $('#client_dash').html(clientDashDisplay);
     }
 }
 //EVENT HANDLERS
@@ -324,15 +988,16 @@ function newClientHandler() {
         $('#edit_data_button').addClass('hidden');
         $('.client_search_results_list' ).empty();
         $('#client_dash').empty();
-        $('#contact_block').removeClass('hidden');
+        $('#data_block').children().removeClass('hidden');
+        $('#data_nav_bar').removeClass('hidden');
         console.log('new client button pushed');
-        console.log($(this));
     });
 }
 //triggers the CREATE API call and creates new document in the collection
 function dataSubmitHandler(client_id) {
     $('body').on('click', '#submit_data_button', function(event) {
         event.preventDefault();
+        console.log(client_id);
         createNewClient(client_id, alertForCreatedClient);
         console.log('new data submit button clicked');
     });
@@ -353,8 +1018,10 @@ function clientListSelectHandler() {
     $('body').on('click', '.search_result_return', function(event) {
         event.preventDefault();
         getAndDisplayClientData($(this).attr('client_id'));
+        // $('#manip_data_buttons').html(dataManipButtons);
         $('.display_area :input').prop('disabled', true);
-        $('#contact_block').removeClass('hidden');
+        $('#data_block').children().removeClass('hidden');
+        $('#data_nav_bar').removeClass('hidden');
         $('#submit_data_button').addClass('hidden');
         $('#edit_data_button').removeClass('hidden');
         $('.client_search_results_list').toggleClass('hidden');
@@ -405,11 +1072,21 @@ function resetClientSearchHandler() {
         $('.client_search_results_list' ).empty();
         $('#data_block').children('div').empty();
         $('#client_dash').empty();
+        $('#data_nav_bar').addClass('hidden');
         console.log('reset search button pushed');
+    });
+}
+//for development only
+function bypassLoginHandler() {
+    $('body').on('click', '#bypass_login', function(event) {
+        event.preventDefault();
+        $('#login_page').addClass('hidden');
+        $('#dashboard').removeClass('hidden');
     });
 }
 //ready function
 $(function() {
+    bypassLoginHandler();
     newClientHandler();
     dataSubmitHandler();
     submitChangesHandler();
@@ -419,569 +1096,3 @@ $(function() {
     clientListSelectHandler();
     deleteClientHandler();
 });
-
-
-
-//what api return data will look like: /api/client_id
-// var Mock_Client_Data = {
-//     "client_id": [
-//         {
-//             "contact": {
-//                 "contactName": {
-//                     "contactLastName": "Last Name",
-//                     "contactFirstName": "First Name"
-//                 },
-//                 "contactPrimaryPhone": "5085885334", //10-digit numbers only
-//                 "contactSecondaryPhone": "5085885334",
-//                 "contactAddress": {
-//                     "contactStreet": "Street Address",
-//                     "contactCity": "City",
-//                     "contactState": "State",
-//                     "contactZip": "02301"
-//                 },
-//                 "contactEmail": "contactemail@gmail.com",
-//                 "relationToProspect": "relationship to prospect", //radio with adult child, spouse, friend, guardian, etc
-//                 "referralSource": "Referral Source",
-//                 "referredBy": "Referred By",
-//                 "dateOfFirstContact": "2017-01-01" //use date function
-//             },
-
-//     }]
-// };
-    //         "prospect": {
-    //             "prospectName": {
-    //                 "prospectLastName": "Last Name",
-    //                 "prospectFirstName": "First Name"
-    //             },
-    //             "prospectPhone": "5085885334", // 10-digit numbers only ? same as contact button?
-    //             "prospectAddress": "Prospect Address",
-    //             "dateOfBirth": "01011920", //8 digit date - 2 digit month, 2 digit day, 4 digit year
-    //             "socialSec": "011010111", //9 digit number
-    //             "insNumbers": {
-    //                 "medicareNum": "011010111A", //9 digit number with one or two letters
-    //                 "massHealth": "10101010101",
-    //                 "insuranceNum": "XX010101010"
-    //             },
-    //             "gender": "Gender", //radio male female
-    //             "maritalStatus": "Marital Status",
-    //             "veteranStatus": "Veteran Status", //radio yes vet - text input service
-    //             "religion": "Religion",
-    //             "levelOfEducation": "Level of Education",
-    //             "currentHousing": "Current Living Situation",
-    //             "leadStatus": "Lead Status",
-    //             "poa": {
-    //                 "poaName": "POA Name",
-    //                 "poaPhone": "POA Phone"
-    //             },
-    //             "hcp": {
-    //                 "hcpName": "HCP Name",
-    //                 "hcpPhone": "HCP Phone"
-    //             },
-    //             "dnr": "DNR Status", //create alert box on dashboard
-    //             "eContact": {
-    //                 "eContactName": "Emergency Contact Name",
-    //                 "eContactPhone": "5085885334"
-    //             },
-    //             "altEmergContact": {
-    //                 "altContactName": "Alternate Emergency Contact Name",
-    //                 "altContactPhone": "5085885334"
-    //             },
-    //             "prefHospital": "Preferred Hospital",
-    //             "followUpDate": "01012017", //8 digit date
-    //             "dateAddedtoDB": "01012017"
-    //         },
-    //         "housingAssistance": {
-    //             "housingType": "Type of Housing", // radio Independent, Assisted Living, Memory Care, GAFC
-    //             "assistanceNeeded": {
-    //                 "bathing": "detail of bathing assist",
-    //                 "dressing": "detail of dressing assist",
-    //                 "grooming": "detail of grooming assist",
-    //                 "medAssist": "detail of medication assistance",
-    //                 "ambulation": "detail of ambulation assistance"
-    //             },
-    //             "primaryAptPref": "Primary Apartment Type Preference",
-    //             "secondaryAptPref": "Second Choice Apartment Preference",
-    //             "estimatedMoveDate": "01012017", //8 digit date
-    //             "additionalServices": "Additional Services incl. laundry, housekeeping, meals",
-    //             "appOrDec": "Approved or declined"
-    //         },
-    //         "financials": {
-    //             "appFee": "Application fee paid",
-    //             "payerSource": "Payer Source", //private, LTC ins, MassHealth, Navicare, etc
-    //             "income": {
-    //                 "monthlyIncome": "Monthly Income", //should generate from other entries
-    //                 "pension": "Monthly Pension", //income is numbers only
-    //                 "socSecMonthly": "Monthly Social Security Wages",
-    //                 "ssi": "SSI Income",
-    //                 "vaBenefits": "Monthly VA Benefits",
-    //                 "otherIncome": "Other Monthly Income",
-    //                 "otherIncomeSource": "Other Income Source" //text input
-    //             },
-    //             "assets": {
-    //                 "propertyValue": "Estimated Property Assets",
-    //                 "bankAccounts": "Estimate Bank Account Amounts",
-    //                 "lifeInsurance": "Estimated Value of Life Insurance",
-    //                 "otherAssets": "Estimated value of other assets",
-    //                 "otherAssetsSource": "Source of other assets"
-    //             },
-    //             "bankReference": {
-    //                 "bankRefName": "Bank Reference Name",
-    //                 "bankRefNumber": "Bank Reference Phone Number"
-    //             },
-    //             "landlordReference": {
-    //                 "landlordRefName": "Landlord Reference Name",
-    //                 "landlordRefNum": "Landlord Reference Number"
-    //             }
-    //         },
-    //         "medical": {
-    //             "initialAssessment": {
-    //                 "assessSchedDate": "01012017", //8 digit date of initial assessment
-    //                 "assessCompDate": "01012017",
-    //                 "assessedBy": "Name of Assessor"
-    //             },
-    //             "alfPlanType": "Care Plan Level",
-    //             "allergies": "Any known allergies",
-    //             "oxygenStatus": "Is prospect oxygen dependent?",
-    //             "medsOnAdmit": "List of medications on admission",
-    //             "healthIssues": "Any major health issues or disabilities",
-    //             "ambulation": "Assistance with Ambulation",
-    //             "homeCareOnAdmit": "Prospect receives home care prior to admission",
-    //             "diet": "Dietary needs",
-    //             "pcp": {
-    //                 "pcpName": "Primary Care Physician Name",
-    //                 "pcpNum": "PCP Phone Number",
-    //                 "pcpFax": "PCP Fax Number",
-    //                 "pcpAddress": "PCP Address"
-    //             },
-    //             "physFormRec": "01012017", //8 digit date physician form received
-    //             "pharmacy": "Name of Pharmacy",
-    //             //following information is collected in prospect section
-    //             "poa": {
-    //                 "poaName": "POA Name",
-    //                 "poaPhone": "POA Phone"
-    //             },
-    //             "hcp": {
-    //                 "hcpName": "HCP Name",
-    //                 "hcpPhone": "HCP Phone"
-    //             },
-    //             "dnr": "DNR", //create alert box on dashboard
-    //             "eContact": {
-    //                 "eContactName": "Emergency Contact Name",
-    //                 "eContactPhone": "5085885334"
-    //             },
-    //             "altEmergContact": {
-    //                 "altContactName": "Alternate Emergency Contact Name",
-    //                 "altContactPhone": "5085885334"
-    //             },
-    //             "prefHospital": "Preferred Hospital",
-    //         },
-    //         "comments": {
-    //             "user" : "user who creates comment",
-    //             "commentDate": "01012017", //8 digit date comment entered
-    //             "commentText": "Comment Text"
-    //         }
-
-// other code for when it actually does something
-//var newProspectEntryMsg =
-//     "<div id='prospect_information'>" +
-//         "<form action='' method='post'>" +
-//         "<fieldset>" +
-//             "<legend>Prospect Contact Information</legend>" +
-//             "<label for='prospect_last_name'>Last Name:  </label>" +
-//             "<input type='text' required id='prospect_last_name' placeholder='Johnson'>" +
-//             "<label for='prospect_first_name'>First Name:  </label>" +
-//             "<input type='text' required id='prospect_first_name' placeholder='Joseph'>" +
-//             "<label class='enter_button' for='enter_prospect_name_button'></label>" +
-//             "<button name='enter_prospect_name_button' id='enter_prospect_name'>Enter</button>" +
-//             "<legend>Prospect Phone Numbers</legend>" +
-//             "<label for='prospect_primary_phone'>Primary Phone:  </label>" +
-//             "<input type='number' maxlength='10' required id='contact_primary_phone' placeholder='508-588-5555'>" +
-//             "<label for='prospect_alt_phone'>Alternate Phone:  </label>" +
-//             "<input type='number' maxlength='10' id='contact_alt_phone' placeholder='508-588-5858'>" +
-//             "<label class='enter_button' for='enter_prospect_phone_button'></label>" +
-//             "<button name='enter_prospect_phone_button' id='enter_prospect_phone'>Enter</button>" +
-//             "<legend>Prospect Address</legend>" +
-//             "<label for='prospect_street'>Street:  </label>" +
-//             "<input type='text' id='prospect_street' placeholder='123 Prospect St.'>" +
-//             "<label for='prospect_city'>City:  </label>" +
-//             "<input type='text' id='prospect_city' placeholder='Brockton'>" +
-//             "<label for='prospect_state'>State:  </label>" +
-//             "<input type='text' id='prospect_state' placeholder='MA'>" +
-//             "<label for='prospect_zipcode'>Zip:  </label>" +
-//             "<input type='number' id='prospect_zipcode' placeholder='02301'>" +
-//             "<label class='enter_button' for='enter_prospect_address_button'></label>" +
-//             "<button name='enter_prospect_address_button' id='enter_prospect_address'>Enter</button>" +
-//         "</fieldset>" +
-//         "</form>" +
-//     "</div>" +
-//     "<div id='prospect_identification'>" +
-//         "<form action='' method='post'>" +
-//         "<fieldset>" +
-//             "<legend>Prospect Identification</legend>" +
-//             "<label for='date_of_birth'>Date of Birth </label>" +
-//             "<input type='date' id='date_of_birth' required name='date_of_birth'>" +
-//             "<label for='ssn'>Social Security Number </label>" +
-//             "<input type='number' id='ssn' maxlength='9' required placeholder='000112222'> " +
-//             "<label for='medicare'>Medicare Number </label>" +
-//             "<input type='text' id='medicare' required placeholder='000112222A'>" +
-//             "<label for='massHealth'>MassHealth Number </label>" +
-//             "<input type='text' id='massHealth' placeholder='000111222333'>" +
-//             "<label for='other_ins'>Other Insurance </label>" +
-//             "<input type='text' id='other_ins' placeholder='BCBS XX010101010'>" +
-//         "</fieldset>" +
-//         "</form>" +
-//     "</div>" +
-//     "<div id='prospect_addl_information'>" +
-//         "<form action='' method='post'>" +
-//         "<fieldset>" +
-//             "<legend>Additional Information</legend>" +
-//             "<label for='gender'>Gender</label>" +
-//             "<ul>" +
-//                 "<li><input type='radio' required name='gender' value='Male' id='male'>Male</>" +
-//                 "<li><input type='radio' required name='gender' value='Female' id='female'>Female</>" +
-//             "</ul>" +
-//             "<label for='marital_status'>Marital Status</label>" +
-//             "<ul>" +
-//                 "<li><input type='radio' required name='marital_status' value='single' id='single'>Single</>" +
-//                 "<li><input type='radio' required name='marital_status' value='married' id='married'>Married</>" +
-//                 "<li><input type='radio' required name='marital_status' value='widowed' id='widowed'>Widowed</>" +
-//                 "<li><input type='radio' required name='marital_status' value='separated' id='separated'>Separated</>" +
-//             "</ul>" +
-//             "<label for='veteran_status'>Veteran Status</label>" +
-//             "<ul>" +
-//                 "<li><input type='radio' required name='veteran_status' value='veteran' id='veteran'>Veteran:  </>" +
-//                 "<label for='service_branch'>Branch of Service:  </label><input type='text' id='service_branch' placeholder='Navy'>" +
-//                 "<li><input type='radio' required name='veteran_status' value='Not a Veteran' id='notVet'>Not a Veteran</>" +
-//             "</ul>" +
-//             "<label id='religion'>Religion</label>" +
-//             "<input type='text' id='religion' placeholder='Lutheran'><br>" +
-
-//             "<label for='education'>Highest Level of Education</label>" +
-//             "<ul>" +
-//                 "<li><input type='radio' required name='education' value='grade_school' id='grade_school'>Grade School</>" +
-//                 "<li><input type='radio' required name='education' value='high_school' id='high_school'>High School</>" +
-//                 "<li><input type='radio' required name='education' value='trade' id='trade'>Trade School</>" +
-//                 "<li><input type='radio' required name='education' value='college' id='college'>College</>" +
-//                 "<li><input type='radio' required name='education' value='post_grad' id='post_grad'>Post Graduate</>" +
-//             "</ul>" +
-//             "<label for='current_housing'>Current Housing Situation</label>" +
-//             "<ul>" +
-//                 "<li><input type='radio' required name='current_housing' value='Alone' id='housing_alone'>Alone</>" +
-//                 "<li><input type='radio' required name='current_housing' value='With Spouse' id='housing_spouse'>With Spouse</>" +
-//                 "<li><input type='radio' required name='current_housing' value='With Family' id='housing_family'>With Family</>" +
-//                 "<li><input type='radio' required name='current_housing' value='Skilled Nursing Facility' id='housing_snf'>Skilled Nursing Facility</>" +
-//                 "<li><input type='radio' required name='current_housing' value='Other Assisted Living Community' id='housing_alf'>Other Assisted Living Community</>" +
-//                 "<li><input type='radio' required name='current_housing' value='Senior Housing' id='housing_senior'>Senior Housing</>" +
-//             "</ul>" +
-//             "<label for='lead_status'>Lead Status</label>" +
-//             "<ul>" +
-//                 "<li><input type='radio' name='lead_status' value='hot' id='lead_hot'>Hot</>" +
-//                 "<p>Move-in within 1-3 months.</p>" +
-//                 "<li><input type='radio' name='lead_status' value='warm' id='lead_warm'>Warm</>" +
-//                 "<p>Move-in within 3-6 months.</p>" +
-//                 "<li><input type='radio' name='lead_status' value='cool' id='lead_cool'>Cool</>" +
-//                 "<p>Move-in after 6 months.</p>" +
-//             "</ul>" +
-//             "<label for='date_to_alcis'>Date Entered in ALCIS:  </label>" + //can date be entered by server not user?
-//             "<input type='date' name='date_to_alcis'>" +
-//             "<label for='follow_up_date'>Follow-up Date:  </label>" + //follow up assigned by server -e.g. dated added plus 3 months
-//             "<input type='date' name='follow_up_date'>" +
-//         "</fieldset>" +
-//         "</form>" +
-//     "</div>" +
-//     "<div id='prospect_emergency_info'>" +
-//         "<form action='' method='post'>" +
-//         "<fieldset>" +
-//             "<legend>Emergency Information</legend>" +
-//             "<label id='pref_hospital'>Preferred Hospital</label>" +
-//             "<ul>" +
-//                 "<li><input type='radio' required name='pref_hospital' value='Brockton' id='hospital_brockton'>Signature Healthcare | Brockton Hospital</input>" +
-//                 "<li><input type='radio' required name='pref_hospital' value='Good Samaritan id='hospital_goodsam'>Steward Healthcare | Good Samaritan Hospital</input>" +
-//             "</ul>" +
-//             "<legend>DNR Status</legend>" +
-//             "<ul>" +
-//                 "<li><input type='radio' value='DNR Present' id='dnr_present'>DNR</input>" +
-//                 "<li><input type='radio' value='DNR Not Present' id='dnr_not_present'>No DNR</input>" +
-//             "</ul>" +
-//             "<legend>Power of Attorney</legend>" + //need to include buttons for same as (econtact, poa, hcp, etc)
-//             "<label for='poa_last_name'>Last Name:  </label>" +
-//             "<input type='text' required id='poa_last_name' placeholder='Johnson'>" +
-//             "<label for='poa_first_name'>First Name:  </label>" +
-//             "<input type='text' required id='poa_first_name' placeholder='Milly'>" +
-//             "<label class='enter_button' for='enter_poa_name_button'></label>" +
-//             "<button name='enter_poa_name_button' id='enter_poa_name'>Enter</button><br>" +
-//             "<label for='poa_primary_phone'>Primary Phone:  </label>" +
-//             "<input type='number' maxlength='10' required id='poa_primary_phone' placeholder='508-588-5555'>" +
-//             "<label for='poa_alt_phone'>Alternate Phone:  </label>" +
-//             "<input type='number' maxlength='10' id='poa_alt_phone' placeholder='508-588-5858'>" +
-//             "<label class='enter_button' for='enter_poa_phone_button'></label>" +
-//             "<button name='enter_poa_phone_button' id='enter_poa_phone'>Enter</button>" +
-
-//             "<legend>Health Care Proxy</legend>" +
-//             "<label for='hcp_last_name'>Last Name:  </label>" +
-//             "<input type='text' required id='hcp_last_name' placeholder='Johnson'>" +
-//             "<label for='hcp_first_name'>First Name:  </label>" +
-//             "<input type='text' required id='hcp_first_name' placeholder='Milly'>" +
-//             "<label class='enter_button' for='enter_hcp_name_button'></label>" +
-//             "<button name='enter_hcp_name_button' id='enter_hcp_name'>Enter</button><br>" +
-//             "<label for='hcp_primary_phone'>Primary Phone:  </label>" +
-//             "<input type='number' maxlength='10' required id='hcp_primary_phone' placeholder='508-588-5555'>" +
-//             "<label for='hcp_alt_phone'>Alternate Phone:  </label>" +
-//             "<input type='number' maxlength='10' id='hcp_alt_phone' placeholder='508-588-5858'>" +
-//             "<label class='enter_button' for='enter_hcp_phone_button'></label>" +
-//             "<button name='enter_hcp_phone_button' id='enter_hcp_phone'>Enter</button>" +
-
-//             "<legend>Primary Emergency Contact</legend>" +
-//             "<label for='pec_last_name'>Last Name:  </label>" +
-//             "<input type='text' required id='pec_last_name' placeholder='Johnson'>" +
-//             "<label for='pec_first_name'>First Name:  </label>" +
-//             "<input type='text' required id='pec_first_name' placeholder='Milly'>" +
-//             "<label class='enter_button' for='enter_pec_name_button'></label>" +
-//             "<button name='enter_pec_name_button' id='enter_pec_name'>Enter</button><br>" +
-//             "<label for='pec_primary_phone'>Primary Phone:  </label>" +
-//             "<input type='number' maxlength='10' required id='pec_primary_phone' placeholder='508-588-5555'>" +
-//             "<label for='pec_alt_phone'>Alternate Phone:  </label>" +
-//             "<input type='number' maxlength='10' id='pec_alt_phone' placeholder='508-588-5858'>" +
-//             "<label class='enter_button' for='enter_pec_phone_button'></label>" +
-//             "<button name='enter_pec_phone_button' id='enter_pec_phone'>Enter</button>" +
-
-//             "<legend>Secondary Emergency Contact</legend>" +
-//             "<label for='sec_last_name'>Last Name:  </label>" +
-//             "<input type='text' required id='sec_last_name' placeholder='Johnson'>" +
-//             "<label for='sec_first_name'>First Name:  </label>" +
-//             "<input type='text' required id='sec_first_name' placeholder='Milly'>" +
-//             "<label class='enter_button' for='enter_sec_name_button'></label>" +
-//             "<button name='enter_sec_name_button' id='enter_sec_name'>Enter</button><br>" +
-//             "<label for='sec_primary_phone'>Primary Phone:  </label>" +
-//             "<input type='number' maxlength='10' required id='sec_primary_phone' placeholder='508-588-5555'>" +
-//             "<label for='sec_alt_phone'>Alternate Phone:  </label>" +
-//             "<input type='number' maxlength='10' id='sec_alt_phone' placeholder='508-588-5858'>" +
-//             "<label class='enter_button' for='enter_sec_phone_button'></label>" +
-//             "<button name='enter_sec_phone_button' id='enter_sec_phone'>Enter</button>" +
-
-//         "</fieldset>" +
-//         "</form>" +
-//     "</div>"
-//     ;
-// var newHousingEntryMsg =
-//     "<div id='housingAndAssist>" +
-//         "<form action='' method='post'>" +
-//         "<fieldset>" +
-//             "<legend>Housing Type and Assistance Needed</legend>" +
-//             "<label for='type_of_housing'>Type of Housing</label>" +
-//             "<ul>" +
-//                 "<li><input type='radio' required name='type_of_housing' value='Independent' id='housing_ind'>Independent</input></li>" +
-//                 "<li><input type='radio' required name='type_of_housing' value='Assisted Living' id='housing_al'>Assisted Living</input></li>" +
-//                 "<li><input type='radio' required name='type_of_housing' value='Memory Care' id='housing_mc'>Memory Care</input></li>" +
-//                 "<li><input type='radio' required name='type_of_housing' value='GAFC' id='housing_gafc'>GAFC</input></li>" +
-//             "</ul>" +
-//             "<label id='assistance_needed'>Assistance Needed</label>" +
-//             "<ul>" +
-//                 "<li><input type='checkbox' value='bathing'>Bathing: </input></li>" +
-//                 "<input type='text' id='bathing_detail' disabled='true' placeholder='Needs hands on assistance, lower body washing.'>" +
-//                 "<li><input type='checkbox' value='dressing'>Dressing: </input></li>" +
-//                 "<input type='text' id='dressing_detail' disabled='true' placeholder='Needs assistance with lower body dressing and buttons.'>" +
-//                 "<li><input type='checkbox' value='grooming'>Grooming: </input></li>" +
-//                 "<input type='text' id='grooming_detail' disabled='true' placeholder='Needs cueing to soak dentures at night.'>" +
-//                 "<li><input type='checkbox' value='medication assistance'>Medication Assistance: </input></li>" +
-//                 "<input type='text' id='med_assist_detail' disabled='true' placeholder='Needs SAMM reminders'>" +
-//                 "<li><input type='checkbox' value='ambulation'>Ambulation: </input></li>" +
-//                 "<input type='text' id='Ambulation_detail' disabled='true' placeholder='Needs escorts to meals and activities.'>" +
-//                 "<li><input type='checkbox' value='toileting'>Toileting: </input></li>" +
-//                 "<input type='text' id='toileting_detail' disabled='true' placeholder='Occasional incontinence of bladder; needs cueing to change depends.'>" +
-//             "</ul>" +
-//             "<label for='prim_apt_pref'>Primary Apartment Preference</label>" +
-//             "<ul>" +
-//                 "<li><input type='radio' required name='prim_apt_pref' value='Studio' id='prim_pref_studio'>Studio</input></li>" +
-//                 "<li><input type='radio' required name='prim_apt_pref' value='One Bedroom' id='prim_pref_onebed'>One Bedroom</input></li>" +
-//                 "<li><input type='radio' required name='prim_apt_pref' value='One Bedroom Center' id='prim_pref_onebedcenter'>One Bedroom Center</input></li>" +
-//                 "<li><input type='radio' required name='prim_apt_pref' value='One Bedroom Delux' id='prim_pref_onebeddelux'>One Bedroom Delux</input></li>" +
-//                 "<li><input type='radio' required name='prim_apt_pref' value='Two Bedroom' id='prim_pref_twobed'>Two Bedroom</input></li>" +
-//                 "<li><input type='radio' required name='prim_apt_pref' value='Cooperative Living' id='prim_pref_coop'>Cooperative Living</input></li>" +
-//             "</ul>" +
-//             "<label for='sec_apt_pref'>Secondary Apartment Preference</label>" +
-//             "<ul>" +
-//                 "<li><input type='radio' name='sec_apt_pref' value='Studio' id='sec_pref_studio'>Studio</input></li>" +
-//                 "<li><input type='radio' name='sec_apt_pref' value='One Bedroom' id='sec_pref_onebed'>One Bedroom</input></li>" +
-//                 "<li><input type='radio' name='sec_apt_pref' value='One Bedroom Center' id='sec_pref_onebedcenter'>One Bedroom Center</input></li>" +
-//                 "<li><input type='radio' name='sec_apt_pref' value='One Bedroom Delux' id='sec_pref_onebeddelux'>One Bedroom Delux</input></li>" +
-//                 "<li><input type='radio' name='sec_apt_pref' value='Two Bedroom' id='sec_pref_twobed'>Two Bedroom</input></li>" +
-//                 "<li><input type='radio' name='sec_apt_pref' value='Cooperative Living' id='sec_pref_coop'>Cooperative Living</input></li>" +
-//             "</ul>" +
-//             "<label id='additional_services'>Additional Services</label>" +
-//             "<ul>" +
-//                 "<li><input type='checkbox' value='Laundry' id='addt_laundry'>Laundry</input></li>" +
-//                 "<li><input type='checkbox' value='Housekeeping' id='addt_housekeeping'>Housekeeping</input></li>" +
-//                 "<li><input type='checkbox' value='Meals' id='addt_meals'>Meals</input></li>" +
-//             "</ul>" +
-//             "<label for='est_move_date'>Estimated Move-in Date: </label>" +
-//             "<input type='date' id='est_move_date'>" +
-//         "</fieldset>" +
-//         "</form>" +
-//     "</div>";
-
-// var newFinancialsEntryMsg =
-//     "<div id='gen_financial'>" +
-//         "<form action='' method='post'>" +
-//         "<fieldset>" +
-//             "<legend>Financial Information</legend>" +
-//             "<label for='payer_source'>Payer Source</label>" +
-//             "<ul>" +
-//                 "<li><input type='radio' required name='payer_source' value='Private' id='payer_private'>Private</input></li>" +
-//                 "<li><input type='radio' required name='payer_source' value='MassHealth' id='payer_masshealth'>MassHealth | GAFC</input></li>" +
-//                 "<li><input type='radio' required name='payer_source' value='SCP' id='payer_sco'>SCO: <span class='fade_text'>(Navicare, Senior Whole Health, Tufts, etc)</span></input></li>" +
-//                 "<li><input type='radio' required name='payer_source' value='Long Term Care Insurance' id='payer_ltc'>Long Term Care Insurance</input></li>" +
-//             "</ul>" +
-//             "</fieldset>" +
-//         "</form>" +
-//     "</div>"+
-//     "<div id='detail_financial'>" +
-//         "<form action='' method='post'>" +
-//         "<fieldset>" +
-//             "<legend>Income and Assets</legend>" +
-//             "<label for='income_social'>Monthly Social Security Income:  $</label>" +
-//             "<input type='number' min='0.00' step='0.01' value='' id='income_social' placeholder='2000'></input><br>" +
-//             "<label for='income_pension'>Monthly Pension Income:  $</label>" +
-//             "<input type='number' min='0.00' step='0.01' value='' id='income_pension' placeholder='2000'></input><br>" +
-//             "<label for='income_ssi'>Monthly Supplemental Security (SSI) Income:  $</label>" +
-//             "<input type='number' min='0.00' step='0.01' value='' id='income_ssi' placeholder='2000'></input><br>" +
-//             "<label for='income_va'>Monthly VA Benefits Income:  $</label>" +
-//             "<input type='number' min='0.00' step='0.01' value='' id='income_va' placeholder='2000'></input><br>" +
-//             "<label for='income_other'>Other Monthly Income:  $</label>" +
-//             "<input type='number' min='0.00' step='0.01' value='' id='income_other' placeholder='2000'></input><br>" +
-//             "<label for='income_other_source'>Source:  </label><input type='text' id='income_other_source' placeholder='alimony'></input><br>"+
-//             "<label for='property_value'>Estimated Property Value: $</label>" +
-//             "<input type='number' min='0.00' step='0.01' value='' id='property_value' placeholder='2000'></input><br>" +
-//             "<label for='bank_value'>Estimated Bank Accounts Value: $</label>" +
-//             "<input type='number' min='0.00' step='0.01' value='' id='bank_value' placeholder='2000'></input><br>" +
-//             "<label for='life_ins_value'>Estimated Life Insurance Value: $</label>" +
-//             "<input type='number' min='0.00' step='0.01' value='' id='life_ins_value' placeholder='2000'></input><br>" +
-//             "<label for='other_value'>Other Estimated Assets: $</label>" +
-//             "<input type='number' min='0.00' step='0.01' value='' id='other_value' placeholder='2000'></input><br>" +
-//             "<label for='other_value_source'>Source:  </label><input type='text' id='other_value_source' placeholder='rental income'></input>"+
-//         "</fieldset>" +
-//         "</form>" +
-//     "</div>" +
-//         "<div id='references_financial'>" +
-//         "<form action='' method='post'>" +
-//         "<fieldset>" +
-//             "<legend>Financial References</legend>" +
-//             "<label for='bank_ref_name'>Bank Name:  </label>" +
-//             "<input type='text' id='bank_ref_name' placeholder='HarborOne'></input><br>" +
-//             "<label for='bank_ref_number'>Bank Phone Number:  </label>" +
-//             "<input type='number' id=bank_ref_number' maxlength='10' placeholder='5085885858'></input><br>" +
-//             "<label for='landlord_ref_name'>Landlord Name:  </label>" +
-//             "<input type='text' id='landlord_ref_name' placeholder='Jim Smith'></input><br>" +
-//             "<label for='landlord_ref_number'>Landlord Phone Number:  </label>" +
-//             "<input type='number' id=landlord_ref_number' maxlength='10' placeholder='5085885858'></input>" +
-//         "</fieldset>" +
-//         "</form>" +
-//     "</div>"
-//     ;
-
-// var newMedicalEntryMsg =
-//     "<div id='assessment_data'>" +
-//         "<form action='' method='post'>" +
-//         "<fieldset>" +
-//             "<legend>Assessment Information</legend>" +
-//             "<label for='assess_date'>Initial Assessment Scheduled:  </label>" +
-//             "<input type='date' id='assess_date'></input><br>" +
-//             "<label for='assess_date_completed'>Initial Assessment Completed:  </label>" +
-//             "<input type='date' id='assess_dat_completed'></input><br>" +
-//             "<label for='assessed_by'>Initial Assessment Completed By:  </label>" +
-//             "<input type='text' id='assessed_by' placeholder='Jane Smith, R.N.'></input><br>" +
-//             "<label for='level_of_care'>Level Of Care</label>" +
-//             "<ul>" +
-//                 "<li><input type='radio' required name='level_of_care' id='care_ind' value='Independent'>Independent</input></li>" +
-//                 "<li><input type='radio' required name='level_of_care' id='care_traditional' value='Traditional'>Traditional</input></li>" +
-//                 "<li><input type='radio' required name='level_of_care' id='care_enhanced' value='Enhanced'>Enhanced</input></li>" +
-//                 "<li><input type='radio' required name='level_of_care' id='care_comprehensive' value='Comprehensive'>Comprehensive</input></li>" +
-//             "</ul>" +
-//             "<label for='other_plans'>Special Plans</label>" +
-//             "<ul>" +
-//                 "<li><input type='radio' name='other_plans' id='care_memory' value='Memory Care'>Memory Care</input></li>" +
-//                 "<li><input type='radio' name='other_plans' id='care_gafc' value='GAFC'>GAFC</input></li>" +
-//             "</ul>" +
-//         "</fieldset>" +
-//         "</form>" +
-//     "</div>" +
-//     "<div id='allergies_data'>" +
-//         "<form action='' method='post'>" +
-//         "<fieldset>" +
-//             "<legend>Allergy Information</legend>" +
-//             "<input type='checkbox' value='nkda' id='allergies_check'>No Known Drug Allergies</input><br>" +
-//             "<label for='allergies'>Allergies:  </label>" +
-//             "<input type='text' id='allergies' placeholder='penicillin'></input><br>" +
-//         "</fieldset>" +
-//         "</form>" +
-//     "</div>" +
-//     "<div id='medical_data'>" +
-//         "<form action='' method='post'>" +
-//         "<fieldset>" +
-//             "<legend>Medical Information</legend>" +
-//             "<label for='meds_on_admit'>Medications Currently Taken:  </input>" +
-//             "<input type='text' id='meds_on_admit' placeholder='tylenol 500mg BID, lasix 40mg once daily'></input><br>" +
-//             "<label for='health_issues'>Major Health Issues:  </input>" +
-//             "<input type='text' id='health_issues' placeholder='h/o TIA, s/p hip replacement, COPD'></input><br>" +
-//         "</fieldset>" +
-//         "</form>" +
-//     "</div>" +
-//     "<div id='dietary_data'>" +
-//         "<form action='' method='post'>" +
-//         "<fieldset>" +
-//         "<legend>Dietary Needs</legend>" +
-//         "<label for='dietary'>Diet and Consistency</label>" +
-//         "<ul>" +
-//             "<li><input type='checkbox' required name='dietary' value='Regular' id='dietary_regular'>Regular</input></li>" +
-//             "<li><input type='checkbox' required name='dietary' value='No Added Salt' id='dietary_nas'>No Added Salt</input></li>" +
-//             "<li><input type='checkbox' required name='dietary' value='House Concentrated Carbohydrate' id='dietary_hcc'>House Concentrated Carbohydrate</input></li>" +
-//             "<li><input type='checkbox' required name='dietary' value='Cut Up' id='dietary_cut'>Cut Up</input></li>" +
-//             "<li><input type='checkbox' required name='dietary' value='Ground' id='dietary_ground'>Ground</input></li>" +
-//             "<li><input type='checkbox' required name='dietary' value='Puree' id='dietary_puree'>Puree</input></li>" +
-//             "<li><input type='checkbox' required name='dietary' value='Soft' id='dietary_soft'>Soft</input></li>" +
-//         "</ul>" +
-//         "</fieldset>" +
-//         "</form>" +
-//     "</div>" +
-//     "<div id='pcp_data'>" +
-//         "<form action='' method='post'>" +
-//         "<fieldset>" +
-//         "<legend>Primary Care Provider Information</legend>" +
-//         "<label for='pcp_name'>Primary Care Physician:  </label>" +
-//         "<input type='text' id='pcp_name' placeholder='Dr.John Smith'></input><br>" +
-//         "<label for='pcp_phone'>PCP Phone Number:  </label>" +
-//         "<input type='number' id='pcp_phone' maxlength='10' placeholder='5085558888'></input>" +
-//         "<label for='pcp_fax'>PCP Fax Number:  </label>" +
-//         "<input type='number' id='pcp_fax' maxlength='10' placeholder='5088885555'></input><br>" +
-//         "<label for='pcp_street'>Street:  </label>" +
-//         "<input type='text' id='pcp_street' placeholder='123 Prospect St.'>" +
-//         "<label for='pcp_city'>City:  </label>" +
-//         "<input type='text' id='pcp_city' placeholder='Brockton'>" +
-//         "<label for='pcp_state'>State:  </label>" +
-//         "<input type='text' id='pcp_state' placeholder='MA'>" +
-//         "<label for='pcp_zipcode'>Zip:  </label>" +
-//         "<input type='number' id='pcp_zipcode' placeholder='02301'>" +
-//         "<label class='enter_button' for='enter_pcp_address_button'></label>" +
-//         "<button name='enter_pcp_address_button' id='enter_pcp_address'>Enter</button><br>" +
-//         "<label for='phys_form'>Physician Form Received</input>" +
-//         "<input type='checkbox' name='phys_form' id='phys_form_box' value='Physician Form Received'></input>" +
-//         "<input type='date' name='phys_form' id='phys_form_date'></input>" +
-//         "</fieldset>" +
-//         "</form>" +
-//     "</div>" +
-//     "<div id='pcp_data'>" +
-//         "<form action='' method='post'>" +
-//         "<fieldset>" +
-//             "<legend>Pharmacy</legend>" +
-//             "<label for='pharmacy_choice'>Pharmacy</label>" +
-//             "<ul>" +
-//                 "<li><input type='radio' required name='pharmacy_choice' id='pharmacy_gb' value='Greater Boston LTC'>Greater Boston</input></li>" +
-//                 "<li><input type='radio' required name='pharmacy_choice' id='pharmacy_apothecare' value='Apothecare'>Apothecare</input></li>" +
-//                 "<li><input type='radio' required name='pharmacy_choice' id='pharmacy_va' value='VA'>VA</input></li>" +
-//                 "<li><input type='radio' required name='pharmacy_choice' id='pharmacy_mail' value='Mail Order Pharmacy'>Mail Order Pharmacy</input></li>" +
-//                 "<li><input type='radio' required name='pharmacy_choice' id='pharmacy_other' value='Other Pharmacy'>Other Pharmacy</input></li>" +
-//             "</ul>" +
-//         "</fieldset>" +
-//         "</form>" +
-//     "</div>"
-//     ;

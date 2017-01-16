@@ -10,7 +10,7 @@
 </head>
 <body>
     <!--Login page contains input area for user to input credentials and link to request access-->
-    <div id="login_page" class="hidden">
+    <div id="login_page" class="">
         <h1>ALCIS || Assisted Living Client Information System</h1>
         <form action="" method="post">
             <fieldset>
@@ -21,12 +21,16 @@
                 <input type="password" id="password" required placeholder="password">
             </fieldset>
         </form>
+        <form action="" method="post">
+            <label for="bypass_login"></label>
+            <button name="bypass_login" id="bypass_login" value="bypass_logint">Dev Bypass Login</button>
+        </form>
         <p>
             <a href="mailto:requestAccess@example.com">Email Administrator to Request Access</a>
         </p>
     </div>
     <!--dashboard contains main navigational menu, search field for client lookup, option to enter new client-->
-    <div id="dashboard">
+    <div id="dashboard" class="hidden">
         <h1 class="dash_logo">ALCIS</h1>
         <!--search entry contains the main name search input fields and the button to select to enter a new client-->
         <div id="search_entry">
@@ -73,12 +77,14 @@
             <!--data block displays information sections selected in nav bar for existing clients and through the data entry process for new clients-->
             <div id="data_block">
                 <div id="contact_block" class='hidden'></div>
-                <div id="prospect_block" class=''></div>
-                <div id="housing_block" class=''></div>
-                <div id="financials_block" class=''></div>
-                <div id="medical_block" class=''></div>
-                <div id="comments_block"></div>
+                <div id="prospect_block" class='hidden'></div>
+                <div id="housing_block" class='hidden'></div>
+                <div id="financials_block" class='hidden'></div>
+                <div id="medical_block" class='hidden'></div>
+                <div id="comments_block" class='hidden'></div>
             </div>
+            <!--submit, edit, and delete client buttons-->
+            <div id="manip_data_buttons"></div>
         </div>
         <!--comments div is a collapsible vertical window that logs user comments regarding client-->
         <!--<div id="user_comments"></div>-->
