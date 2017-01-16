@@ -695,6 +695,14 @@ var clientCommentsDisplay;
 function generateClientPackage(client_id) {
     console.log(client_id);
     var client = new ClientDataPackage(client_id);
+    genContactPackage(client);
+    genProspectPackage(client);
+    genHousingPackage(client);
+    genFinancialPackage(client);
+    genMedicalPackage(client);
+    return client;
+}
+function genContactPackage(client) {
     client.add_contact_name($('#contact_last_name').val(), $('#contact_first_name').val());
     client.add_contact_phone($('#contact_primary_phone').val(), $('#contact_alt_phone').val());
     client.add_contact_address($('#contact_street').val(), $('#contact_city').val(), $('#contact_state').val(), $('#contact_zipcode').val());
@@ -702,7 +710,8 @@ function generateClientPackage(client_id) {
     client.add_contact_relationToProspect($('input[name="rel_to_prospect"]:checked').val());
     client.add_contact_referral($('input[name="referral_source"]:checked').val());
     client.add_first_contact($('#first_contact_date').val());
-    // prospect data
+}
+function genProspectPackage(client) {
     client.add_prospect_name($('#prospect_last_name').val(), $('#prospect_first_name').val());
     client.add_prospect_phone($('#prospect_primary_phone').val());
     client.add_prospect_address($('#prospect_street').val(), $('#prospect_city').val(), $('#prospect_state').val(), $('#prospect_zipcode').val());
@@ -724,19 +733,22 @@ function generateClientPackage(client_id) {
     client.add_hospital($('input[name="pref_hospital"]:checked').val());
     client.add_followup_date($('#follow_up_date').val());
     client.add_date_added($('#date_to_alcis').val());
-    //housing data
+}
+function genHousingPackage(client) {
     client.add_housing_type($('input[name="type_of_housing"]:checked').val());
     client.add_assistance($('#bathing_detail').val(), $('#dressing_detail').val(), $('#grooming_detail').val(), $('#med_assist_detail').val(), 
     $('#ambulation_detail').val(), $('#toileting_detail').val());
     client.add_apt_preference($('input[name="prim_apt_pref"]:checked').val(), $('input[name="sec_apt_pref"]:checked').val());
     client.add_move_date($('#est_move_date').val());
     client.add_additional_service($('input[name="additional_services"]:checked').val());
-    //financial data
+}
+function genFinancialPackage(client) {
     client.add_payer_source($('input[name="payer_source"]:checked').val());
     client.add_income($('#income_social').val(), $('#income_pension').val(), $('#income_ssi').val(), $('#income_va').val(), $('#income_other').val(), $('#income_other_source').val());
     client.add_assets($('#property_value').val(), $('#bank_value').val(), $('#life_ins_value').val(), $('#other_value').val());
     client.add_references($('#bank_ref_name').val(), $('#bank_ref_number').val(), $('#landlord_ref_name').val(), $('#landlord_ref_number').val());
-    //medical
+}
+function genMedicalPackage(client){
     client.add_initial_assessment($('#assess_date').val(), $('assess_date_completed').val(), $('#assessed_by').val());
     client.add_alf_plan($('input[name="level_of_care"]:checked').val(), $('input[name="other_plans"]:checked').val());
     client.add_allergies($('#allergies').val(), $('#allergies_check'));
@@ -749,10 +761,9 @@ function generateClientPackage(client_id) {
     client.add_pcp($('#pcp_name').val(), $('#pcp_phone').val(), $('#pcp_fax').val(), $('#pcp_street').val(), $('#pcp_city').val(), $('#pcp_state').val(), $('#pcp_zipcode').val());
     client.add_physForm_received($('#phys_form_date').val(), $('input[name="phys_form_box"]:checked').val());
     client.add_pharmacy($('input[name="pharmacy_choice"]:checked').val());
+}
     //comments
     // client.add_comments();
-    return client;
-}
 //API CALLS
 //(CREATE) creates the new client data package by pulling form values 
 function createNewClient(client_id, callback) {
