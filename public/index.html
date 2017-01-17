@@ -23,26 +23,28 @@
     <!--Login page contains input area for user to input credentials and link to request access-->
     <div id="login_page" class="">
         <div class="login_block">
-            <form class="login_form content" action="" method="post">
-                <fieldset class="center_fieldset display_center raised_content">
+            <form class="login_form content rounded_corners" action="" method="post">
+                <fieldset class="center_fieldset display_center raised_content rounded_corners">
                     <div class="raised_content">
+                        <h1 class="login_heading underline">Log in</h1>
                         <p>Access to ALCIS is restricted.</p>
-                        <p class="fine_print">If you require access, <a href="mailto:requestAccess@example.com">email Administrator to Request Access</a></p>
+                        <p class="fine_print">If you require access, <a href="mailto:requestAccess@example.com">contact</a> Administrator to Request Access</p>
                     </div>
+                    <div class="space"></div>
                     <legend class="hide_label">Log In</legend>
                     <div class="raised_content">
                         <label class="raised_content">username:</label>
-                        <input class="display_center login_input" type="text" id="username: " required placeholder="">
+                        <input class="display_center login_input rounded_corners" type="text" id="username: " required placeholder="">
                     </div>
                     <div class="raised_content">
                         <label class="raised_content">password:</label>
-                        <input class="display_center login_input" type="password" id="password: " required placeholder="">
+                        <input class="display_center login_input rounded_corners" type="password" id="password: " required placeholder="">
                     </div>
                 </fieldset>
-                <fieldset class="buttons">
+                <fieldset class="buttons rounded_corners">
                     <form action="" method="post">
                         <label for="login_button"></label>
-                        <button name="login_button" id="login_button" value="login">Log in</button>
+                        <button name="login_button" class="rounded_corners" id="login_button" value="login">Log in</button>
                     </form>
                 </fieldset>
             </form>
@@ -111,6 +113,6 @@
         <!--    <a href="/user_comments">Comments</a>-->
         <!--</div>-->
     </div>
-    <footer class="footer_bar"></footer>
+    <!--<footer class="footer_bar"></footer>-->
 
 </body>

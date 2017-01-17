@@ -1,8 +1,8 @@
 * {
     /*font-family: 'Nunito Sans', sans-serif;*/
     font-family: 'Montserrat', sans-serif;
-    background-color: #464646;
-    color: #eee8d5;
+    background-color: #141c20;
+    color: #dbdbdb;
     box-sizing: border-box;
     letter-spacing: 2px;
 }
@@ -14,7 +14,7 @@ body {
     font-size: 1em;
 }
 .header_bar, .footer_bar {
-    background-color: #232323;
+    background-color: #4d5355;
     width: 100%;
     height: 75px;
     display: inline-block;
@@ -31,17 +31,16 @@ body {
     top: 0;
 }
 .main_title {
-    background-color: #232323;
+    color: #dbdbdb;
+    background-color: #4d5355;
     margin: auto;
     position: relative;
-    text-align: justify;
+    text-align: left;
     vertical-align: middle;
     letter-spacing: 2px;
-    top: 10px;
+    top: 15px;
+    left: 10px;
 }
-/*.hide {*/
-/*    display: none;*/
-/*}*/
 .hidden {
     display: none;
 }
@@ -58,10 +57,11 @@ fieldset {
     margin-top: 100px;
 }
 .search_link {
-    color: #0f475b;
-    border: 1px solid #A9A9A9;
+    color: #f79425;
+    border: 1px solid #00241f;
 }
 #login_page {
+    width: 100%;
     margin-top: 75px;
     justify-content: center;
     align-self: center;
@@ -76,24 +76,33 @@ div p {
 .login_input {
     width: 100%;
     margin: auto;
+    border: #126971;
+}
+.rounded_corners {
+    border-radius: 5px;
 }
 .login_form {
     /*width: 300px;*/
-    height: 300px;
+    height: 320px;
     margin: auto;
-    background-color: #505e65;
+    background-color: #4d5355;
     position: relative;
-    border-radius: 4px;
 }
-.login_form > fieldset, legend, label, p {
-    background-color: #505e65;
+.login_form > fieldset, legend, label, p, h1 {
+    background-color: #4d5355;
     font-family: 'Nunito Sans', sans-serif;
+}
+.login_heading {
+    margin: 0;
+}
+.underline {
+    border-bottom: solid 2px #dbdbdb;
 }
 .fine_print {
     font-size: .75em;
 }
 .raised_content {
-    background-color: #505e65;
+    background-color: #4d5355;
     margin: auto;
 }
 .login_form > fieldset {
@@ -102,9 +111,10 @@ div p {
     margin: auto;
 }
 #login_button {
-    background-color: #ff6f6f;
-    border-radius: 4px;
+    background-color: #f79425;
     font-weight: bold;
+    border: #464646;
+    color: #dbdbdb;
 }
 .hide_label {
     display: none;
@@ -116,4 +126,7 @@ div p {
     margin: 65px auto 0 auto;
     padding: 15px;
     width: 400px;
+}
+a {
+    color: #f79425;
 }
