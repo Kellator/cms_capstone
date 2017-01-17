@@ -3,12 +3,15 @@
     font-family: 'Montserrat', sans-serif;
     background-color: #464646;
     color: #eee8d5;
+    box-sizing: border-box;
+    letter-spacing: 2px;
 }
 body {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-content: center;
+    font-size: 1em;
 }
 .header_bar, .footer_bar {
     background-color: #232323;
@@ -31,13 +34,14 @@ body {
     background-color: #232323;
     margin: auto;
     position: relative;
+    text-align: justify;
+    vertical-align: middle;
+    letter-spacing: 2px;
+    top: 10px;
 }
-.hide {
-    display: none;
-}
-fieldset {
-    border: 1px solid black;
-}
+/*.hide {*/
+/*    display: none;*/
+/*}*/
 .hidden {
     display: none;
 }
@@ -47,30 +51,69 @@ ul {
 fieldset {
     border: 0;
     margin: auto;
+    margin-top: 150px;
+    font-family: 'Nunito Sans', sans-serif;
+}
+.center_fieldset {
+    margin-top: 100px;
 }
 .search_link {
     color: #0f475b;
     border: 1px solid #A9A9A9;
 }
-.login_form {
-    flex: 2 2 10%;
-    width: 300px;
-    height: 300px;
-    margin-top: 50px;
-    margin-bottom: 50px;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: #505e65;
-    
+#login_page {
+    margin-top: 75px;
+    justify-content: center;
+    align-self: center;
 }
-.login_form > fieldset, legend, label {
+.content {
+    width: 85%;
+    vertical-align: middle;
+}
+div p {
+    text-align: center;
+}
+.login_input {
+    width: 100%;
+    margin: auto;
+}
+.login_form {
+    /*width: 300px;*/
+    height: 300px;
+    margin: auto;
     background-color: #505e65;
+    position: relative;
+    border-radius: 4px;
+}
+.login_form > fieldset, legend, label, p {
+    background-color: #505e65;
+    font-family: 'Nunito Sans', sans-serif;
+}
+.fine_print {
+    font-size: .75em;
+}
+.raised_content {
+    background-color: #505e65;
+    margin: auto;
 }
 .login_form > fieldset {
     border: 1em;
     padding: 1em;
     margin: auto;
 }
-button {
-    background-color: #deb389;
+#login_button {
+    background-color: #ff6f6f;
+    border-radius: 4px;
+    font-weight: bold;
+}
+.hide_label {
+    display: none;
+}
+.display_center {
+    justify-content: center;
+}
+.login_block {
+    margin: 65px auto 0 auto;
+    padding: 15px;
+    width: 400px;
 }

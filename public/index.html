@@ -1,35 +1,52 @@
 <!doctype html>
+
 <head>
     <meta charset="utf-8">
     <link href="https://fonts.googleapis.com/css?family=Montserrat|Nunito+Sans" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.1.1/normalize.css" rel="stylesheet">
     <link rel='stylesheet' href='main.css'>
     <script src="//code.jquery.com/jquery-2.1.0.js"></script>
-    <script src="main.js"></script> 
+    <script src="main.js"></script>
     <!--<script src="/socket.io/socket.io.js"></script>-->
     <title>ALCIS || Assisted Living Client Information System</title>
 </head>
+
 <body>
     <header class="header_bar">
         <h1 class='main_title'>ALCIS || Assisted Living Client Information System</h1>
+        <!--<nav class="header_nav">-->
+        <!--    <span>About</span>-->
+        <!--    <span>Log In</span>-->
+        <!--    <span>Contact Us</span>-->
+        <!--</nav>-->
     </header>
     <!--Login page contains input area for user to input credentials and link to request access-->
-    <div id="login_page" class="container">
-        <form class="login_form" action="" method="post">
-            <fieldset>
-                <legend>Log In</legend>
-                <label>username</label>
-                <input type="text" id="username: " required placeholder="username">
-                <label>password</label>
-                <input type="password" id="password: " required placeholder="password">
-            </fieldset>
-        </form>
-        <form action="" method="post">
-            <label for="bypass_login"></label>
-            <button name="bypass_login" id="bypass_login" value="bypass_logint">Dev Bypass Login</button>
-        </form>
-        <p>
-            <a href="mailto:requestAccess@example.com">Email Administrator to Request Access</a>
-        </p>
+    <div id="login_page" class="">
+        <div class="login_block">
+            <form class="login_form content" action="" method="post">
+                <fieldset class="center_fieldset display_center raised_content">
+                    <div class="raised_content">
+                        <p>Access to ALCIS is restricted.</p>
+                        <p class="fine_print">If you require access, <a href="mailto:requestAccess@example.com">email Administrator to Request Access</a></p>
+                    </div>
+                    <legend class="hide_label">Log In</legend>
+                    <div class="raised_content">
+                        <label class="raised_content">username:</label>
+                        <input class="display_center login_input" type="text" id="username: " required placeholder="">
+                    </div>
+                    <div class="raised_content">
+                        <label class="raised_content">password:</label>
+                        <input class="display_center login_input" type="password" id="password: " required placeholder="">
+                    </div>
+                </fieldset>
+                <fieldset class="buttons">
+                    <form action="" method="post">
+                        <label for="login_button"></label>
+                        <button name="login_button" id="login_button" value="login">Log in</button>
+                    </form>
+                </fieldset>
+            </form>
+        </div>
     </div>
     <!--dashboard contains main navigational menu, search field for client lookup, option to enter new client-->
     <div id="dashboard" class="hidden">
@@ -60,16 +77,16 @@
             <!--client_dash contains quick info including contactName & phone, prospectName & DOB, lead status, housing type, hospital-->
             <div id="client_dash" class=''></div>
             <!--client nav bar is a horizontal navigational bar that is active for existing clients to display data and new clients to enter data-->
-            <nav id="data_nav_bar"  class="hidden">
+            <nav id="data_nav_bar" class="hidden">
                 <div>
                     <span id="nav_contact_block">Contact Information</span>
-    
+
                     <span id="nav_prospect_block">Prospect Information</span>
-    
+
                     <span id="nav_housing_block">Housing & Assistance</span>
-    
+
                     <span id="nav_financials_block">Financials</span>
-    
+
                     <span id="nav_medical_block">Medical Information</span>
                     <!--<li>
                         <a href="/comments_block">Comments</a>
@@ -95,7 +112,5 @@
         <!--</div>-->
     </div>
     <footer class="footer_bar"></footer>
-    
+
 </body>
-
-
