@@ -107,7 +107,6 @@ div p {
 }
 .login_form > fieldset {
     border: 1em;
-    padding: 1em;
     margin: auto;
 }
 #login_button {
@@ -116,6 +115,7 @@ div p {
     border: #464646;
     color: #dbdbdb;
 }
+
 .hide_label {
     display: none;
 }
@@ -125,7 +125,10 @@ div p {
 .login_block {
     margin: 65px auto 0 auto;
     padding: 15px;
-    width: 400px;
+    width: 600px;
+    font-size: 150%;
+    height: 100%;
+    border-radius: 5px;
 }
 a {
     color: #f79425;
