@@ -203,7 +203,7 @@ exports.runServer = runServer;
 //     }
 //     console.log("created client"); //example has snippet.name
 // });
-// var client_id = '587598012512db4f2be3ad0a'
+// var client_id = '587c42f8fd17e87044272de7'
 //     Client.findOneAndRemove(client_id, function(err, client) {
 //         if (err) {
 //             console.error('could not delete client');

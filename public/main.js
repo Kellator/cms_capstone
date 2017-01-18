@@ -160,15 +160,15 @@ ClientDataPackage.prototype.add_additional_service = function(services) {
 ClientDataPackage.prototype.add_payer_source = function(payer) {
     this.financials.payerSource = payer;
 };
-ClientDataPackage.prototype.add_income = function(monthly, pension, social, ssi, va, other, otherSource) {
+ClientDataPackage.prototype.add_income = function(pension, social, ssi, va, other, otherSource) {
     this.financials.income = {};
-    this.financials.income.monthlyIncome = monthly;
+    // this.financials.income.monthlyIncome = monthly;
     this.financials.income.pension = pension;
     this.financials.income.socSecMonthly = social;
     this.financials.income.ssi = ssi;
     this.financials.income.vaBenefits = va;
     this.financials.income.otherIncome = other;
-    this.financials.income.otherIncomeSources = otherSource;
+    this.financials.income.otherIncomeSource = otherSource;
 };
 ClientDataPackage.prototype.add_assets = function(property, bank, life, other, otherSource) {
     this.financials.assets = {};
@@ -324,7 +324,7 @@ var clientProspectDisplay =
             "<label for='prospect_state'>State:  </label>" +
             "<input type='text' disabled='' id='prospect_state' placeholder='MA'>" +
             "<label for='prospect_zipcode'>Zip:  </label>" +
-            "<input type='number' disabled='' id='prospect_zipcode' placeholder='02301'>" +
+            "<input type='text' disabled='' id='prospect_zipcode' placeholder='02301'>" +
         "</fieldset>" +
         "</form>" +
     "</div>" +
@@ -423,7 +423,7 @@ var clientProspectDisplay =
             "<label for='poa_first_name'>First Name:  </label>" +
             "<input type='text' disabled='' required id='poa_first_name' placeholder='Milly'>" +
             "<label for='poa_primary_phone'>Primary Phone:  </label>" +
-            "<input type='number' disabled='' maxlength='10' required id='poa_primary_phone'pattern='\d{3}[\-]\d{3}[\-]\d{4}'  placeholder='508-588-5555'>" +
+            "<input type='text' disabled='' maxlength='10' required id='poa_primary_phone'pattern='\d{3}[\-]\d{3}[\-]\d{4}'  placeholder='508-588-5555'>" +
             "<label for='poa_alt_phone'>Alternate Phone:  </label>" +
             "<input type='number' disabled='' maxlength='10' id='poa_alt_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='508-588-5858'>" +
 
@@ -433,9 +433,9 @@ var clientProspectDisplay =
             "<label for='hcp_first_name'>First Name:  </label>" +
             "<input type='text' disabled='' required id='hcp_first_name' placeholder='Milly'>" +
             "<label for='hcp_primary_phone'>Primary Phone:  </label>" +
-            "<input type='number' disabled='' maxlength='10' required id='hcp_primary_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='508-588-5555'>" +
+            "<input type='text' disabled='' maxlength='10' required id='hcp_primary_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='508-588-5555'>" +
             "<label for='hcp_alt_phone'>Alternate Phone:  </label>" +
-            "<input type='number' disabled='' maxlength='10' id='hcp_alt_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='508-588-5858'>" +
+            "<input type='text' disabled='' maxlength='10' id='hcp_alt_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='508-588-5858'>" +
 
             "<legend>Primary Emergency Contact</legend>" +
             "<label for='pec_last_name'>Last Name:  </label>" +
@@ -443,9 +443,9 @@ var clientProspectDisplay =
             "<label for='pec_first_name'>First Name:  </label>" +
             "<input type='text' disabled='' required id='pec_first_name' placeholder='Milly'>" +
             "<label for='pec_primary_phone'>Primary Phone:  </label>" +
-            "<input type='number' disabled='' maxlength='10' required id='pec_primary_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='508-588-5555'>" +
+            "<input type='text' disabled='' maxlength='10' required id='pec_primary_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='508-588-5555'>" +
             "<label for='pec_alt_phone'>Alternate Phone:  </label>" +
-            "<input type='number' disabled='' maxlength='10' id='pec_alt_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='508-588-5858'>" +
+            "<input type='text' disabled='' maxlength='10' id='pec_alt_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='508-588-5858'>" +
 
             "<legend>Secondary Emergency Contact</legend>" +
             "<label for='sec_last_name'>Last Name:  </label>" +
@@ -453,9 +453,9 @@ var clientProspectDisplay =
             "<label for='sec_first_name'>First Name:  </label>" +
             "<input type='text' disabled='' required id='sec_first_name' placeholder='Milly'>" +
             "<label for='sec_primary_phone'>Primary Phone:  </label>" +
-            "<input type='number'disabled=''  maxlength='10' required id='sec_primary_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='508-588-5555'>" +
+            "<input type='text'disabled=''  maxlength='10' required id='sec_primary_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='508-588-5555'>" +
             "<label for='sec_alt_phone'>Alternate Phone:  </label>" +
-            "<input type='number' disabled='' maxlength='10' id='sec_alt_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='508-588-5858'>" +
+            "<input type='text' disabled='' maxlength='10' id='sec_alt_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='508-588-5858'>" +
         "</fieldset>" +
         "</form>" +
     "</div>"
@@ -566,12 +566,12 @@ var clientFinancialDisplay =
             "<legend>Financial References</legend>" +
             "<label for='bank_ref_name'>Bank Name:  </label>" +
             "<input type='text' disabled='' id='bank_ref_name' placeholder='HarborOne'></input><br>" +
-            "<label for='bank_ref_number'>Bank Phone Number:  </label>" +
-            "<input type='number' disabled='' id=bank_ref_number' maxlength='10' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='5085885858'></input><br>" +
+            "<label for='bank_ref_text'>Bank Phone Number:  </label>" +
+            "<input type='text' disabled='' id=bank_ref_number' maxlength='10' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='5085885858'></input><br>" +
             "<label for='landlord_ref_name'>Landlord Name:  </label>" +
             "<input type='text' disabled='' id='landlord_ref_name' placeholder='Jim Smith'></input><br>" +
             "<label for='landlord_ref_number'>Landlord Phone Number:  </label>" +
-            "<input type='number' disabled='' id=landlord_ref_number' maxlength='10' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='5085885858'></input>" +
+            "<input type='text' disabled='' id=landlord_ref_number' maxlength='10' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='5085885858'></input>" +
         "</fieldset>" +
         "</form>" +
     "</div>"
@@ -648,9 +648,9 @@ var clientMedicalDisplay =
         "<label for='pcp_name'>Primary Care Physician:  </label>" +
         "<input type='text' disabled='' id='pcp_name' placeholder='Dr.John Smith'></input><br>" +
         "<label for='pcp_phone'>PCP Phone Number:  </label>" +
-        "<input type='number' disabled='' id='pcp_phone' maxlength='10' placeholder='5085558888'></input>" +
+        "<input type='text' disabled='' id='pcp_phone' maxlength='10' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='5085558888'></input>" +
         "<label for='pcp_fax'>PCP Fax Number:  </label>" +
-        "<input type='number' disabled='' id='pcp_fax' maxlength='10' placeholder='5088885555'></input><br>" +
+        "<input type='text' disabled='' id='pcp_fax' maxlength='10' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='5088885555'></input><br>" +
         "<label for='pcp_street'>Street:  </label>" +
         "<input type='text' disabled='' id='pcp_street' placeholder='123 Prospect St.'>" +
         "<label for='pcp_city'>City:  </label>" +
@@ -658,7 +658,7 @@ var clientMedicalDisplay =
         "<label for='pcp_state'>State:  </label>" +
         "<input type='text' disabled='' id='pcp_state' placeholder='MA'>" +
         "<label for='pcp_zipcode'>Zip:  </label>" +
-        "<input type='number' disabled='' id='pcp_zipcode' placeholder='02301'>" +
+        "<input type='text' disabled='' id='pcp_zipcode' placeholder='02301'>" +
         "<label for='phys_form'>Physician Form Received</input>" +
         "<input type='checkbox' disabled='' name='phys_form' id='phys_form_box' value='Physician Form Received'></input>" +
         "<input type='date' disabled='' name='phys_form' id='phys_form_date'></input>" +
@@ -747,6 +747,7 @@ function genFinancialPackage(client) {
     client.add_income($('#income_social').val(), $('#income_pension').val(), $('#income_ssi').val(), $('#income_va').val(), $('#income_other').val(), $('#income_other_source').val());
     client.add_assets($('#property_value').val(), $('#bank_value').val(), $('#life_ins_value').val(), $('#other_value').val());
     client.add_references($('#bank_ref_name').val(), $('#bank_ref_number').val(), $('#landlord_ref_name').val(), $('#landlord_ref_number').val());
+    console.log(client.financials.income.otherIncome);
 }
 function genMedicalPackage(client){
     client.add_initial_assessment($('#assess_date').val(), $('assess_date_completed').val(), $('#assessed_by').val());
@@ -881,42 +882,40 @@ function displayClientList(data) {
         $('.client_search_results_list' ).html('<div id="search_display">Client Search Results</div>');
         $.each(data, function(index, client) {
             resultElement +=
-            '<div client_id="'+ client._id + '" value="'+ index + '" class="search_result_return">' +
+            '<div client_id="'+ client._id + '" value="'+ index + '" class="search_result_return search_link">' +
                 '<ul>' +
-                    '<li><span  class="search_link">Contact Name:  </span>' + client.contact.contactName.contactLastName + ', ' + client.contact.contactName.contactFirstName + '</li>' +
+                    '<li>Contact Name:  ' + client.contact.contactName.contactFirstName + ' ' + client.contact.contactName.contactLastName + '</li>' +
                     '<li>Contact Phone:  ' + client.contact.contactPrimaryPhone + '</li>' +
-                    // '<li>Prospect Name:  ' + client.prospect.prospectLastName + ', ' + client.prospect.prospectFirstName + '</li> ' +
-                    // '<li>Prospect DOB:  ' + client.prospect.date_of_birth + '</li>' +
-                    // '<li>Prospect Gender:  ' + client.prospect.gender + '</li>' +
-                    // '<li>Prospect Housing Type:  ' + client.housing.type_of_housing + '</li>' +
+                    '<li>Prospect Name:  ' + client.prospect.prospectName.prospectFirstName + ' ' + client.prospect.prospectName.prospectLastName + '</li> ' +
+                    '<li>DOB:  ' + client.prospect.date_of_birth + '</li>' +
+                    '<li>Gender:  ' + client.prospect.gender + '</li>' +
+                    '<li>Housing Type:  ' + client.housingAssistance.housingType + '</li>' +
                 '</ul>' +
             '</div></a>';
         $('#search_display').html(resultElement);
     });
     }
     else {
-            resultElement += '<p>Sorry.  There are no results for your search.  Try again with a different name.</p.';
+        resultElement += '<p>Sorry.  There are no results for your search.  Try again with a different name.</p.';
         }
     }
 //renders essential client data to dashboard and all of the document's data to individual display sections or form inputs
 function displayClientData(data) {
     console.log(data);
     if (data) {
-        console.log(data);
-        console.log(data._id);
         //information display variables - contain HTML
         var clientDashDisplay =
             "<div class='client_dash_display'>" +
                 "<h3 class='client_dash_head'>Client Dashboard</h3>" +
                 "<div class='client_dash_info'>" +
                     "<ul>" +
-                        // "<li>Prospect Name:  " + data.prospect.prospectName.prospectFirstName + " " + data.prospect.prospectName.prospectLastName + "</li>" +
-                        // "<li>DOB:  " + data.prospect.dateOfBirth + "</li>" +
+                        "<li>Prospect Name:  " + data.prospect.prospectName.prospectFirstName + " " + data.prospect.prospectName.prospectLastName + "</li>" +
+                        "<li>DOB:  " + data.prospect.dateOfBirth + "</li>" +
                         "<li id='dash_contact_name'>Contact Name:  " + data.contact.contactName.contactFirstName + " " + data.contact.contactName.contactLastName + "</li>" +
                         "<li>Contact Primary Phone:  " + data.contact.contactPrimaryPhone + "</li>" +
-                        // "<li id='dash_lead_status'>Lead Status:  " + data.prospect.leadStatus + "</li>" +
-                        // "<li id='dash_hospital'>Hospital:  " + data.prospect.prefHospital + "</li>" +
-                        // "<li id='dash_dnr_status'>DNR Status:  " + data.prospect.dnr + "</li>" +
+                        "<li id='dash_lead_status'>Lead Status:  " + data.prospect.leadStatus + "</li>" +
+                        "<li id='dash_hospital'>Hospital:  " + data.prospect.prefHospital + "</li>" +
+                        "<li id='dash_dnr_status'>DNR Status:  " + data.prospect.dnr + "</li>" +
                     "</ul>" +
                 "</div>" +
                 "<form action='' method='post'>" +
@@ -936,45 +935,43 @@ function displayClientData(data) {
         contactDisplay.find('#contact_email').val(data.contact.contactEmail);
         contactDisplay.find('#rel_to_prospect').val(data.contact.relationToProspect);
         contactDisplay.find('#first_contact_date').val(data.contact.dateOfFirstContact);
-        console.log(data.contact.dateOfFirstContact);
-        console.log(data.prospect);
         var prospectDisplay = $(clientProspectDisplay);
-        // prospectDisplay.find('#prospect_first_name').val(data.prospect.prospectName.prospectFirstName);
-        // prospectDisplay.find('#prospect_last_name').val(data.prospect.prospectName.prospectLastName);
-        // prospectDisplay.find('#prospect_phone').val(data.prospect.prospectPhone);
-        // prospectDisplay.find('#prospect_street').val(data.prospect.prospectAddress.prospectStreet);
-        // prospectDisplay.find('#prospect_city').val(data.prospect.prospectAddress.prospectCity);
-        // prospectDisplay.find('#prospect_state').val(data.prospect.prospectAddress.prospectState);
-        // prospectDisplay.find('#prospect_zipcode').val(data.prospect.prospectAddress.prospectZip);
-        // prospectDisplay.find('#date_of_birth').val(data.prospect.dateOfBirth);
-        // prospectDisplay.find('#ssn').val(data.prospect.socialSecurityNum);
-        // prospectDisplay.find('#medicare').val(data.prospect.insuranceNums.medicareNum);
-        // prospectDisplay.find('#masshealth').val(data.prospect.insuranceNums.massHealth);
-        // prospectDisplay.find('#other_ins').val(data.prospect.insuranceNums.insuranceNum);
-        // prospectDisplay.find('gender').val(data.prospect.gender);
-        // prospectDisplay.find('marital_status').val(data.prospect.maritalStatus);
-        // prospectDisplay.find('veteran_status').val(data.prospect.veteranStatus);
-        // prospectDisplay.find('#service_branch').val(data.prospect.serviceBranch);
-        // prospectDisplay.find('#religion').val(data.prospect.religion);
-        // prospectDisplay.find('education').val(data.prospect.levelOfEducation);
-        // prospectDisplay.find('current_housing').val(data.prospect.currentHousing);
-        // prospectDisplay.find('lead_status').val(data.prospect.leadStatus);
-        // prospectDisplay.find('#poa_first_name').val(data.prospect.poa.poaName.poaFirstName);
-        // prospectDisplay.find('#poa_last_name').val(data.prospect.poa.poaName.poaLastName);
-        // prospectDisplay.find('#poa_primary_phone').val(data.prospect.poa.poaPhone);
-        // prospectDisplay.find('#poa_alt_phone').val(data.prospect.poa.poaSecPhone);
-        // prospectDisplay.find('#hcp_first_name').val(data.prospect.hcp.hcpName.hcpFirstName);
-        // prospectDisplay.find('hcp_last_name').val(data.prospect.hcp.hcpName.hcpLastName);
-        // prospectDisplay.find('#hcp_primary_phone').val(data.prospect.hcp.hcpPhone);
-        // prospectDisplay.find('#hcp_alt_phone').val(data.prospect.hcp.hcpSecPhone);
-        // prospectDisplay.find('#pec_first_name').val(data.prospect.eContact.eContactName.eContactFirstName);
-        // prospectDisplay.find('#pec_last_name').val(data.prospect.eContact.eContactName.eContactLastName);
-        // prospectDisplay.find('#pec_primary_phone').val(data.prospect.eContact.eContacPhone);
-        // prospectDisplay.find('#pec_alt_phone').val(data.prospect.eContact.eContactAltPhone);
-        // prospectDisplay.find('#sec_first_name').val(data.prospect.altEmergContact.altContactName.altContactFirstName);
-        // prospectDisplay.find('#sec_last_name').val(data.prospect.altEmergContact.altContactName.altContactLastName);
-        // prospectDisplay.find('#sec_primary_phone').val(data.prospect.altEmergContact.altContactPhone);
-        // prospectDisplay.find('#sec_alt_phone').val(data.prospect.altEmergContact.altContactAltPhone);
+        prospectDisplay.find('#prospect_first_name').val(data.prospect.prospectName.prospectFirstName);
+        prospectDisplay.find('#prospect_last_name').val(data.prospect.prospectName.prospectLastName);
+        prospectDisplay.find('#prospect_phone').val(data.prospect.prospectPhone);
+        prospectDisplay.find('#prospect_street').val(data.prospect.prospectAddress.prospectStreet);
+        prospectDisplay.find('#prospect_city').val(data.prospect.prospectAddress.prospectCity);
+        prospectDisplay.find('#prospect_state').val(data.prospect.prospectAddress.prospectState);
+        prospectDisplay.find('#prospect_zipcode').val(data.prospect.prospectAddress.prospectZip);
+        prospectDisplay.find('#date_of_birth').val(data.prospect.dateOfBirth);
+        prospectDisplay.find('#ssn').val(data.prospect.socialSecurityNum);
+        prospectDisplay.find('#medicare').val(data.prospect.insuranceNums.medicareNum);
+        prospectDisplay.find('#masshealth').val(data.prospect.insuranceNums.massHealth);
+        prospectDisplay.find('#other_ins').val(data.prospect.insuranceNums.insuranceNum);
+        prospectDisplay.find('input[name="gender"]').val(data.prospect.gender);
+        prospectDisplay.find('input[name="marital_status"]').val(data.prospect.maritalStatus);
+        prospectDisplay.find('input[name="veteran_status"]').val(data.prospect.veteranStatus);
+        prospectDisplay.find('#service_branch').val(data.prospect.serviceBranch);
+        prospectDisplay.find('#religion').val(data.prospect.religion);
+        prospectDisplay.find('input[name="education"]').val(data.prospect.levelOfEducation);
+        prospectDisplay.find('input[name="current_housing"]').val(data.prospect.currentHousing);
+        prospectDisplay.find('input[name="lead_status"]').val(data.prospect.leadStatus);
+        prospectDisplay.find('#poa_first_name').val(data.prospect.poa.poaName.poaFirstName);
+        prospectDisplay.find('#poa_last_name').val(data.prospect.poa.poaName.poaLastName);
+        prospectDisplay.find('#poa_primary_phone').val(data.prospect.poa.poaPhone);
+        prospectDisplay.find('#poa_alt_phone').val(data.prospect.poa.poaSecPhone);
+        prospectDisplay.find('#hcp_first_name').val(data.prospect.hcp.hcpName.hcpFirstName);
+        prospectDisplay.find('hcp_last_name').val(data.prospect.hcp.hcpName.hcpLastName);
+        prospectDisplay.find('#hcp_primary_phone').val(data.prospect.hcp.hcpPhone);
+        prospectDisplay.find('#hcp_alt_phone').val(data.prospect.hcp.hcpSecPhone);
+        prospectDisplay.find('#pec_first_name').val(data.prospect.eContact.eContactName.eContactFirstName);
+        prospectDisplay.find('#pec_last_name').val(data.prospect.eContact.eContactName.eContactLastName);
+        prospectDisplay.find('#pec_primary_phone').val(data.prospect.eContact.eContacPhone);
+        prospectDisplay.find('#pec_alt_phone').val(data.prospect.eContact.eContactAltPhone);
+        prospectDisplay.find('#sec_first_name').val(data.prospect.altEmergContact.altContactName.altContactFirstName);
+        prospectDisplay.find('#sec_last_name').val(data.prospect.altEmergContact.altContactName.altContactLastName);
+        prospectDisplay.find('#sec_primary_phone').val(data.prospect.altEmergContact.altContactPhone);
+        prospectDisplay.find('#sec_alt_phone').val(data.prospect.altEmergContact.altContactAltPhone);
         var housingDisplay = $(clientHousingDisplay);
         var financialDisplay = $(clientFinancialDisplay);
         var medicalDisplay = $(clientMedicalDisplay);
@@ -1001,16 +998,13 @@ function newClientHandler() {
         $('#client_dash').empty();
         $('#data_block').children().removeClass('hidden');
         $('#data_nav_bar').removeClass('hidden');
-        console.log('new client button pushed');
     });
 }
 //triggers the CREATE API call and creates new document in the collection
 function dataSubmitHandler(client_id) {
     $('body').on('click', '#submit_data_button', function(event) {
         event.preventDefault();
-        console.log(client_id);
         createNewClient(client_id, alertForCreatedClient);
-        console.log('new data submit button clicked');
     });
 }
 //submits client search data - generates searchName object for initial GET call
@@ -1020,8 +1014,6 @@ function submitClientSearchHandler() {
         var searchName = {firstName: $(this).find('#first_name').val(), lastName: $(this).find('#last_name').val()};
         getClientList(searchName, displayClientList);
         $('.client_search_results_list').removeClass('hidden');
-        console.log('submit search button pushed');
-        console.log(searchName);
     });
 }
 //handler for displaying specific client document data from initial results list
@@ -1036,7 +1028,6 @@ function clientListSelectHandler() {
         $('#submit_data_button').addClass('hidden');
         $('#edit_data_button').removeClass('hidden');
         $('.client_search_results_list').toggleClass('hidden');
-        console.log('search link clicked');
     });
 }
 //handler for button to allow user to edit client document
@@ -1044,7 +1035,6 @@ function editContactHandler() {
     $('body').on('click', '#edit_data_button', function(event) {
         event.preventDefault();
         if (confirm("Are you sure you want to change client information?")) {
-            console.log("you opted to change data");
             $('.display_area :input').prop('disabled', false);
             $('#submit_changes_button').removeClass('hidden');
             $('#edit_data_button').addClass('hidden');
@@ -1065,8 +1055,6 @@ function submitChangesHandler() {
 function deleteClientHandler(client_id) {
     $('body').on('click', '#client_delete_button', function(event) {
         event.preventDefault();
-        console.log(client_id);
-        console.log('delete client pushed');
         if (confirm("Are you sure you want to delete all client information?")) {
             deleteClientData($(this).attr('client_id'), alertForDeletedClient);
         } else {
@@ -1084,7 +1072,6 @@ function resetClientSearchHandler() {
         $('#data_block').children('div').empty();
         $('#client_dash').empty();
         $('#data_nav_bar').addClass('hidden');
-        console.log('reset search button pushed');
     });
 }
 //for development only
