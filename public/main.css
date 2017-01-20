@@ -128,6 +128,10 @@ div p {
     border-radius: 5px;
     background-color: #4d5355;
 }
+.login_form_buttons {
+    background-color: #4d5355;
+    margin-top: 20px;
+}
 a {
     color: #f79425;
 }
