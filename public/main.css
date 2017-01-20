@@ -67,7 +67,6 @@ fieldset {
     align-self: center;
 }
 .content {
-    width: 85%;
     vertical-align: middle;
 }
 div p {
@@ -82,8 +81,7 @@ div p {
     border-radius: 5px;
 }
 .login_form {
-    /*width: 300px;*/
-    height: 320px;
+    width: 100%;
     margin: auto;
     background-color: #4d5355;
     position: relative;
@@ -124,10 +122,11 @@ div p {
 .login_block {
     margin: 65px auto 0 auto;
     padding: 15px;
-    width: 600px;
+    width: 500px;
     font-size: 150%;
     height: 100%;
     border-radius: 5px;
+    background-color: #4d5355;
 }
 a {
     color: #f79425;

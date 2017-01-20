@@ -1,4 +1,5 @@
 //screen for user credentials entry
+
 /*global $*/
 var databaseUrl = 'https://node-unit-project-kellator.c9users.io/';
 //constructor function to create client data package
@@ -162,7 +163,7 @@ ClientDataPackage.prototype.add_payer_source = function(payer) {
 };
 ClientDataPackage.prototype.add_income = function(pension, social, ssi, va, other, otherSource) {
     this.financials.income = {};
-    // this.financials.income.monthlyIncome = monthly;
+    this.financials.income.monthlyIncome = pension + social + ssi + va + other; 
     this.financials.income.pension = pension;
     this.financials.income.socSecMonthly = social;
     this.financials.income.ssi = ssi;
@@ -314,7 +315,7 @@ var clientProspectDisplay =
             
             "<legend>Prospect Phone Numbers</legend>" +
             "<label for='prospect_phone'>Prospect Phone:  </label>" +
-            "<input type='number' disabled='' maxlength='10' required id='prospect_primary_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='508-588-5555'>" +
+            "<input type='text' disabled='' maxlength='10' required id='prospect_primary_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='508-588-5555'>" +
             
             "<legend>Prospect Address</legend>" +
             "<label for='prospect_street'>Street:  </label>" +
@@ -335,7 +336,7 @@ var clientProspectDisplay =
             "<label for='date_of_birth'>Date of Birth </label>" +
             "<input type='date' disabled='' id='date_of_birth' required name='date_of_birth'>" +
             "<label for='ssn'>Social Security Number </label>" +
-            "<input type='number' disabled='' id='ssn' maxlength='9' required placeholder='000112222'> " +
+            "<input type='text' disabled='' id='ssn' maxlength='9' required placeholder='000112222'> " +
             "<label for='medicare'>Medicare Number </label>" +
             "<input type='text' disabled='' id='medicare' required placeholder='000112222A'>" +
             "<label for='massHealth'>MassHealth Number </label>" +
@@ -425,7 +426,7 @@ var clientProspectDisplay =
             "<label for='poa_primary_phone'>Primary Phone:  </label>" +
             "<input type='text' disabled='' maxlength='10' required id='poa_primary_phone'pattern='\d{3}[\-]\d{3}[\-]\d{4}'  placeholder='508-588-5555'>" +
             "<label for='poa_alt_phone'>Alternate Phone:  </label>" +
-            "<input type='number' disabled='' maxlength='10' id='poa_alt_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='508-588-5858'>" +
+            "<input type='text' disabled='' maxlength='10' id='poa_alt_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='508-588-5858'>" +
 
             "<legend>Health Care Proxy</legend>" +
             "<label for='hcp_last_name'>Last Name:  </label>" +

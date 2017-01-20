@@ -7,12 +7,13 @@ var config = require('./config');
 var app = express();
 var bcrypt = require('bcryptjs');
 
+var http = require('http');
+var cookieParser = require('cookie-parser');
+var server = http.Server(app);
+var session = require('express-session');
 app.use(bodyParser.json());
 app.use(express.static('public'));
-
-var http = require('http');
-
-var server = http.Server(app);
+// app.use(express.session({secret: 'pickle relish'}));
 //middlewares
 var Client = require('./models/clients');
 var User = require('./models/users');
@@ -38,8 +39,47 @@ if(require.main === module) {
         }
     });
 }
+//Local Authentication
+var passport = require('passport');
+var BasicStrategy = require('passport-http').BasicStrategy;
+
+var strategy = new BasicStrategy(function(username, password, callback) {
+    User.findOne({
+        username: username
+    }, function(err, user) {
+        if (err) {
+            callback(err);
+            return;
+        }
+        if (!user) {
+            return callback(null, false, {
+                message: "Incorrect username"
+            });
+        }
+        user.validatePassword(password, function(err, isValid) {
+            if (err) {
+                return callback(err);
+            }
+            if (!isValid) {
+                return callback(null, false, {
+                    message: "Incorrect password"
+                });
+            }
+            return callback(null, user);
+        });
+    });
+});
+passport.use(strategy);
+app.use(passport.initialize());
+app.use(passport.session());
+//initial get for site app access
+app.get('/', passport.authenticate('basic', {session: true}), function(req, res) {
+    console.log('initial get completed');
+    res.json(req.user);
+});
+
 //performs initial search of collection based on search name criteria and retrieves list of clients from collection
-app.get('/clients', function(req, res) {
+app.get('/clients', passport.authenticate('basic', {session: false}), function(req, res) {
     var searchFirstName = req.query.firstName;
     var searchLastName = req.query.lastName;
 //     Client.find({ $and: [ {'contact.contactName.contactLastName' : searchLastName}, {'contact.contactName.contactFirstName' : searchFirstName}]}).exec(function(err, clients) {
@@ -65,7 +105,7 @@ app.get('/clients', function(req, res) {
     });
 });
 //api endpoint to retrieve client document from collection for search list results
-app.get('/clients/:client_id', function(req, res) {
+app.get('/clients/:client_id', passport.authenticate('basic', {session: false}), function(req, res) {
     var client_id = req.params.client_id;
     Client.findById(client_id, function(err, client) {
         if (err) {
@@ -76,8 +116,14 @@ app.get('/clients/:client_id', function(req, res) {
         return res.send(client);
     });
 });
+
+app.post('/login', passport.authenticate('local', 
+    {successRedirect: '/', 
+    failureRedirect: '/login', 
+    failureFlash: true}
+));
 //creates new document for the collection
-app.post('/clients/', function(req, res) {
+app.post('/clients/', passport.authenticate('basic', {session: false}), function(req, res) {
     console.log(req.body);
     console.log('POST: ');
     var client = req.body;
@@ -93,7 +139,7 @@ app.post('/clients/', function(req, res) {
     });
 });
 //makes a change to an existing document in the collection
-app.put('/clients/:client_id', function(req, res) {
+app.put('/clients/:client_id', passport.authenticate('basic', {session: false}), function(req, res) {
     console.log(req.params);
     console.log(req.body);
     var client_id = req.params.client_id;
@@ -108,7 +154,7 @@ app.put('/clients/:client_id', function(req, res) {
     });
 });
 //deletes and item from the collection (will eventually update a key 'deleted' to TRUE so all clients remain in db but are not displayed if inactive)
-app.delete('/clients/:client_id', function(req, res) {
+app.delete('/clients/:client_id', passport.authenticate('basic', {session: false}), function(req, res) {
     var client_id = req.params.client_id;
     console.log(req.params);
     Client.findByIdAndRemove(client_id, function(err, client) {
@@ -120,13 +166,14 @@ app.delete('/clients/:client_id', function(req, res) {
         return res.status(204).end();
     });
 });
-app.use('*', function(req, res) {
-    res.status(404).json({
-        message: 'Not Found'
-    });
-});
+// app.use('*', function(req, res) {
+//     res.status(404).json({
+//         message: 'Not Found'
+//     });
+// });
 //userName & password endpoints
-app.post('/users', function(req,res) {
+//creating a username & password (admin level)
+app.post('/users/', function(req,res) {
     if (!req.body) {
         return res.status(400).json({
             message: "No Request Body"
@@ -163,12 +210,14 @@ app.post('/users', function(req,res) {
     }
     bcrypt.genSalt(10, function(err, salt) {
         if (err) {
+            console.log(err);
             return res.status(500).json({
                 message: "Internal Server Error"
             });
         }
         bcrypt.hash(password, salt, function(err, hash) {
             if (err) {
+                console.log(err);
                 return res.status(500).json({
                     message: "Internal Server Error"
                 });
@@ -179,6 +228,7 @@ app.post('/users', function(req,res) {
             });
             user.save(function(err) {
                 if (err) {
+                    console.log(err);
                     return res.status(500).json({
                         message: "Internal Server Error"
                     });
@@ -186,6 +236,12 @@ app.post('/users', function(req,res) {
                 return res.status(201).json({});
             });
         });
+    });
+});
+//endpoint protected by authenticate strategy
+app.get('/hidden', passport.authenticate('basic', {session: false}), function(req, res) {
+    res.json({
+        message: "Autheticated"
     });
 });
 exports.app = app;
@@ -210,94 +266,3 @@ exports.runServer = runServer;
 //         }
 //         console.log('client deleted');
 //     });
-
-
-//app.listen(process.env.PORT ||8080);
-// var sampleData = {
-//     "deleted": false,
-//     "contact": {
-//         "contactName": {
-//             "contactLastName": "Last Name",
-//             "contactFirstName": "First Name"
-//         },
-//         "contactPrimaryPhone": "5085885334", //10-digit numbers only
-//         "contactSecondaryPhone": "5085885334",
-//         "contactAddress": {
-//             "contactStreet": "Street Address",
-//             "contactCity": "City",
-//             "contactState": "State",
-//             "contactZip": "02301"
-//         },
-//         "contactEmail": "contactemail@gmail.com",
-//         "relationToProspect": "relationship to prospect", //radio with adult child, spouse, friend, guardian, etc
-//         "referralSource": "Referral Source",
-//         "referredBy": "Referred By",
-//         "dateOfFirstContact": "2017-01-01" //use date function
-//     },
-// };
-// var sampleData_2 = {
-//     "deleted": false,
-//     "contact": {
-//         "contactName": {
-//             "contactLastName": "Standish",
-//             "contactFirstName": "Myles"
-//         },
-//         "contactPrimaryPhone": "3333333333", //10-digit numbers only
-//         "contactSecondaryPhone": "0",
-//         "contactAddress": {
-//             "contactStreet": "194 Cranberry Rd.",
-//             "contactCity": "Carver",
-//             "contactState": "MA",
-//             "contactZip": "02330"
-//         },
-//         "contactEmail": "MStandish@gmail.com",
-//         "relationToProspect": "friend", //radio with adult child, spouse, friend, guardian, etc
-//         "referralSource": "friend",
-//         "referredBy": "John Smith",
-//         "dateOfFirstContact": "2017-01-01" //use date function
-//     },
-// };
-// var sampleData_3 = {
-//     "deleted": false,
-//     "contact": {
-//         "contactName": {
-//             "contactLastName": "Smith",
-//             "contactFirstName": "John"
-//         },
-//         "contactPrimaryPhone": "3333333333", //10-digit numbers only
-//         "contactSecondaryPhone": "0",
-//         "contactAddress": {
-//             "contactStreet": "143 Pocahontas Way",
-//             "contactCity": "Plymouth",
-//             "contactState": "MA",
-//             "contactZip": "02360"
-//         },
-//         "contactEmail": "JSmith.theOriginal@gmail.com",
-//         "relationToProspect": "self", //radio with adult child, spouse, friend, guardian, etc
-//         "referralSource": "APFM",
-//         "referredBy": "Maureen",
-//         "dateOfFirstContact": "2017-01-01" //use date function
-//     },
-// };  
-// var sampleData_4 = {
-//     "deleted": true,
-//     "contact": {
-//         "contactName": {
-//             "contactLastName": "Johnson",
-//             "contactFirstName": "Howard"
-//         },
-//         "contactPrimaryPhone": "7815856581", //10-digit numbers only
-//         "contactSecondaryPhone": "0",
-//         "contactAddress": {
-//             "contactStreet": "23 Summer St.",
-//             "contactCity": "Kingston",
-//             "contactState": "MA",
-//             "contactZip": "02364"
-//         },
-//         "contactEmail": "HoJo@gmail.com",
-//         "relationToProspect": "self", //radio with adult child, spouse, friend, guardian, etc
-//         "referralSource": "APFM",
-//         "referredBy": "Maureen",
-//         "dateOfFirstContact": "2017-01-01" //use date function
-//     },
-// }; 
