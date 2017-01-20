@@ -772,7 +772,7 @@ function createNewClient(client_id, callback) {
     var client = generateClientPackage(client_id);
     console.log(client);
     var settings = {
-        url: databaseUrl + 'clients/',
+        url: databaseUrl + 'alcis/clients/',
         dataType: 'json',
         method: 'POST',
         data: JSON.stringify(client),
@@ -788,7 +788,7 @@ function createNewClient(client_id, callback) {
 //(READ) searches complete client collection based on specified criteria and returns matching list
 function getClientList(searchName, callback) {
     var settings = {
-        url: databaseUrl + 'clients/',
+        url: databaseUrl + 'alcis/clients/',
         dataType: 'json',
         data: searchName,
         method: 'GET',
@@ -802,7 +802,7 @@ function getClientList(searchName, callback) {
 //(READ) pulls specific client document from collection to display client data package to user
 function getClientInformation(client_id, callback) {
     var settings = {
-        url: databaseUrl + 'clients/' + client_id,
+        url: databaseUrl + 'alcis/clients/' + client_id,
         dataType: 'json',
         method: 'GET',
         success: function(data) {
@@ -817,7 +817,7 @@ function updateClientInformation(client_id, callback) {
     console.log(client_id);
     var update = generateClientPackage(client_id);
     var settings = {
-        url: databaseUrl + 'clients/' + client_id,
+        url: databaseUrl + 'alcis/clients/' + client_id,
         dataType: 'json',
         method: 'PUT',
         data: JSON.stringify(update),
@@ -834,7 +834,7 @@ function updateClientInformation(client_id, callback) {
 function deleteClientData(client_id, callback) {
     console.log(client_id);
     var settings = {
-        url: databaseUrl + 'clients/' + client_id,
+        url: databaseUrl + 'alcis/clients/' + client_id,
         dataType: 'json',
         method: 'DELETE',
         success: function(data) {
@@ -1001,6 +1001,14 @@ function newClientHandler() {
         $('#data_nav_bar').removeClass('hidden');
     });
 }
+//submits username and password for authentication
+function loginSubmitHandler() {
+    $('body').on('submit', '.login_form', function(event) {
+        event.preventDefault();
+        console.log('you are here');
+        //build request to submit data for login (post request)
+    });
+}
 //triggers the CREATE API call and creates new document in the collection
 function dataSubmitHandler(client_id) {
     $('body').on('click', '#submit_data_button', function(event) {
@@ -1085,6 +1093,7 @@ function bypassLoginHandler() {
 }
 //ready function
 $(function() {
+    loginSubmitHandler();
     bypassLoginHandler();
     newClientHandler();
     dataSubmitHandler();
