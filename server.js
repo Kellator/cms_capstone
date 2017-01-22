@@ -157,6 +157,7 @@ app.get('/alcis/clients/:client_id', function(req, res) {
 app.post('/login', function(req, res, next) {
   passport.authenticate('local', function(err, user, info) {
     if (err) {
+        console.log(err);
         return next(err);
     }
     if (!user) {
@@ -166,6 +167,7 @@ app.post('/login', function(req, res, next) {
     }
     req.logIn(user, function(err) {
         if (err) {
+            console.log(err);
             return res.status(500).json({
                 err: 'Could not log in user'
             });
@@ -227,7 +229,8 @@ app.delete('/alcis/clients/:client_id', function(req, res) {
 // });
 //userName & password endpoints
 //creating a username & password (admin level)
-app.post('/users/', function(req,res) {
+app.post('/alcis/users/', function(req,res) {
+    console.log(req.body);
     if (!req.body) {
         return res.status(400).json({
             message: "No Request Body"

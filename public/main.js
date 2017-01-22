@@ -2,6 +2,20 @@
 
 /*global $*/
 var databaseUrl = 'https://node-unit-project-kellator.c9users.io/';
+function CreateUserPackage() {
+    this.username = {};
+    this.password = {};
+    this.administrator = false;
+}
+CreateUserPackage.prototype.add_username = function(username) {
+    this.username.username = username;
+    this.username.require = true;
+    this.username.unique = true;
+};
+CreateUserPackage.prototype.add_password = function(password) {
+    this.password.password = password;
+    this.password.require = true;
+};
 //constructor function to create client data package
 function ClientDataPackage() {
     this.contact = {};
@@ -843,6 +857,38 @@ function deleteClientData(client_id, callback) {
     };
     $.ajax(settings);
 }
+// (READ) searches user database to retrieve login credentials
+function loginRequest(username, password, callback) {
+    var settings = {
+        url: databaseUrl + 'login',
+        dataType: 'json',
+        method: 'POST',
+        success:  function(data) {
+            callback(data);
+            console.log(data);
+        }
+    };
+    $.ajax(settings);
+}
+//create login credentials
+function createLoginCredentials(user_id, callback) {
+    var user = CreateUserPackage(user_id);
+    console.log(user);
+    console.log(user_id);
+    var settings = {
+        url: databaseUrl + 'alcis/users/',
+        dataType: 'json',
+        method: 'POST',
+        data: JSON.stringify(user),
+        processData: false,
+        contentType: 'application/json',
+        success: function(data) {
+            callback(data);
+            console.log(data);
+        }
+    };
+    $.ajax(settings);
+}
 //alert callback for creation of new client document
 function alertForCreatedClient() {
     alert("You have created a new client.");
@@ -1006,7 +1052,24 @@ function loginSubmitHandler() {
     $('body').on('submit', '.login_form', function(event) {
         event.preventDefault();
         console.log('you are here');
-        //build request to submit data for login (post request)
+        var username = $('#username').val();
+        var password = $('#password').val();
+        loginRequest(username, password, function() {
+            alert("Welcome to Alcis");
+        });
+    });
+}
+//allows creation of user credentials
+function devCredCreationHandler(user_id) {
+    $('body').on('click', '#dev_create_login', function(event) {
+        event.preventDefault();
+        console.log("creating new user");
+        var username = $('#username').val();
+        var password = $('#password').val();
+        createLoginCredentials(user_id, function() {
+            console.log(username + ' ' + password);
+            alert("user create");
+        });
     });
 }
 //triggers the CREATE API call and creates new document in the collection
@@ -1103,4 +1166,5 @@ $(function() {
     submitClientSearchHandler();
     clientListSelectHandler();
     deleteClientHandler();
+    devCredCreationHandler();
 });
