@@ -3,14 +3,15 @@
     font-family: 'Montserrat', sans-serif;
     background-color: #141c20;
     color: #dbdbdb;
-    box-sizing: border-box;
+    /*box-sizing: border-box;*/
     letter-spacing: 2px;
+    font-size: 16px;
 }
 body {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    /*justify-content: center;*/
+    /*align-content: center;*/
     font-size: 1em;
 }
 .header_bar, .footer_bar {
@@ -21,8 +22,12 @@ body {
     margin: 0;
     padding: 0;
     border: 0;
-    position: absolute;
+    position: relative;
     left: 0;
+}
+.main_content {
+    position: relative;
+    vertical-align: middle;
 }
 .footer_bar {
     bottom: 0;
@@ -40,6 +45,7 @@ body {
     letter-spacing: 2px;
     top: 15px;
     left: 10px;
+    font-size: 2em;
 }
 .hidden {
     display: none;
@@ -50,7 +56,6 @@ ul {
 fieldset {
     border: 0;
     margin: auto;
-    margin-top: 150px;
     font-family: 'Nunito Sans', sans-serif;
 }
 .center_fieldset {
@@ -62,13 +67,14 @@ fieldset {
 }
 #login_page {
     width: 100%;
-    margin-top: 75px;
     justify-content: center;
-    align-self: center;
+    vertical-align: central;
+    top: 50%;
+    position: relative;
+    transform: translateY(50%);
+    /*align-self: center;*/
 }
-.content {
-    vertical-align: middle;
-}
+
 div p {
     text-align: center;
 }
@@ -81,17 +87,18 @@ div p {
     border-radius: 5px;
 }
 .login_form {
-    width: 100%;
     margin: auto;
-    background-color: #4d5355;
+    /*background-color: #4d5355;*/
     position: relative;
 }
 .login_form > fieldset, legend, label, p, h1 {
     background-color: #4d5355;
     font-family: 'Nunito Sans', sans-serif;
+
 }
 .login_heading {
     margin: 0;
+    max-width: 100%;
 }
 .underline {
     border-bottom: solid 2px #dbdbdb;
@@ -105,7 +112,7 @@ div p {
 }
 .login_form > fieldset {
     border: 1em;
-    margin: auto;
+    vertical-align: central;
 }
 #login_button {
     background-color: #f79425;
@@ -120,11 +127,11 @@ div p {
     justify-content: center;
 }
 .login_block {
-    margin: 65px auto 0 auto;
-    padding: 15px;
-    width: 500px;
+    /*margin: 65px auto 0 auto;*/
+    /*padding: 15px;*/
+    /*width: 500px;*/
     font-size: 150%;
-    height: 100%;
+    /*height: 100%;*/
     border-radius: 5px;
     background-color: #4d5355;
 }
@@ -134,4 +141,8 @@ div p {
 }
 a {
     color: #f79425;
+}
+.block {
+    display: block;
+    position: relative;
 }
