@@ -199,8 +199,9 @@ ClientDataPackage.prototype.add_initial_assessment = function(schedDate, compDat
     this.medical.initialAssessment.assessCompDate = compDate;
     this.medical.initialAssessment.assessedBy = assessor;
 };
-ClientDataPackage.prototype.add_alf_plan = function(planType) {
+ClientDataPackage.prototype.add_alf_plan = function(planType, otherPlan) {
     this.medical.alfPlanType = planType;
+    this.medical.otherPlan = otherPlan;
 };
 ClientDataPackage.prototype.add_allergies = function(allergies) {
     this.medical.allergies = allergies;
@@ -223,12 +224,16 @@ ClientDataPackage.prototype.add_admit_homecare = function(homecare) {
 ClientDataPackage.prototype.add_diet = function(diet) {
     this.medical.diet = diet;
 };
-ClientDataPackage.prototype.add_pcp = function(name, num, fax, address) {
+ClientDataPackage.prototype.add_pcp = function(name, num, fax, street, city, state, zip) {
     this.medical.pcp = {};
     this.medical.pcp.pcpName = name;
     this.medical.pcp.pcpNum = num;
     this.medical.pcp.pcpFax = fax;
-    this.medical.pcp.pcpAddress = address;
+    this.medical.pcp.pcpAddress = {};
+    this.medical.pcp.pcpAddress.pcpStreet = street;
+    this.medical.pcp.pcpAddress.pcpCity = city;
+    this.medical.pcp.pcpAddress.pcpState = state;
+    this.medical.pcp.pcpAddress.pcpZip = zip; 
 };
 ClientDataPackage.prototype.add_physForm_received = function(date) {
     this.medical.physFormRec = date;
@@ -244,61 +249,63 @@ ClientDataPackage.prototype.add_pharmacy = function(name) {
 // };
 //variable to display contact form fields - used in data collection and presentation
 var clientContactDisplay =
-    "<div data_type='contact' id='contact_information'>" +
-        "<form action='' method='post'>" +
-        "<fieldset>" +
-            "<legend>Contact Information</legend>" +
-            "<label for='contact_last_name'>Last Name:  </label>" +
-            "<input type='text' disabled='' required id='contact_last_name' placeholder='Johnson'>" +
-            "<label for='contact_first_name'>First Name:  </label>" +
-            "<input type='text' disabled='' required id='contact_first_name' placeholder='Milly'>" +
-
-            "<legend>Contact Address</legend>" +
-            "<label for='contact_street'>Street:  </label>" +
-            "<input type='text' disabled='' id='contact_street' placeholder='123 Prospect St.'>" +
-            "<label for='contact_city'>City:  </label>" +
-            "<input type='text' disabled='' id='contact_city' placeholder='Brockton'>" +
-            "<label for='contact_state'>State:  </label>" +
-            "<input type='text' disabled='' id='contact_state' placeholder='MA'>" +
-            "<label for='contact_zipcode'>Zip:  </label>" +
-            "<input type='text' disabled='' id='contact_zipcode' pattern='[0-9]{5}' placeholder='02301'>" +
-
-            "<legend>Contact Phone Numbers</legend>" +
-            "<label for='contact_primary_phone'>Primary Phone:  </label>" +
-            "<input type='text' disabled='' maxlength='10' required id='contact_primary_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='5085885555'>" +
-            "<label for='contact_alt_phone'>Alternate Phone:  </label>" +
-            "<input type='text' disabled='' maxlength='10' id='contact_alt_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='5085885858'>" +
-
-            "<legend>Contact Email</legend>" +
-            "<label for='contact_email'>Email:  </label>" +
-            "<input type='email' disabled='' id='contact_email' placeholder='name@email.com'>" +
-        "</fieldset>" +
-        "</form>" +
-    "</div>" +
-    "<div id='contact_addl_details'>" +
-        "<form action='' method='post'>" +
-        "<fieldset>" +
-            "<legend>Additional Details</legend>" +
-            "<label for='rel_to_prospect' >Relationship to Prospect</label>" +
-            "<ul id='relation_to_prospect_list'>" +
-                "<li><input type='radio' disabled='' required name='rel_to_prospect' value='Self' id=rel_self' checked>Self</> " +
-                "<li><input type='radio' disabled='' required name='rel_to_prospect' value='Spouse' id=rel_spouse'>Spouse</> " +
-                "<li><input type='radio' disabled='' required name='rel_to_prospect' value='Adult Child' id=rel_child'>Adult Child</> " +
-                "<li><input type='radio' disabled='' required name='rel_to_prospect' value='Sibling' id=rel_sibling'>Sibling</> " +
-                "<li><input type='radio' disabled='' required name='rel_to_prospect' value='Care Professional' id=rel_careProf'>Care Professional</> " +
-                "<li><input type='radio' disabled='' required name='rel_to_prospect' value='Other' id='rel_other'>Other</><br><input type='text' placeholder='Other'/>" +
-            "</ul>" +
-            "<label for='referral_source'>Referral Source</label>" +
-            "<ul>" +
-                "<li><input type='radio' disabled='' required name='referral_source' value='Self' id='ref_self' checked>Self</>" +
-                "<li><input type='radio' disabled='' required name='referral_source' value='APFM' id='ref_apfm'>A Place For Mom</>" +
-                "<li><input type='radio' disabled='' required name='referral_source' value='Word of Mouth' id='ref_wom'>Word of Mouth</><br><input type='text' placeholder='Referred by'/>" +
-                "<li><input type='radio' disabled='' required name='referral_source' value='Health Care Provider' id='ref_hcp'>Health Care Provider</><br><input type='text' id='referred_by' placeholder='Referred by'/>" +
-            "</ul>" +
-            "<label for='first_contact_date'>Date of First Contact </label>" +
-            "<input type='date' disabled='' name='first_contact_date'>" +
-        "</fieldset>" +
-        "</form>" +
+    "<div id='contact_block'>" +
+        "<div data_type='contact' id='contact_information'>" +
+            "<form action='' method='post'>" +
+            "<fieldset>" +
+                "<legend>Contact Information</legend>" +
+                "<label for='contact_last_name'>Last Name:  </label>" +
+                "<input type='text' disabled='' required id='contact_last_name' placeholder='Johnson'>" +
+                "<label for='contact_first_name'>First Name:  </label>" +
+                "<input type='text' disabled='' required id='contact_first_name' placeholder='Milly'>" +
+    
+                "<legend>Contact Address</legend>" +
+                "<label for='contact_street'>Street:  </label>" +
+                "<input type='text' disabled='' id='contact_street' placeholder='123 Prospect St.'>" +
+                "<label for='contact_city'>City:  </label>" +
+                "<input type='text' disabled='' id='contact_city' placeholder='Brockton'>" +
+                "<label for='contact_state'>State:  </label>" +
+                "<input type='text' disabled='' id='contact_state' placeholder='MA'>" +
+                "<label for='contact_zipcode'>Zip:  </label>" +
+                "<input type='text' disabled='' id='contact_zipcode' pattern='[0-9]{5}' placeholder='02301'>" +
+    
+                "<legend>Contact Phone Numbers</legend>" +
+                "<label for='contact_primary_phone'>Primary Phone:  </label>" +
+                "<input type='text' disabled='' maxlength='10' required id='contact_primary_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='5085885555'>" +
+                "<label for='contact_alt_phone'>Alternate Phone:  </label>" +
+                "<input type='text' disabled='' maxlength='10' id='contact_alt_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='5085885858'>" +
+    
+                "<legend>Contact Email</legend>" +
+                "<label for='contact_email'>Email:  </label>" +
+                "<input type='email' disabled='' id='contact_email' placeholder='name@email.com'>" +
+            "</fieldset>" +
+            "</form>" +
+        "</div>" +
+        "<div id='contact_addl_details'>" +
+            "<form action='' method='post'>" +
+            "<fieldset>" +
+                "<legend>Additional Details</legend>" +
+                "<label for='rel_to_prospect' >Relationship to Prospect</label>" +
+                "<ul id='relation_to_prospect_list'>" +
+                    "<li><input type='radio' disabled='' required name='rel_to_prospect' value='Self' id=rel_self' checked>Self</> " +
+                    "<li><input type='radio' disabled='' required name='rel_to_prospect' value='Spouse' id=rel_spouse'>Spouse</> " +
+                    "<li><input type='radio' disabled='' required name='rel_to_prospect' value='Adult Child' id=rel_child'>Adult Child</> " +
+                    "<li><input type='radio' disabled='' required name='rel_to_prospect' value='Sibling' id=rel_sibling'>Sibling</> " +
+                    "<li><input type='radio' disabled='' required name='rel_to_prospect' value='Care Professional' id=rel_careProf'>Care Professional</> " +
+                    "<li><input type='radio' disabled='' required name='rel_to_prospect' value='Other' id='rel_other'>Other</><br><input type='text' placeholder='Other'/>" +
+                "</ul>" +
+                "<label for='referral_source'>Referral Source</label>" +
+                "<ul>" +
+                    "<li><input type='radio' disabled='' required name='referral_source' value='Self' id='ref_self' checked>Self</>" +
+                    "<li><input type='radio' disabled='' required name='referral_source' value='APFM' id='ref_apfm'>A Place For Mom</>" +
+                    "<li><input type='radio' disabled='' required name='referral_source' value='Word of Mouth' id='ref_wom'>Word of Mouth</><br><input type='text' placeholder='Referred by'/>" +
+                    "<li><input type='radio' disabled='' required name='referral_source' value='Health Care Provider' id='ref_hcp'>Health Care Provider</><br><input type='text' id='referred_by' placeholder='Referred by'/>" +
+                "</ul>" +
+                "<label for='first_contact_date'>Date of First Contact </label>" +
+                "<input type='date' disabled='' name='first_contact_date'>" +
+            "</fieldset>" +
+            "</form>" +
+        "</div>" +
     "</div>" +
     "<label for='submit_data_button'></label>" +
     "<button name='submit_data_button' id='submit_data_button' class='hidden'>Submit</button>" +
@@ -1036,20 +1043,23 @@ function displayClientData(data) {
         medicalDisplay.find('#assess_date').val(data.medical.initialAssessment.assessSchedDate);
         medicalDisplay.find('#assess_date_comepleted').val(data.medical.initialAssessment.assessCompDate);
         medicalDisplay.find('#assessed_by').val(data.medical.initialAssessment.assessedBy);
-        medicalDisplay.find('').val(data.medical.alfPlanType);
-        medicalDisplay.find('').val(data.medical.allergies);
-        medicalDisplay.find('').val(data.medical.oxygenStatus);
-        medicalDisplay.find('').val(data.medical.medsOnAdmit);
-        medicalDisplay.find('').val(data.medical.healthIssues);
+        medicalDisplay.find('input[name="level_of_care"]:checked').val(data.medical.alfPlanType);
+        medicalDisplay.find('input[name="other_plans"]:checked').val(data.medical.otherPlan);
+        medicalDisplay.find('#allergies').val(data.medical.allergies);
+        medicalDisplay.find('#meds_on_admit').val(data.medical.medsOnAdmit);
+        medicalDisplay.find('#health_issues').val(data.medical.healthIssues);
         medicalDisplay.find('').val(data.medical.ambulation);
         medicalDisplay.find('').val(data.medical.homeCareOnAdmit);
-        medicalDisplay.find('').val(data.medical.diet);
-        medicalDisplay.find('').val(data.medical.pcp.pcpName);
-        medicalDisplay.find('').val(data.medical.pcp.pcpNum);
-        medicalDisplay.find('').val(data.medical.pcp.pcpFax);
-        medicalDisplay.find('').val(data.medical.pcp.pcpAddress);
-        medicalDisplay.find('').val(data.medical.physFormRec);
-        medicalDisplay.find('').val(data.medical.pharmacy);
+        medicalDisplay.find('input[name="dietary"]:checked').val(data.medical.diet);
+        medicalDisplay.find('#pcp_name').val(data.medical.pcp.pcpName);
+        medicalDisplay.find('#pcp_phone').val(data.medical.pcp.pcpNum);
+        medicalDisplay.find('#pcp_fax').val(data.medical.pcp.pcpFax);
+        medicalDisplay.find('#pcp_street').val(data.medical.pcp.pcpAddress.pcpStreet);
+        medicalDisplay.find('#pcp_city').val(data.medical.pcp.pcpAddress.pcpCity);
+        medicalDisplay.find('#pcp_state').val(data.medical.pcp.pcpAddress.pcpState);
+        medicalDisplay.find('#pcp_zipcode').val(data.medical.pcp.pcpAddress.pcpZip);
+        medicalDisplay.find('#phys_form_date').val(data.medical.physFormRec);
+        medicalDisplay.find('input[name="pharmacy_choice"]:checked').val(data.medical.pharmacy);
         var commentsDisplay;
         $('#contact_block').html(contactDisplay);
         $('#prospect_block').html(prospectDisplay);

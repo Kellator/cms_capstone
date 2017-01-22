@@ -134,6 +134,7 @@ var clientSchema = new mongoose.Schema({
             assessedBy: String
         },
         alfPlanType: String,
+        otherPlan: String,
         allergies: String,
         oxygenStatus: String,
         medsOnAdmit: String,

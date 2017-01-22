@@ -54,10 +54,10 @@
         </div>
     </div>
     <!--dashboard contains main navigational menu, search field for client lookup, option to enter new client-->
-    <div id="dashboard" class="hidden">
-        <h1 class="dash_logo">ALCIS</h1>
+    <div id="dashboard" class="hidden main_content">
+        <!--<h1 class="dash_logo">ALCIS</h1>-->
         <!--search entry contains the main name search input fields and the button to select to enter a new client-->
-        <div id="search_entry">
+        <div id="search_entry" class="Grid-cell">
             <form class="client_search_form">
                 <fieldset>
                     <legend>Client Search</legend>
@@ -76,31 +76,33 @@
                 <button name="new_client_button" id="new_client_button" value="Create New Client">Create New Client</button>
             </form>
         </div>
-        <div class='display_area'>
+        <div class="main_content display_area">
             <!--search display shows list of possible clients for user to select-->
             <div class="client_search_results_list hidden"></div>
             <!--client_dash contains quick info including contactName & phone, prospectName & DOB, lead status, housing type, hospital-->
-            <div id="client_dash" class=''></div>
+            <div id="client_dash" class='hidden'></div>
             <!--client nav bar is a horizontal navigational bar that is active for existing clients to display data and new clients to enter data-->
             <nav id="data_nav_bar" class="hidden">
-                <div>
-                    <span id="nav_contact_block">Contact Information</span>
-
-                    <span id="nav_prospect_block">Prospect Information</span>
-
-                    <span id="nav_housing_block">Housing & Assistance</span>
-
-                    <span id="nav_financials_block">Financials</span>
-
-                    <span id="nav_medical_block">Medical Information</span>
-                    <!--<li>
-                        <a href="/comments_block">Comments</a>
-                    </li>-->
+                <div id="holder">
+                    <ul>
+                        <li class="" id=""><a href="#" id="onlink">Contact Information</a></li>
+    
+                        <li class="" id=""><a href="#">Prospect Information</a></li>
+    
+                        <li class="" id=""><a href="#">Housing & Assistance</a></li>
+    
+                        <li class="" id=""><a href="#">Financials</a></li>
+    
+                        <li class="" id=""><a href="#">Medical Information</a></li>
+                        <!--<li>
+                            <a href="/comments_block">Comments</a>
+                        </li>-->
+                    </ul>
                 </div>
             </nav>
             <!--data block displays information sections selected in nav bar for existing clients and through the data entry process for new clients-->
             <div id="data_block">
-                <div id="contact_block" class='hidden'></div>
+                <div id="contact_block" class='hidden data_display'></div>
                 <div id="prospect_block" class='hidden'></div>
                 <div id="housing_block" class='hidden'></div>
                 <div id="financials_block" class='hidden'></div>
