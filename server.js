@@ -1,7 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-
 var config = require('./config');
 
 var app = express();
@@ -96,25 +95,12 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(require('express-session')({ secret: 'pickle relish', resave: false, saveUninitialized: false }));
 app.use(flash());
-//initial get for site app access
-// app.get('/', function(req, res) {
-//     console.log('initial get completed');
-//     res.render('home', {user:req.user});
-// });
-// app.get('/login', function(req, res) {
-//     res.render('login');
-// });
-// app.post('/login', passport.authenticate('local', {failureRedirect: '/login'}),
-//     function(req, res) {
-//         res.redirect('/');
-//     });
+
 app.get('/logout', function(req, res) { 
     req.logout();
     res.redirect('/');
 });
-// app.get('/profile', ensureLoggedIn('/login'), function (req, res) {
-//     res.render('profile', {user: req.user});
-// });
+
 //performs initial search of collection based on search name criteria and retrieves list of clients from collection
 app.get('/alcis/clients', function(req, res) {
     var searchFirstName = req.query.firstName;
@@ -154,7 +140,7 @@ app.get('/alcis/clients/:client_id', function(req, res) {
     });
 });
 
-app.post('/login', function(req, res, next) {
+app.post('/', function(req, res, next) {
   passport.authenticate('local', function(err, user, info) {
     if (err) {
         console.log(err);
@@ -222,14 +208,9 @@ app.delete('/alcis/clients/:client_id', function(req, res) {
         return res.status(204).end();
     });
 });
-// app.use('*', function(req, res) {
-//     res.status(404).json({
-//         message: 'Not Found'
-//     });
-// });
 //userName & password endpoints
 //creating a username & password (admin level)
-app.post('/alcis/users/', function(req,res) {
+app.post('/alcis/users/', bodyParser.json, function(req, res) {
     console.log(req.body);
     if (!req.body) {
         return res.status(400).json({

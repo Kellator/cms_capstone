@@ -1,21 +1,12 @@
 //screen for user credentials entry
 
 /*global $*/
-var databaseUrl = 'https://node-unit-project-kellator.c9users.io/';
-function CreateUserPackage() {
-    this.username = {};
-    this.password = {};
-    this.administrator = false;
-}
-CreateUserPackage.prototype.add_username = function(username) {
-    this.username.username = username;
-    this.username.require = true;
-    this.username.unique = true;
-};
-CreateUserPackage.prototype.add_password = function(password) {
-    this.password.password = password;
-    this.password.require = true;
-};
+var databaseUrl = 'https://node-unit-project-kellator.c9users.io';
+// function CreateUserPackage(username, password) {
+//     this.username = username;
+//     this.password = password;
+//     this.administrator = false;
+// }
 //constructor function to create client data package
 function ClientDataPackage() {
     this.contact = {};
@@ -488,19 +479,19 @@ var clientHousingDisplay =
                 "<li><input type='radio' required name='type_of_housing' value='Memory Care' id='housing_mc'>Memory Care</input></li>" +
                 "<li><input type='radio' required name='type_of_housing' value='GAFC' id='housing_gafc'>GAFC</input></li>" +
             "</ul>" +
-            "<label id='assistance_needed'>Assistance Needed</label>" +
+            "<label for='assistance_needed'>Assistance Needed</label>" +
             "<ul>" +
-                "<li><input type='checkbox' value='bathing'>Bathing: </input></li>" +
+                "<li><input type='checkbox' name='assistance_needed' value='bathing'>Bathing: </input></li>" +
                 "<input type='text' id='bathing_detail' disabled=''  placeholder='Needs hands on assistance, lower body washing.'>" +
-                "<li><input type='checkbox' value='dressing'>Dressing: </input></li>" +
+                "<li><input type='checkbox' name='assistance_needed' value='dressing'>Dressing: </input></li>" +
                 "<input type='text' id='dressing_detail' disabled=''  placeholder='Needs assistance with lower body dressing and buttons.'>" +
-                "<li><input type='checkbox' value='grooming'>Grooming: </input></li>" +
+                "<li><input type='checkbox' name='assistance_needed' value='grooming'>Grooming: </input></li>" +
                 "<input type='text' id='grooming_detail' disabled='' placeholder='Needs cueing to soak dentures at night.'>" +
-                "<li><input type='checkbox' value='medication assistance'>Medication Assistance: </input></li>" +
+                "<li><input type='checkbox' name='assistance_needed' value='medication assistance'>Medication Assistance: </input></li>" +
                 "<input type='text' id='med_assist_detail' disabled='' placeholder='Needs SAMM reminders'>" +
-                "<li><input type='checkbox' value='ambulation'>Ambulation: </input></li>" +
+                "<li><input type='checkbox' name='assistance_needed' value='ambulation'>Ambulation: </input></li>" +
                 "<input type='text' id='ambulation_detail' disabled='' placeholder='Needs escorts to meals and activities.'>" +
-                "<li><input type='checkbox' value='toileting'>Toileting: </input></li>" +
+                "<li><input type='checkbox' name='assistance_needed' value='toileting'>Toileting: </input></li>" +
                 "<input type='text' id='toileting_detail' disabled='' placeholder='Occasional incontinence of bladder; needs cueing to change depends.'>" +
             "</ul>" +
             "<label for='prim_apt_pref'>Primary Apartment Preference</label>" +
@@ -552,6 +543,8 @@ var clientFinancialDisplay =
         "<form action='' method='post'>" +
         "<fieldset>" +
             "<legend>Income and Assets</legend>" +
+            "<label for='total_monthly_income'>Total Monthly Income:  $</label>" +
+            "<input type='number' disabled=''  min='0.00' step='0.01' value='' id='income_monthly'></input><br>" +
             "<label for='income_social'>Monthly Social Security Income:  $</label>" +
             "<input type='number'disabled=''  min='0.00' step='0.01' value='' id='income_social' placeholder='2000'></input><br>" +
             "<label for='income_pension'>Monthly Pension Income:  $</label>" +
@@ -600,7 +593,7 @@ var clientMedicalDisplay =
             "<label for='assess_date'>Initial Assessment Scheduled:  </label>" +
             "<input type='date' disabled='' id='assess_date'></input><br>" +
             "<label for='assess_date_completed'>Initial Assessment Completed:  </label>" +
-            "<input type='date' disabled='' id='assess_dat_completed'></input><br>" +
+            "<input type='date' disabled='' id='assess_date_completed'></input><br>" +
             "<label for='assessed_by'>Initial Assessment Completed By:  </label>" +
             "<input type='text' disabled='' id='assessed_by' placeholder='Jane Smith, R.N.'></input><br>" +
             "<label for='level_of_care'>Level Of Care</label>" +
@@ -698,14 +691,7 @@ var clientMedicalDisplay =
     ;
 //var for comments display - used for displaying and adding comments
 var clientCommentsDisplay;
-// var dataManipButtons = 
-//     "<label for='submit_data_button'></label>" +
-//     "<button name='submit_data_button' id='submit_data_button' class='hidden'>Submit</button>" +
-//     "<label for='edit_data_button'></label>" +
-//     "<button name='edit_data_button' id='edit_data_button' class=''>Edit</button>" +
-//     "<label for='submit_changes_button'></label>" +
-//     "<button name='submit_changes_button' id='submit_changes_button' class='hidden'>Submit Changes</button>"
-//     ;
+//display as username: date: <br> comment:
 //used for update commands to document for contact data
 function generateClientPackage(client_id) {
     console.log(client_id);
@@ -786,7 +772,7 @@ function createNewClient(client_id, callback) {
     var client = generateClientPackage(client_id);
     console.log(client);
     var settings = {
-        url: databaseUrl + 'alcis/clients/',
+        url: databaseUrl + '/alcis/clients/',
         dataType: 'json',
         method: 'POST',
         data: JSON.stringify(client),
@@ -802,7 +788,7 @@ function createNewClient(client_id, callback) {
 //(READ) searches complete client collection based on specified criteria and returns matching list
 function getClientList(searchName, callback) {
     var settings = {
-        url: databaseUrl + 'alcis/clients/',
+        url: databaseUrl + '/alcis/clients/',
         dataType: 'json',
         data: searchName,
         method: 'GET',
@@ -816,7 +802,7 @@ function getClientList(searchName, callback) {
 //(READ) pulls specific client document from collection to display client data package to user
 function getClientInformation(client_id, callback) {
     var settings = {
-        url: databaseUrl + 'alcis/clients/' + client_id,
+        url: databaseUrl + '/alcis/clients/' + client_id,
         dataType: 'json',
         method: 'GET',
         success: function(data) {
@@ -831,7 +817,7 @@ function updateClientInformation(client_id, callback) {
     console.log(client_id);
     var update = generateClientPackage(client_id);
     var settings = {
-        url: databaseUrl + 'alcis/clients/' + client_id,
+        url: databaseUrl + '/alcis/clients/' + client_id,
         dataType: 'json',
         method: 'PUT',
         data: JSON.stringify(update),
@@ -848,7 +834,7 @@ function updateClientInformation(client_id, callback) {
 function deleteClientData(client_id, callback) {
     console.log(client_id);
     var settings = {
-        url: databaseUrl + 'alcis/clients/' + client_id,
+        url: databaseUrl + '/alcis/clients/' + client_id,
         dataType: 'json',
         method: 'DELETE',
         success: function(data) {
@@ -860,7 +846,7 @@ function deleteClientData(client_id, callback) {
 // (READ) searches user database to retrieve login credentials
 function loginRequest(username, password, callback) {
     var settings = {
-        url: databaseUrl + 'login',
+        url: databaseUrl +'/alcis/users/',
         dataType: 'json',
         method: 'POST',
         success:  function(data) {
@@ -871,15 +857,12 @@ function loginRequest(username, password, callback) {
     $.ajax(settings);
 }
 //create login credentials
-function createLoginCredentials(user_id, callback) {
-    var user = CreateUserPackage(user_id);
-    console.log(user);
-    console.log(user_id);
+function createLoginCredentials(username, password, callback) {
     var settings = {
-        url: databaseUrl + 'alcis/users/',
+        url: databaseUrl + '/alcis/users/',
         dataType: 'json',
         method: 'POST',
-        data: JSON.stringify(user),
+        data: JSON.stringify(username, password),
         processData: false,
         contentType: 'application/json',
         success: function(data) {
@@ -980,7 +963,7 @@ function displayClientData(data) {
         contactDisplay.find('#contact_primary_phone').val(data.contact.contactPrimaryPhone);
         contactDisplay.find('#contact_alt_phone').val(data.contact.contactSecondaryPhone);
         contactDisplay.find('#contact_email').val(data.contact.contactEmail);
-        contactDisplay.find('#rel_to_prospect').val(data.contact.relationToProspect);
+        contactDisplay.find('input[name="rel_to_prospect"]:checked').val(data.contact.relationToProspect);
         contactDisplay.find('#first_contact_date').val(data.contact.dateOfFirstContact);
         var prospectDisplay = $(clientProspectDisplay);
         prospectDisplay.find('#prospect_first_name').val(data.prospect.prospectName.prospectFirstName);
@@ -995,20 +978,20 @@ function displayClientData(data) {
         prospectDisplay.find('#medicare').val(data.prospect.insuranceNums.medicareNum);
         prospectDisplay.find('#masshealth').val(data.prospect.insuranceNums.massHealth);
         prospectDisplay.find('#other_ins').val(data.prospect.insuranceNums.insuranceNum);
-        prospectDisplay.find('input[name="gender"]').val(data.prospect.gender);
-        prospectDisplay.find('input[name="marital_status"]').val(data.prospect.maritalStatus);
-        prospectDisplay.find('input[name="veteran_status"]').val(data.prospect.veteranStatus);
+        prospectDisplay.find('input[name="gender"]:checked').val(data.prospect.gender);
+        prospectDisplay.find('input[name="marital_status"]:checked').val(data.prospect.maritalStatus);
+        prospectDisplay.find('input[name="veteran_status"]:checked').val(data.prospect.veteranStatus);
         prospectDisplay.find('#service_branch').val(data.prospect.serviceBranch);
         prospectDisplay.find('#religion').val(data.prospect.religion);
-        prospectDisplay.find('input[name="education"]').val(data.prospect.levelOfEducation);
-        prospectDisplay.find('input[name="current_housing"]').val(data.prospect.currentHousing);
-        prospectDisplay.find('input[name="lead_status"]').val(data.prospect.leadStatus);
+        prospectDisplay.find('input[name="education"]:checked').val(data.prospect.levelOfEducation);
+        prospectDisplay.find('input[name="current_housing"]:checked').val(data.prospect.currentHousing);
+        prospectDisplay.find('input[name="lead_status"]:checked').val(data.prospect.leadStatus);
         prospectDisplay.find('#poa_first_name').val(data.prospect.poa.poaName.poaFirstName);
         prospectDisplay.find('#poa_last_name').val(data.prospect.poa.poaName.poaLastName);
         prospectDisplay.find('#poa_primary_phone').val(data.prospect.poa.poaPhone);
         prospectDisplay.find('#poa_alt_phone').val(data.prospect.poa.poaSecPhone);
         prospectDisplay.find('#hcp_first_name').val(data.prospect.hcp.hcpName.hcpFirstName);
-        prospectDisplay.find('hcp_last_name').val(data.prospect.hcp.hcpName.hcpLastName);
+        prospectDisplay.find('#hcp_last_name').val(data.prospect.hcp.hcpName.hcpLastName);
         prospectDisplay.find('#hcp_primary_phone').val(data.prospect.hcp.hcpPhone);
         prospectDisplay.find('#hcp_alt_phone').val(data.prospect.hcp.hcpSecPhone);
         prospectDisplay.find('#pec_first_name').val(data.prospect.eContact.eContactName.eContactFirstName);
@@ -1020,8 +1003,53 @@ function displayClientData(data) {
         prospectDisplay.find('#sec_primary_phone').val(data.prospect.altEmergContact.altContactPhone);
         prospectDisplay.find('#sec_alt_phone').val(data.prospect.altEmergContact.altContactAltPhone);
         var housingDisplay = $(clientHousingDisplay);
+        housingDisplay.find('input[name="type_of_housing"]:checked').val();
+        housingDisplay.find('input[name="assistance_needed"]:checked').val();
+        housingDisplay.find('#bathing_detail').val(data.housingAssistance.assistanceNeeded.bathing);
+        housingDisplay.find('#dressing_detail').val(data.housingAssistance.assistanceNeeded.dressing);
+        housingDisplay.find('#grooming_detail').val(data.housingAssistance.assistanceNeeded.grooming);
+        housingDisplay.find('#ambulation_detail').val(data.housingAssistance.assistanceNeeded.ambulation);
+        housingDisplay.find('#toileting_detail').val(data.housingAssistance.assistanceNeeded.toileting);
+        housingDisplay.find('input[name="prim_apt_pref"]:checked').val(data.housingAssistance.primaryAptPref);
+        housingDisplay.find('input[name="sec_apt_pref"]:checked').val(data.housingAssistance.secondaryAptPref);
+        housingDisplay.find('input[name="additional_services"]:checked').val(data.housingAssistance.additionalServices);
+        housingDisplay.find('#est_move_date');
         var financialDisplay = $(clientFinancialDisplay);
+        financialDisplay.find('input[name="payer_source"]:checked').val(data.financials.payerSource);
+        financialDisplay.find('#income_monthly').val(data.financials.income.monthlyIncome);
+        financialDisplay.find('#income_social').val(data.financials.income.socSecMonthly);
+        financialDisplay.find('#income_pension').val(data.financials.income.pension);
+        financialDisplay.find('#income_ssi').val(data.financials.income.ssi);
+        financialDisplay.find('#income_va').val(data.financials.income.vaBenefits);
+        financialDisplay.find('#income_other').val(data.financials.income.otherIncome);
+        financialDisplay.find('#income_other_source').val(data.financials.income.otherIncomeSource);
+        financialDisplay.find('#property_value').val(data.financials.assets.propertyValue);
+        financialDisplay.find('#bank_value').val(data.financials.assets.bankAccounts);
+        financialDisplay.find('#life_ins_value').val(data.financials.assets.lifeInsurance);
+        financialDisplay.find('#other_value').val(data.financials.assets.otherAssets);
+        financialDisplay.find('#other_value_source').val(data.financials.assets.otherAssetsSource);
+        financialDisplay.find('#bank_ref_name').val(data.financials.bankReference.bankRefName);
+        financialDisplay.find('#bank_ref_number').val(data.financials.bankReference.bankRefNumber);
+        financialDisplay.find('#landlord_ref_name').val(data.financials.landlordReference.landlordRefName);
+        financialDisplay.find('#landlord_ref_number').val(data.financials.landlordReference.landlordRefNum);
         var medicalDisplay = $(clientMedicalDisplay);
+        medicalDisplay.find('#assess_date').val(data.medical.initialAssessment.assessSchedDate);
+        medicalDisplay.find('#assess_date_comepleted').val(data.medical.initialAssessment.assessCompDate);
+        medicalDisplay.find('#assessed_by').val(data.medical.initialAssessment.assessedBy);
+        medicalDisplay.find('').val(data.medical.alfPlanType);
+        medicalDisplay.find('').val(data.medical.allergies);
+        medicalDisplay.find('').val(data.medical.oxygenStatus);
+        medicalDisplay.find('').val(data.medical.medsOnAdmit);
+        medicalDisplay.find('').val(data.medical.healthIssues);
+        medicalDisplay.find('').val(data.medical.ambulation);
+        medicalDisplay.find('').val(data.medical.homeCareOnAdmit);
+        medicalDisplay.find('').val(data.medical.diet);
+        medicalDisplay.find('').val(data.medical.pcp.pcpName);
+        medicalDisplay.find('').val(data.medical.pcp.pcpNum);
+        medicalDisplay.find('').val(data.medical.pcp.pcpFax);
+        medicalDisplay.find('').val(data.medical.pcp.pcpAddress);
+        medicalDisplay.find('').val(data.medical.physFormRec);
+        medicalDisplay.find('').val(data.medical.pharmacy);
         var commentsDisplay;
         $('#contact_block').html(contactDisplay);
         $('#prospect_block').html(prospectDisplay);
@@ -1055,18 +1083,19 @@ function loginSubmitHandler() {
         var username = $('#username').val();
         var password = $('#password').val();
         loginRequest(username, password, function() {
+            console.log('log in successful');
             alert("Welcome to Alcis");
         });
     });
 }
 //allows creation of user credentials
-function devCredCreationHandler(user_id) {
+function devCredCreationHandler() {
     $('body').on('click', '#dev_create_login', function(event) {
         event.preventDefault();
         console.log("creating new user");
         var username = $('#username').val();
         var password = $('#password').val();
-        createLoginCredentials(user_id, function() {
+        createLoginCredentials(username, password, function() {
             console.log(username + ' ' + password);
             alert("user create");
         });
