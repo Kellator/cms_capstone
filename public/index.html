@@ -57,7 +57,7 @@
     <div id="dashboard" class="hidden main_content">
         <!--<h1 class="dash_logo">ALCIS</h1>-->
         <!--search entry contains the main name search input fields and the button to select to enter a new client-->
-        <div id="search_entry" class="Grid-cell">
+        <div id="search_entry" class="">
             <form class="client_search_form">
                 <fieldset>
                     <legend>Client Search</legend>
@@ -71,7 +71,7 @@
                     <input type="reset" name="reset_search_button" id="reset_search"></input>
                 </fieldset>
             </form>
-            <form action="" method="post">
+            <form class="create_new_button" action="" method="post">
                 <label for="new_client_button"></label>
                 <button name="new_client_button" id="new_client_button" value="Create New Client">Create New Client</button>
             </form>
@@ -101,7 +101,7 @@
                 </div>
             </nav>
             <!--data block displays information sections selected in nav bar for existing clients and through the data entry process for new clients-->
-            <div id="data_block">
+            <div id="data_block hidden">
                 <div id="contact_block" class='hidden data_display'></div>
                 <div id="prospect_block" class='hidden'></div>
                 <div id="housing_block" class='hidden'></div>

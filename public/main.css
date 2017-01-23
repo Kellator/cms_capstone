@@ -24,6 +24,7 @@ button:hover {
 input {
     border-radius: 5px;
 }
+
 .header_bar, .footer_bar {
     background-color: #4d5355;
     width: 100%;
@@ -160,7 +161,7 @@ a {
    width: 660px; 
 }
 #data_nav_bar #holder {
-    height: 65px;
+    height: 55px;
     border-bottom: 1px;
     width: 1000px;
     padding-left: 25px;
@@ -180,12 +181,12 @@ a {
     border-bottom: none;
     color: #dbdbdb;
     background-color: #141c20;
-    font-size: 1.15em;
+    font-size: .85em;
     padding: 10px;
     width: 180px;
     text-align: center;
     display: block;
-    height: 65px;
+    height: 55px;
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
 }
@@ -204,4 +205,45 @@ a {
 .data_display {
     background-color: #4d5355;
     padding: 25px;
+}
+#contact_block fieldset {
+    background-color: #4d5355;
+}
+#contact_block fieldset legend {
+    background-color: #4d5355;
+}
+#contact_block fieldset label {
+    background-color: #4d5355;
+}
+#contact_block fieldset ul {
+    background-color: #4d5355;
+}
+#contact_block fieldset ul li {
+    background-color: #4d5355;
+}
+#contact_block fieldset input {
+    background-color: #dbdbdb;
+    color: #141c20;
+    font-weight: bold;
+}
+.client_search_form {
+    padding: 25px;
+}
+#search_entry {
+    display: flex;
+    flex-direction: row;
+    align-content: space-between;
+    width: 1000px;
+    height: 110px;
+}
+#search_entry fieldset {
+    padding: 0px;
+}
+#search_entry .client_search_form {
+    flex: 1 1 65% ;
+    padding: 25px;
+}
+#search_entry .create_new_button {
+    flex: 1 1 30%;
+    align-self: center;
 }

@@ -249,10 +249,10 @@ ClientDataPackage.prototype.add_pharmacy = function(name) {
 // };
 //variable to display contact form fields - used in data collection and presentation
 var clientContactDisplay =
-    "<div id='contact_block'>" +
+    "<div id='contact_block' class='tab_nav_display'>" +
         "<div data_type='contact' id='contact_information'>" +
             "<form action='' method='post'>" +
-            "<fieldset>" +
+            "<fieldset class=''>" +
                 "<legend>Contact Information</legend>" +
                 "<label for='contact_last_name'>Last Name:  </label>" +
                 "<input type='text' disabled='' required id='contact_last_name' placeholder='Johnson'>" +
@@ -283,10 +283,10 @@ var clientContactDisplay =
         "</div>" +
         "<div id='contact_addl_details'>" +
             "<form action='' method='post'>" +
-            "<fieldset>" +
+            "<fieldset class=''>" +
                 "<legend>Additional Details</legend>" +
                 "<label for='rel_to_prospect' >Relationship to Prospect</label>" +
-                "<ul id='relation_to_prospect_list'>" +
+                "<ul class='tab_nav_display' id='relation_to_prospect_list'>" +
                     "<li><input type='radio' disabled='' required name='rel_to_prospect' value='Self' id=rel_self' checked>Self</> " +
                     "<li><input type='radio' disabled='' required name='rel_to_prospect' value='Spouse' id=rel_spouse'>Spouse</> " +
                     "<li><input type='radio' disabled='' required name='rel_to_prospect' value='Adult Child' id=rel_child'>Adult Child</> " +
@@ -295,7 +295,7 @@ var clientContactDisplay =
                     "<li><input type='radio' disabled='' required name='rel_to_prospect' value='Other' id='rel_other'>Other</><br><input type='text' placeholder='Other'/>" +
                 "</ul>" +
                 "<label for='referral_source'>Referral Source</label>" +
-                "<ul>" +
+                "<ul class=''>" +
                     "<li><input type='radio' disabled='' required name='referral_source' value='Self' id='ref_self' checked>Self</>" +
                     "<li><input type='radio' disabled='' required name='referral_source' value='APFM' id='ref_apfm'>A Place For Mom</>" +
                     "<li><input type='radio' disabled='' required name='referral_source' value='Word of Mouth' id='ref_wom'>Word of Mouth</><br><input type='text' placeholder='Referred by'/>" +
@@ -306,13 +306,7 @@ var clientContactDisplay =
             "</fieldset>" +
             "</form>" +
         "</div>" +
-    "</div>" +
-    "<label for='submit_data_button'></label>" +
-    "<button name='submit_data_button' id='submit_data_button' class='hidden'>Submit</button>" +
-    "<label for='edit_data_button'></label>" +
-    "<button name='edit_data_button' id='edit_data_button' class=''>Edit</button>" +
-    "<label for='submit_changes_button'></label>" +
-    "<button name='submit_changes_button' id='submit_changes_button' class='hidden'>Submit Changes</button>"
+    "</div>"
 ;
 //variable for prospect data display - used in data collection and display
 var clientProspectDisplay = 
@@ -699,6 +693,14 @@ var clientMedicalDisplay =
 //var for comments display - used for displaying and adding comments
 var clientCommentsDisplay;
 //display as username: date: <br> comment:
+var buttonDisplay = 
+    "<label for='submit_data_button'></label>" +
+    "<button name='submit_data_button' id='submit_data_button' class='hidden'>Submit</button>" +
+    "<label for='edit_data_button'></label>" +
+    "<button name='edit_data_button' id='edit_data_button' class=''>Edit</button>" +
+    "<label for='submit_changes_button'></label>" +
+    "<button name='submit_changes_button' id='submit_changes_button' class='hidden'>Submit Changes</button>"
+    ;
 //used for update commands to document for contact data
 function generateClientPackage(client_id) {
     console.log(client_id);
@@ -910,6 +912,7 @@ function enterNewClientData() {
     $("#financials_block").html(clientFinancialDisplay);
     $("#medical_block").html(clientMedicalDisplay);
     $("#comments_block").html();
+    $("#manip_data_buttons").html(buttonDisplay);
 }
 //renders list of search results from READ call in html - client names are rendered as links to collection documents
 function displayClientList(data) {
@@ -1068,6 +1071,7 @@ function displayClientData(data) {
         $('#medical_block').html(medicalDisplay);
         $('#comments_block').html(commentsDisplay);
         $('#client_dash').html(clientDashDisplay);
+        $("#manip_data_buttons").html(buttonDisplay);
     }
 }
 //EVENT HANDLERS
@@ -1134,7 +1138,8 @@ function clientListSelectHandler() {
         getAndDisplayClientData($(this).attr('client_id'));
         // $('#manip_data_buttons').html(dataManipButtons);
         $('.display_area :input').prop('disabled', true);
-        $('#data_block').children().removeClass('hidden');
+        $('#data_block').removeClass('hidden');
+        $('#contact_block').removeClass('hidden');
         $('#data_nav_bar').removeClass('hidden');
         $('#submit_data_button').addClass('hidden');
         $('#edit_data_button').removeClass('hidden');
