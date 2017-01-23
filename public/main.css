@@ -3,7 +3,7 @@
     font-family: 'Montserrat', sans-serif;
     background-color: #141c20;
     color: #dbdbdb;
-    /*box-sizing: border-box;*/
+    box-sizing: border-box;
     letter-spacing: 2px;
     font-size: 16px;
 }
@@ -16,6 +16,7 @@ body {
 }
 input {
     padding: 1px 2px 1px 5px;
+    margin-right: 5px;
 }
 button {
     border-radius: 5px;
@@ -78,8 +79,16 @@ fieldset {
     color: #f79425;
     border: 1px solid #00241f;
 }
+.main_content {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
 #login_page {
-    width: 100%;
+    flex-basis: 50%;
     justify-content: center;
     vertical-align: central;
     top: 50%;
@@ -92,7 +101,7 @@ div p {
     text-align: center;
 }
 .login_input {
-    width: 100%;
+    flex-basis: 85%;
     margin: auto;
     border: #126971;
 }
@@ -100,14 +109,24 @@ div p {
     border-radius: 5px;
 }
 .login_form {
+    flex-basis: 100%;
+    padding: 20px;
     margin: auto;
     /*background-color: #4d5355;*/
     position: relative;
+    max-width: 400px;
+    min-width: 400px;
 }
 .login_form > fieldset, legend, label, p, h1 {
     background-color: #4d5355;
     font-family: 'Nunito Sans', sans-serif;
-
+}
+#login_page .login_form fieldset {
+    padding: 20px;
+}
+#login_page .login_input {
+    width: 98%;
+    margin-right: 0px;
 }
 .login_heading {
     margin: 0;
@@ -171,9 +190,8 @@ a {
 #data_nav_bar #holder ul {
    margin: 0;
    padding: 0;
-   
 }
-#data_nav_bar #holder ul li a {
+#data_nav_bar #holder ul li span {
     flex: none;
     list-style: none;
     text-decoration: none;
@@ -184,22 +202,30 @@ a {
     color: #dbdbdb;
     background-color: #141c20;
     font-size: .85em;
-    padding: 10px;
-    width: 180px;
+    width: 120px;
     text-align: center;
     display: block;
     height: 55px;
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
+    padding: 10px;
 }
-#data_nav_bar #holder ul li a:hover {
+#data_nav_bar #holder ul li span:hover {
     background-color: #f79425;
     color: #141c20;
 }
-#holder ul li a#onlink {
+#data_nav_bar #holder ul li span.active {
+    background-color: #4d5355;
+    color: #141c20;
+}
+#holder ul li span#onlink {
     background-color: #4d5355;   
     color: #dbdbdb;
     border-bottom: 1px solid #4d5355;
+}
+#holder ul li span#onlink:hover {
+    background-color: #4d5355;
+    color: #141c20;
 }
 #data_block {
     background-color: #4d5355;

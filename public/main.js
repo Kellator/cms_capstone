@@ -135,10 +135,10 @@ ClientDataPackage.prototype.add_hospital = function(hospital) {
     this.prospect.prefHospital = hospital;
 };
 ClientDataPackage.prototype.add_followup_date = function(date) {
-    this.prospect.followUpDate = date;
+    this.prospect.followUpDate = date.toString();
 };
-ClientDataPackage.prototype.add_date_added = function(date) {
-    this.prospect.dateAddedtoDB = date;
+ClientDataPackage.prototype.add_date_added = function() {
+    this.prospect.dateAddedtoDB = Date.now().toString();
 };
 //constructor components for housing data
 ClientDataPackage.prototype.add_housing_type = function(housing) {
@@ -236,7 +236,7 @@ ClientDataPackage.prototype.add_pcp = function(name, num, fax, street, city, sta
     this.medical.pcp.pcpAddress.pcpZip = zip; 
 };
 ClientDataPackage.prototype.add_physForm_received = function(date) {
-    this.medical.physFormRec = date;
+    this.medical.physFormRec = date.toString();
 };
 ClientDataPackage.prototype.add_pharmacy = function(name) {
     this.medical.pharmacy = name;
@@ -855,7 +855,7 @@ function deleteClientData(client_id, callback) {
 // (READ) searches user database to retrieve login credentials
 function loginRequest(username, password, callback) {
     var settings = {
-        url: databaseUrl +'/alcis/users/',
+        url: databaseUrl +'/alcis/login?username=' + username + '&password=' + password,
         dataType: 'json',
         method: 'POST',
         success:  function(data) {
@@ -867,11 +867,13 @@ function loginRequest(username, password, callback) {
 }
 //create login credentials
 function createLoginCredentials(username, password, callback) {
+    console.log('login create ajax');
+    console.log(username + ' ' + password);
     var settings = {
-        url: databaseUrl + '/alcis/users/',
+        url: databaseUrl + '/alcis/users',
         dataType: 'json',
         method: 'POST',
-        data: JSON.stringify(username, password),
+        data: JSON.stringify({username: username, password: password}),
         processData: false,
         contentType: 'application/json',
         success: function(data) {
@@ -1202,6 +1204,13 @@ function bypassLoginHandler() {
         $('#dashboard').removeClass('hidden');
     });
 }
+function tabNavHandler() {
+    $('div').on('click', '.tab_nav', function(event) {
+        event.preventDefault();
+        console.log('clicked a nav tab');
+        //empty current display block - write in block that corresponds with selected tab
+    });
+}
 //ready function
 $(function() {
     loginSubmitHandler();
@@ -1215,4 +1224,5 @@ $(function() {
     clientListSelectHandler();
     deleteClientHandler();
     devCredCreationHandler();
+    tabNavHandler();
 });

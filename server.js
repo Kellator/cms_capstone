@@ -70,21 +70,25 @@ if(require.main === module) {
 //     });
 // });
 //verify credentials submitted by user
-var localStrat = new LocalStrategy( function(username, password, callback) {
+var localStrat = new LocalStrategy(function(username, password, callback) {
+    console.log(username + ' ' + password);
     User.findByUsername(username, function(err, user) {
+        console.log(username);
         if (err) {console.log(err); return callback(err); }
         if (!user) {return callback(null, false); }
         if (user.password != password) { return callback(null, false); }
     });
     
 });
-var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
+// var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
 passport.use(localStrat);
 //authenticated session persistance
 passport.serializeUser(function(user, callback) {
+    console.log("serialize");
     callback(null, user.id);
 });
 passport.deserializeUser(function(id, callback) {
+    console.log("deserialize");
     User.findById(id, function(err, user) {
         if (err) { return callback(err); }
         callback(null, user);
@@ -96,10 +100,10 @@ app.use(passport.session());
 app.use(require('express-session')({ secret: 'pickle relish', resave: false, saveUninitialized: false }));
 app.use(flash());
 
-app.get('/logout', function(req, res) { 
-    req.logout();
-    res.redirect('/');
-});
+// app.get('/logout', function(req, res) { 
+//     req.logout();
+//     res.redirect('/');
+// });
 
 //performs initial search of collection based on search name criteria and retrieves list of clients from collection
 app.get('/alcis/clients', function(req, res) {
@@ -140,29 +144,10 @@ app.get('/alcis/clients/:client_id', function(req, res) {
     });
 });
 
-app.post('/', function(req, res, next) {
-  passport.authenticate('local', function(err, user, info) {
-    if (err) {
-        console.log(err);
-        return next(err);
-    }
-    if (!user) {
-        return res.status(401).json({
-            err: info
-        });
-    }
-    req.logIn(user, function(err) {
-        if (err) {
-            console.log(err);
-            return res.status(500).json({
-                err: 'Could not log in user'
-            });
-        }
-        res.status(200).json({
-            status: 'Login successful!'
-        });
+app.post('/alcis/login', passport.authenticate('local'), function(req, res) {
+    res.status(200).json({
+        status: 'Login successful!'
     });
-  })(req, res, next);
 });
 //creates new document for the collection
 app.post('/alcis/clients/', function(req, res) {
@@ -210,7 +195,7 @@ app.delete('/alcis/clients/:client_id', function(req, res) {
 });
 //userName & password endpoints
 //creating a username & password (admin level)
-app.post('/alcis/users/', bodyParser.json, function(req, res) {
+app.post('/alcis/users', function(req, res) {
     console.log(req.body);
     if (!req.body) {
         return res.status(400).json({

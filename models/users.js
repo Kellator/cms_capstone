@@ -14,7 +14,15 @@ var UserSchema = new mongoose.Schema({
     },
     administrator: false
 });
-
+UserSchema.statics.findByUsername = function(username, callback) {
+    return this.find({username: username}, function(err, user) {
+        if (err) {
+            callback(err);
+            return;
+        }
+        callback(null, user);
+    });
+};
 UserSchema.methods.validatePassword = function(password, callback) {
     bcrypt.compare(password, this.password, function(err, isValid) {
         if (err) {

@@ -5,7 +5,6 @@
     <meta charset="utf-8">
     <link href="https://fonts.googleapis.com/css?family=Montserrat|Nunito+Sans" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.1.1/normalize.css" rel="stylesheet">
-    <link rel= 'stylesheet' href='grid.css'>
     <link rel='stylesheet' href='main.css'>
     <script src="//code.jquery.com/jquery-2.1.0.js"></script>
     <script src="main.js"></script>
@@ -21,9 +20,9 @@
         <!--    <span>Contact Us</span>-->
         <!--</nav>-->
     </header>
-    <div class="Grid Aligner main_content">
+    <div class="main_content">
     <!--Login page contains input area for user to input credentials and link to request access-->
-        <div id="login_page" class="main_content Aligner-item--fixed">
+        <div id="login_page" class="">
                 <form class="login_form rounded_corners">
                     <fieldset class=" rounded_corners ">
                         <div class="raised_content">
@@ -35,11 +34,11 @@
                         <legend class="hide_label">Log In</legend>
                         <div class="raised_content">
                             <label class="raised_content">username:</label>
-                            <input class="display_center login_input rounded_corners" type="text" id="username" required placeholder="">
+                            <input class="login_input rounded_corners" type="text" id="username" required placeholder="">
                         </div>
                         <div class="raised_content">
                             <label class="raised_content">password:</label>
-                            <input class="display_center login_input rounded_corners" type="password" id="password" required placeholder="">
+                            <input class="login_input rounded_corners" type="password" id="password" required placeholder="">
                         </div>
                         <div class="login_form_buttons">
                             <label for="login_button"></label>
@@ -85,18 +84,12 @@
             <nav id="data_nav_bar" class="hidden">
                 <div id="holder">
                     <ul>
-                        <li class="" id=""><a href="#" id="onlink">Contact Information</a></li>
-    
-                        <li class="" id=""><a href="#">Prospect Information</a></li>
-    
-                        <li class="" id=""><a href="#">Housing & Assistance</a></li>
-    
-                        <li class="" id=""><a href="#">Financials</a></li>
-    
-                        <li class="" id=""><a href="#">Medical Information</a></li>
-                        <!--<li>
-                            <a href="/comments_block">Comments</a>
-                        </li>-->
+                        <li class="" id=""><span class="tab_nav" id="onlink">Contact Information</span></li>
+                        <li class="" id=""><span class="tab_nav">Prospect Information</span></li>
+                        <li class="" id=""><span class="tab_nav">Housing & Assistance</span></li>
+                        <li class="" id=""><span class="tab_nav">Financials</span></li>
+                        <li class="" id=""><span class="tab_nav">Medical Information</span></li>
+                        <li class="" id=""><span class="tab_nav">Comments</span></li>
                     </ul>
                 </div>
             </nav>
