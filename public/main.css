@@ -14,6 +14,9 @@ body {
     /*align-content: center;*/
     font-size: 1em;
 }
+input {
+    padding: 1px 2px 1px 5px;
+}
 button {
     border-radius: 5px;
 }
@@ -36,9 +39,8 @@ input {
     position: relative;
     left: 0;
 }
-.main_content {
-    position: relative;
-    vertical-align: middle;
+.contact_fields {
+    background-color: #4d5355;
 }
 .footer_bar {
     bottom: 0;
@@ -202,14 +204,25 @@ a {
 #data_block {
     background-color: #4d5355;
 }
-.data_display {
+#contact_block {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
     background-color: #4d5355;
-    padding: 25px;
+    border-radius: 5px;
+    padding-top: 20px;
+}
+#contact_block div {
+    flex: 1 1 100%;
 }
 #contact_block fieldset {
     background-color: #4d5355;
+    padding: 25px;
+    border: 1px solid #dbdbdb;
+    margin: 0 20px 20px 20px;
 }
-#contact_block fieldset legend {
+#contact_block legend {
     background-color: #4d5355;
 }
 #contact_block fieldset label {
@@ -236,6 +249,9 @@ a {
     width: 1000px;
     height: 110px;
 }
+#search_entry legend {
+    background-color: #141c20;
+}
 #search_entry fieldset {
     padding: 0px;
 }
@@ -246,4 +262,23 @@ a {
 #search_entry .create_new_button {
     flex: 1 1 30%;
     align-self: center;
+}
+#data_block div {
+    border-radius: 5px;
+}
+#contact_information fieldset {
+    background-color: #4d5355;
+    padding-top: 10px;
+}
+#contact_information legend {
+    background-color: #4d5355;
+}
+#contact_information form {
+    background-color: #4d5355;
+}
+#contact_addl_details {
+    background-color: #4d5355;
+}
+#contact_addl_details form {
+    background-color: #4d5355;
 }

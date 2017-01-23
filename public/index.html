@@ -54,7 +54,7 @@
         </div>
     </div>
     <!--dashboard contains main navigational menu, search field for client lookup, option to enter new client-->
-    <div id="dashboard" class="hidden main_content">
+    <div id="dashboard" class="hidden">
         <!--<h1 class="dash_logo">ALCIS</h1>-->
         <!--search entry contains the main name search input fields and the button to select to enter a new client-->
         <div id="search_entry" class="">
@@ -76,7 +76,7 @@
                 <button name="new_client_button" id="new_client_button" value="Create New Client">Create New Client</button>
             </form>
         </div>
-        <div class="main_content display_area">
+        <div class="display_area">
             <!--search display shows list of possible clients for user to select-->
             <div class="client_search_results_list hidden"></div>
             <!--client_dash contains quick info including contactName & phone, prospectName & DOB, lead status, housing type, hospital-->
@@ -101,16 +101,16 @@
                 </div>
             </nav>
             <!--data block displays information sections selected in nav bar for existing clients and through the data entry process for new clients-->
-            <div id="data_block hidden">
-                <div id="contact_block" class='hidden data_display'></div>
+            <div id="data_block" class="hidden">
+                <div id="contact_block" class='hidden'></div>
                 <div id="prospect_block" class='hidden'></div>
                 <div id="housing_block" class='hidden'></div>
                 <div id="financials_block" class='hidden'></div>
                 <div id="medical_block" class='hidden'></div>
                 <div id="comments_block" class='hidden'></div>
+                <!--submit, edit, and delete client buttons-->
+                <div id="manip_data_buttons"></div>
             </div>
-            <!--submit, edit, and delete client buttons-->
-            <div id="manip_data_buttons"></div>
         </div>
         <!--comments div is a collapsible vertical window that logs user comments regarding client-->
         <!--<div id="user_comments"></div>-->

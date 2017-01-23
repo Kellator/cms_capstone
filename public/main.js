@@ -249,10 +249,10 @@ ClientDataPackage.prototype.add_pharmacy = function(name) {
 // };
 //variable to display contact form fields - used in data collection and presentation
 var clientContactDisplay =
-    "<div id='contact_block' class='tab_nav_display'>" +
-        "<div data_type='contact' id='contact_information'>" +
+    "<div id='contact_display' class='contact_fields' >" +
+        "<div class='contact_fields'  data_type='contact' id='contact_information'>" +
             "<form action='' method='post'>" +
-            "<fieldset class=''>" +
+            "<fieldset >" +
                 "<legend>Contact Information</legend>" +
                 "<label for='contact_last_name'>Last Name:  </label>" +
                 "<input type='text' disabled='' required id='contact_last_name' placeholder='Johnson'>" +
@@ -1144,6 +1144,8 @@ function clientListSelectHandler() {
         $('#submit_data_button').addClass('hidden');
         $('#edit_data_button').removeClass('hidden');
         $('.client_search_results_list').toggleClass('hidden');
+        $('#manip_data_buttons').removeClass('hidden');
+        $('#client_dash').removeClass('hidden');
     });
 }
 //handler for button to allow user to edit client document
@@ -1186,6 +1188,8 @@ function resetClientSearchHandler() {
         $('#first_name').val('');
         $('.client_search_results_list' ).empty();
         $('#data_block').children('div').empty();
+        $('#data_block').children('div').addClass('hidden');
+        $('#data_block').addClass('hidden');
         $('#client_dash').empty();
         $('#data_nav_bar').addClass('hidden');
     });
