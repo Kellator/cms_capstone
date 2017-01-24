@@ -218,19 +218,19 @@ a {
     background-color: #4d5355;
     color: #141c20;
 }
-#holder ul li span#onlink {
+#data_nav_bar #holder ul li span.onclick {
     background-color: #4d5355;   
     color: #dbdbdb;
     border-bottom: 1px solid #4d5355;
 }
-#holder ul li span#onlink:hover {
+#holder ul li span.onclick:hover {
     background-color: #4d5355;
     color: #141c20;
 }
 #data_block {
     background-color: #4d5355;
 }
-#contact_block {
+.info_block {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -239,32 +239,33 @@ a {
     border-radius: 5px;
     padding-top: 20px;
 }
-#contact_block div {
+.info_block div {
     flex: 1 1 100%;
 }
-#contact_block fieldset {
+.info_block fieldset {
     background-color: #4d5355;
     padding: 25px;
     border: 1px solid #dbdbdb;
     margin: 0 20px 20px 20px;
 }
-#contact_block legend {
+.info_block legend {
     background-color: #4d5355;
 }
-#contact_block fieldset label {
+.info_block fieldset label {
     background-color: #4d5355;
 }
-#contact_block fieldset ul {
+.info_block fieldset ul {
     background-color: #4d5355;
 }
-#contact_block fieldset ul li {
+.info_block fieldset ul li {
     background-color: #4d5355;
 }
-#contact_block fieldset input {
+.info_block fieldset input {
     background-color: #dbdbdb;
     color: #141c20;
     font-weight: bold;
 }
+/*changed*/
 .client_search_form {
     padding: 25px;
 }
@@ -292,19 +293,19 @@ a {
 #data_block div {
     border-radius: 5px;
 }
-#contact_information fieldset {
+.nested_containers fieldset {
     background-color: #4d5355;
     padding-top: 10px;
 }
-#contact_information legend {
+.nested_containers legend {
     background-color: #4d5355;
 }
-#contact_information form {
+.nested_containers form {
     background-color: #4d5355;
 }
-#contact_addl_details {
+.nested_containers {
     background-color: #4d5355;
 }
-#contact_addl_details form {
+.nested_containers form {
     background-color: #4d5355;
 }

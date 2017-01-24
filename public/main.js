@@ -2,11 +2,6 @@
 
 /*global $*/
 var databaseUrl = 'https://node-unit-project-kellator.c9users.io';
-// function CreateUserPackage(username, password) {
-//     this.username = username;
-//     this.password = password;
-//     this.administrator = false;
-// }
 //constructor function to create client data package
 function ClientDataPackage() {
     this.contact = {};
@@ -250,8 +245,8 @@ ClientDataPackage.prototype.add_pharmacy = function(name) {
 //variable to display contact form fields - used in data collection and presentation
 var clientContactDisplay =
 
-    "<div id='contact_display' class='contact_fields' >" +
-        "<div class='contact_fields'  data_type='contact' id='contact_information'>" +
+    "<div id='contact_display' class='contact_fields ' >" +
+        "<div class='contact_fields nested_containers'  data_type='contact' id='contact_information'>" +
             "<form action='' method='post'>" +
             "<fieldset >" +
                 "<legend>Contact Information</legend>" +
@@ -282,7 +277,7 @@ var clientContactDisplay =
             "</fieldset>" +
             "</form>" +
         "</div>" +
-        "<div id='contact_addl_details'>" +
+        "<div id='contact_addl_details' class='nested_containers'>" +
             "<form action='' method='post'>" +
             "<fieldset class=''>" +
                 "<legend>Additional Details</legend>" +
@@ -311,7 +306,7 @@ var clientContactDisplay =
 ;
 //variable for prospect data display - used in data collection and display
 var clientProspectDisplay = 
-    "<div id='prospect_information'>" +
+    "<div id='prospect_information' class='nested_containers'>" +
         "<form action='' method='post'>" +
         "<fieldset>" +
             "<legend>Prospect Contact Information</legend>" +
@@ -336,7 +331,7 @@ var clientProspectDisplay =
         "</fieldset>" +
         "</form>" +
     "</div>" +
-    "<div id='prospect_identification'>" +
+    "<div id='prospect_identification' class='nested_containers'>" +
         "<form action='' method='post'>" +
         "<fieldset>" +
             "<legend>Prospect Identification</legend>" +
@@ -353,7 +348,7 @@ var clientProspectDisplay =
         "</fieldset>" +
         "</form>" +
     "</div>" +
-    "<div id='prospect_addl_information'>" +
+    "<div id='prospect_addl_information' class='nested_containers'>" +
         "<form action='' method='post'>" +
         "<fieldset>" +
             "<legend>Additional Information</legend>" +
@@ -411,7 +406,7 @@ var clientProspectDisplay =
         "</fieldset>" +
         "</form>" +
     "</div>" +
-    "<div id='prospect_emergency_info'>" +
+    "<div id='prospect_emergency_info' class='nested_containers'>" +
         "<form action='' method='post'>" +
         "<fieldset>" +
             "<legend>Emergency Information</legend>" +
@@ -470,7 +465,7 @@ var clientProspectDisplay =
     ;
 //variable for housing data display - used in data collection and display
 var clientHousingDisplay =
-    "<div id='housingAndAssist'>" +
+    "<div id='housingAndAssist' class='nested_containers'>" +
         "<form action='' method='post'>" +
         "<fieldset>" +
             "<legend>Housing Type and Assistance Needed</legend>" +
@@ -527,7 +522,7 @@ var clientHousingDisplay =
     "</div>";
 //var for financial data display - used in data collection and display
 var clientFinancialDisplay = 
-    "<div id='gen_financial'>" +
+    "<div id='gen_financial' class='nested_containers'>" +
         "<form action='' method='post'>" +
         "<fieldset>" +
             "<legend>Financial Information</legend>" +
@@ -541,7 +536,7 @@ var clientFinancialDisplay =
             "</fieldset>" +
         "</form>" +
     "</div>"+
-    "<div id='detail_financial'>" +
+    "<div id='detail_financial' class='nested_containers'>" +
         "<form action='' method='post'>" +
         "<fieldset>" +
             "<legend>Income and Assets</legend>" +
@@ -570,7 +565,7 @@ var clientFinancialDisplay =
         "</fieldset>" +
         "</form>" +
     "</div>" +
-        "<div id='references_financial'>" +
+        "<div id='references_financial' class='nested_containers'>" +
         "<form action='' method='post'>" +
         "<fieldset>" +
             "<legend>Financial References</legend>" +
@@ -588,7 +583,7 @@ var clientFinancialDisplay =
     ;
 //var for medical data display - used in data collection and display
 var clientMedicalDisplay = 
-    "<div id='assessment_data'>" +
+    "<div id='assessment_data' class='nested_containers'>" +
         "<form action='' method='post'>" +
         "<fieldset>" +
             "<legend>Assessment Information</legend>" +
@@ -613,7 +608,7 @@ var clientMedicalDisplay =
         "</fieldset>" +
         "</form>" +
     "</div>" +
-    "<div id='allergies_data'>" +
+    "<div id='allergies_data' class='nested_containers'>" +
         "<form action='' method='post'>" +
         "<fieldset>" +
             "<legend>Allergy Information</legend>" +
@@ -623,7 +618,7 @@ var clientMedicalDisplay =
         "</fieldset>" +
         "</form>" +
     "</div>" +
-    "<div id='medical_data'>" +
+    "<div id='medical_data' class='nested_containers'>" +
         "<form action='' method='post'>" +
         "<fieldset>" +
             "<legend>Medical Information</legend>" +
@@ -634,7 +629,7 @@ var clientMedicalDisplay =
         "</fieldset>" +
         "</form>" +
     "</div>" +
-    "<div id='dietary_data'>" +
+    "<div id='dietary_data' class='nested_containers'>" +
         "<form action='' method='post'>" +
         "<fieldset>" +
         "<legend>Dietary Needs</legend>" +
@@ -651,7 +646,7 @@ var clientMedicalDisplay =
         "</fieldset>" +
         "</form>" +
     "</div>" +
-    "<div id='pcp_data'>" +
+    "<div id='pcp_data' class='nested_containers'>" +
         "<form action='' method='post'>" +
         "<fieldset>" +
         "<legend>Primary Care Provider Information</legend>" +
@@ -675,7 +670,7 @@ var clientMedicalDisplay =
         "</fieldset>" +
         "</form>" +
     "</div>" +
-    "<div id='pcp_data'>" +
+    "<div id='pharmacy_data' class='nested_containers'>" +
         "<form action='' method='post'>" +
         "<fieldset>" +
             "<legend>Pharmacy</legend>" +
@@ -1088,9 +1083,11 @@ function newClientHandler() {
         $('#edit_data_button').addClass('hidden');
         $('.client_search_results_list' ).empty();
         $('#client_dash').empty();
-        $('#contact_block').show();
         $('#data_block').removeClass('hidden');
+        $('#data_block').children('div').hide();
         $('#data_nav_bar').removeClass('hidden');
+        $('#contact_block').show();
+        $('manip_data_buttons').show();
     });
 }
 //submits username and password for authentication
@@ -1143,12 +1140,13 @@ function clientListSelectHandler() {
         // $('#manip_data_buttons').html(dataManipButtons);
         $('.display_area :input').prop('disabled', true);
         $('#data_block').removeClass('hidden');
-        $('#contact_block').removeClass('hidden');
+        $('#data_block').children('div').hide();
+        $('#contact_block').show();
         $('#data_nav_bar').removeClass('hidden');
         $('#submit_data_button').addClass('hidden');
         $('#edit_data_button').removeClass('hidden');
         $('.client_search_results_list').toggleClass('hidden');
-        $('#manip_data_buttons').removeClass('hidden');
+        $('#manip_data_buttons').show();
         $('#client_dash').removeClass('hidden');
     });
 }
@@ -1215,10 +1213,10 @@ function tabNavHandler() {
         var displayDiv = $(this).attr('js_display');
         console.log(displayDiv);
         $('#data_block').children('div').hide();
+        $('.tab_nav').removeClass('onclick');
         $('#data_block').find('#' + displayDiv).show();
+        // $('#holder').find('span').attr('js_display').addClass('onclick');
         $('#manip_data_buttons').show();
-        // $('#data_block').find('#' + displayDiv).removeClass('hidden');
-        //empty current display block - write in block that corresponds with selected tab
     });
 }
 //ready function
