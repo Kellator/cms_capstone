@@ -84,22 +84,22 @@
             <nav id="data_nav_bar" class="hidden">
                 <div id="holder">
                     <ul>
-                        <li class="" id=""><span class="tab_nav" id="onlink">Contact Information</span></li>
-                        <li class="" id=""><span class="tab_nav">Prospect Information</span></li>
-                        <li class="" id=""><span class="tab_nav">Housing & Assistance</span></li>
-                        <li class="" id=""><span class="tab_nav">Financials</span></li>
-                        <li class="" id=""><span class="tab_nav">Medical Information</span></li>
-                        <li class="" id=""><span class="tab_nav">Comments</span></li>
+                        <li class="" id=""><span js_display='contact_block' class="tab_nav" id="onlink">Contact Information</span></li>
+                        <li class="" id=""><span js_display='prospect_block' class="tab_nav">Prospect Information</span></li>
+                        <li class="" id=""><span js_display='housing_block' class="tab_nav">Housing & Assistance</span></li>
+                        <li class="" id=""><span js_display='financials_block' class="tab_nav">Financials</span></li>
+                        <li class="" id=""><span js_display='medical_block' class="tab_nav">Medical Information</span></li>
+                        <li class="" id=""><span js_display='comments_block' class="tab_nav">Comments</span></li>
                     </ul>
                 </div>
             </nav>
             <!--data block displays information sections selected in nav bar for existing clients and through the data entry process for new clients-->
             <div id="data_block" class="hidden">
-                <div id="contact_block" js_display='contact_display' class='hidden'></div>
-                <div id="prospect_block" js_display='prospect_information' class='hidden'></div>
-                <div id="housing_block" js_display='housingAndAssist' class='hidden'></div>
-                <div id="financials_block" js_display='gen_financial' class='hidden'></div>
-                <div id="medical_block" js_display='assessment_data' class='hidden'></div>
+                <div id="contact_block"  class='hidden'></div>
+                <div id="prospect_block"  class='hidden'></div>
+                <div id="housing_block"  class='hidden'></div>
+                <div id="financials_block"  class='hidden'></div>
+                <div id="medical_block"  class='hidden'></div>
                 <div id="comments_block" class='hidden'></div>
                 <!--submit, edit, and delete client buttons-->
                 <div id="manip_data_buttons"></div>

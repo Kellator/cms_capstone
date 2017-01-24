@@ -1084,11 +1084,12 @@ function newClientHandler() {
         event.preventDefault();
         enterNewClientData();
         $('.display_area :input').prop('disabled', false);
-        $('#submit_data_button').removeClass('hidden');
+        $('#submit_data_button').show();
         $('#edit_data_button').addClass('hidden');
         $('.client_search_results_list' ).empty();
         $('#client_dash').empty();
-        $('#data_block').children().removeClass('hidden');
+        $('#contact_block').show();
+        $('#data_block').removeClass('hidden');
         $('#data_nav_bar').removeClass('hidden');
     });
 }
@@ -1211,6 +1212,12 @@ function tabNavHandler() {
         event.stopPropagation();
         console.log('clicked a nav tab');
         console.log(this);
+        var displayDiv = $(this).attr('js_display');
+        console.log(displayDiv);
+        $('#data_block').children('div').hide();
+        $('#data_block').find('#' + displayDiv).show();
+        $('#manip_data_buttons').show();
+        // $('#data_block').find('#' + displayDiv).removeClass('hidden');
         //empty current display block - write in block that corresponds with selected tab
     });
 }
