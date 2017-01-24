@@ -249,6 +249,7 @@ ClientDataPackage.prototype.add_pharmacy = function(name) {
 // };
 //variable to display contact form fields - used in data collection and presentation
 var clientContactDisplay =
+
     "<div id='contact_display' class='contact_fields' >" +
         "<div class='contact_fields'  data_type='contact' id='contact_information'>" +
             "<form action='' method='post'>" +
@@ -469,7 +470,7 @@ var clientProspectDisplay =
     ;
 //variable for housing data display - used in data collection and display
 var clientHousingDisplay =
-    "<div id='housingAndAssist>" +
+    "<div id='housingAndAssist'>" +
         "<form action='' method='post'>" +
         "<fieldset>" +
             "<legend>Housing Type and Assistance Needed</legend>" +
@@ -1207,7 +1208,9 @@ function bypassLoginHandler() {
 function tabNavHandler() {
     $('div').on('click', '.tab_nav', function(event) {
         event.preventDefault();
+        event.stopPropagation();
         console.log('clicked a nav tab');
+        console.log(this);
         //empty current display block - write in block that corresponds with selected tab
     });
 }

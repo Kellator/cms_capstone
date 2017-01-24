@@ -23,7 +23,7 @@
     <div class="main_content">
     <!--Login page contains input area for user to input credentials and link to request access-->
         <div id="login_page" class="">
-                <form class="login_form rounded_corners">
+                <form class="login_form rounded_corners" >
                     <fieldset class=" rounded_corners ">
                         <div class="raised_content">
                             <h1 class="login_heading underline">Log in</h1>
@@ -95,11 +95,11 @@
             </nav>
             <!--data block displays information sections selected in nav bar for existing clients and through the data entry process for new clients-->
             <div id="data_block" class="hidden">
-                <div id="contact_block" class='hidden'></div>
-                <div id="prospect_block" class='hidden'></div>
-                <div id="housing_block" class='hidden'></div>
-                <div id="financials_block" class='hidden'></div>
-                <div id="medical_block" class='hidden'></div>
+                <div id="contact_block" js_display='contact_display' class='hidden'></div>
+                <div id="prospect_block" js_display='prospect_information' class='hidden'></div>
+                <div id="housing_block" js_display='housingAndAssist' class='hidden'></div>
+                <div id="financials_block" js_display='gen_financial' class='hidden'></div>
+                <div id="medical_block" js_display='assessment_data' class='hidden'></div>
                 <div id="comments_block" class='hidden'></div>
                 <!--submit, edit, and delete client buttons-->
                 <div id="manip_data_buttons"></div>

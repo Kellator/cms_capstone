@@ -70,18 +70,32 @@ if(require.main === module) {
 //     });
 // });
 //verify credentials submitted by user
-var localStrat = new LocalStrategy(function(username, password, callback) {
-    console.log(username + ' ' + password);
-    User.findByUsername(username, function(err, user) {
-        console.log(username);
-        if (err) {console.log(err); return callback(err); }
-        if (!user) {return callback(null, false); }
-        if (user.password != password) { return callback(null, false); }
-    });
+// var localStrat = new LocalStrategy(function(username, password, callback) {
+//     console.log(username + ' ' + password);
+//     User.findByUsername(username, function(err, user) {
+//         console.log(username);
+//         if (err) {console.log(err); return callback(err); }
+//         if (!user) {return callback(null, false); }
+//         if (user.password != password) { return callback(null, false); }
+//     });
     
-});
-// var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
-passport.use(localStrat);
+// });
+// // var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
+// passport.use(localStrat);
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+    User.findByUsername({ username: username }, function(err, user) {
+      if (err) { console.log(err) ;return done(err); }
+      if (!user) {
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+      if (!user.validPassword(password)) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      return done(null, user);
+    });
+  }
+));
 //authenticated session persistance
 passport.serializeUser(function(user, callback) {
     console.log("serialize");
@@ -145,6 +159,7 @@ app.get('/alcis/clients/:client_id', function(req, res) {
 });
 
 app.post('/alcis/login', passport.authenticate('local'), function(req, res) {
+    console.log(req.body);
     res.status(200).json({
         status: 'Login successful!'
     });
@@ -208,6 +223,7 @@ app.post('/alcis/users', function(req, res) {
         });
     }
     var username = req.body.username;
+    console.log(username);
     if (typeof username !== 'string') {
         return res.status(422).json({
             message: "Incorrect Field Type: username'"
@@ -220,6 +236,7 @@ app.post('/alcis/users', function(req, res) {
         });
     }
     var password = req.body.password;
+    console.log(password);
     if (typeof password !=='string') {
         return res.status(422).json({
             message: "Incorrect Field Type: password"
@@ -249,6 +266,7 @@ app.post('/alcis/users', function(req, res) {
                 username: username,
                 password: hash
             });
+            console.log(user);
             user.save(function(err) {
                 if (err) {
                     console.log(err);
