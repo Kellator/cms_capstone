@@ -1,5 +1,3 @@
-//screen for user credentials entry
-
 /*global $*/
 var databaseUrl = 'https://node-unit-project-kellator.c9users.io';
 //constructor function to create client data package
@@ -163,7 +161,7 @@ ClientDataPackage.prototype.add_payer_source = function(payer) {
 };
 ClientDataPackage.prototype.add_income = function(pension, social, ssi, va, other, otherSource) {
     this.financials.income = {};
-    this.financials.income.monthlyIncome = pension + social + ssi + va + other; 
+    this.financials.income.monthlyIncome = parseInt(pension, 10) + parseInt(social, 10) + parseInt(ssi, 10) + parseInt(va, 10) + parseInt(other, 10); 
     this.financials.income.pension = pension;
     this.financials.income.socSecMonthly = social;
     this.financials.income.ssi = ssi;
@@ -399,9 +397,9 @@ var clientProspectDisplay =
                 "<li><input type='radio' disabled='' name='lead_status' value='cool' id='lead_cool'>Cool</>" +
                 "<p>Move-in after 6 months.</p>" +
             "</ul>" +
-            "<label for='date_to_alcis'>Date Entered in ALCIS:  </label>" + //can date be entered by server not user?
+            "<label for='date_to_alcis'>Date Entered in ALCIS:  </label>" + 
             "<input type='date' disabled='' id='date_to_alcis' name='date_to_alcis'>" +
-            "<label for='follow_up_date'>Follow-up Date:  </label>" + //follow up assigned by server -e.g. dated added plus 3 months
+            "<label for='follow_up_date'>Follow-up Date:  </label>" +
             "<input type='date' disabled='' id='follow_up_date' name='follow_up_date'>" +
         "</fieldset>" +
         "</form>" +
@@ -413,22 +411,22 @@ var clientProspectDisplay =
             "<label id='pref_hospital'>Preferred Hospital</label>" +
             "<ul>" +
                 "<li><input type='radio' disabled='' required name='pref_hospital' value='Brockton' id='hospital_brockton'>Signature Healthcare | Brockton Hospital</input>" +
-                "<li><input type='radio' disabled='' required name='pref_hospital' value='Good Samaritan id='hospital_goodsam'>Steward Healthcare | Good Samaritan Hospital</input>" +
+                "<li><input type='radio' disabled='' required name='pref_hospital' value='Good Samaritan' id='hospital_goodsam'>Steward Healthcare | Good Samaritan Hospital</input>" +
             "</ul>" +
             "<legend>DNR Status</legend>" +
             "<ul>" +
                 "<li><input type='radio' disabled='' name='dnr_status' value='DNR Present' id='dnr_present'>DNR</input>" +
                 "<li><input type='radio' disabled='' name='dnr_status' value='DNR Not Present' id='dnr_not_present'>No DNR</input>" +
             "</ul>" +
-            "<legend>Power of Attorney</legend>" + //need to include buttons for same as (econtact, poa, hcp, etc)
+            "<legend>Power of Attorney</legend>" + 
             "<label for='poa_last_name'>Last Name:  </label>" +
             "<input type='text' disabled='' required id='poa_last_name' placeholder='Johnson'>" +
             "<label for='poa_first_name'>First Name:  </label>" +
             "<input type='text' disabled='' required id='poa_first_name' placeholder='Milly'>" +
             "<label for='poa_primary_phone'>Primary Phone:  </label>" +
-            "<input type='text' disabled='' maxlength='10' required id='poa_primary_phone'pattern='\d{3}[\-]\d{3}[\-]\d{4}'  placeholder='508-588-5555'>" +
+            "<input type='text' disabled='' maxlength='12' required id='poa_primary_phone'pattern='\d{3}[\-]\d{3}[\-]\d{4}'  placeholder='508-588-5555'>" +
             "<label for='poa_alt_phone'>Alternate Phone:  </label>" +
-            "<input type='text' disabled='' maxlength='10' id='poa_alt_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='508-588-5858'>" +
+            "<input type='text' disabled='' maxlength='12' id='poa_alt_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='508-588-5858'>" +
 
             "<legend>Health Care Proxy</legend>" +
             "<label for='hcp_last_name'>Last Name:  </label>" +
@@ -436,9 +434,9 @@ var clientProspectDisplay =
             "<label for='hcp_first_name'>First Name:  </label>" +
             "<input type='text' disabled='' required id='hcp_first_name' placeholder='Milly'>" +
             "<label for='hcp_primary_phone'>Primary Phone:  </label>" +
-            "<input type='text' disabled='' maxlength='10' required id='hcp_primary_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='508-588-5555'>" +
+            "<input type='text' disabled='' maxlength='12' required id='hcp_primary_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='508-588-5555'>" +
             "<label for='hcp_alt_phone'>Alternate Phone:  </label>" +
-            "<input type='text' disabled='' maxlength='10' id='hcp_alt_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='508-588-5858'>" +
+            "<input type='text' disabled='' maxlength='12' id='hcp_alt_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='508-588-5858'>" +
 
             "<legend>Primary Emergency Contact</legend>" +
             "<label for='pec_last_name'>Last Name:  </label>" +
@@ -446,9 +444,9 @@ var clientProspectDisplay =
             "<label for='pec_first_name'>First Name:  </label>" +
             "<input type='text' disabled='' required id='pec_first_name' placeholder='Milly'>" +
             "<label for='pec_primary_phone'>Primary Phone:  </label>" +
-            "<input type='text' disabled='' maxlength='10' required id='pec_primary_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='508-588-5555'>" +
+            "<input type='text' disabled='' maxlength='12' required id='pec_primary_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='508-588-5555'>" +
             "<label for='pec_alt_phone'>Alternate Phone:  </label>" +
-            "<input type='text' disabled='' maxlength='10' id='pec_alt_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='508-588-5858'>" +
+            "<input type='text' disabled='' maxlength='12' id='pec_alt_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='508-588-5858'>" +
 
             "<legend>Secondary Emergency Contact</legend>" +
             "<label for='sec_last_name'>Last Name:  </label>" +
@@ -456,9 +454,9 @@ var clientProspectDisplay =
             "<label for='sec_first_name'>First Name:  </label>" +
             "<input type='text' disabled='' required id='sec_first_name' placeholder='Milly'>" +
             "<label for='sec_primary_phone'>Primary Phone:  </label>" +
-            "<input type='text'disabled=''  maxlength='10' required id='sec_primary_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='508-588-5555'>" +
+            "<input type='text'disabled=''  maxlength='12' required id='sec_primary_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='508-588-5555'>" +
             "<label for='sec_alt_phone'>Alternate Phone:  </label>" +
-            "<input type='text' disabled='' maxlength='10' id='sec_alt_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='508-588-5858'>" +
+            "<input type='text' disabled='' maxlength='12' id='sec_alt_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='508-588-5858'>" +
         "</fieldset>" +
         "</form>" +
     "</div>"
@@ -572,11 +570,11 @@ var clientFinancialDisplay =
             "<label for='bank_ref_name'>Bank Name:  </label>" +
             "<input type='text' disabled='' id='bank_ref_name' placeholder='HarborOne'></input><br>" +
             "<label for='bank_ref_text'>Bank Phone Number:  </label>" +
-            "<input type='text' disabled='' id=bank_ref_number' maxlength='10' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='5085885858'></input><br>" +
+            "<input type='text' disabled='' id=bank_ref_number' maxlength='12' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='5085885858'></input><br>" +
             "<label for='landlord_ref_name'>Landlord Name:  </label>" +
             "<input type='text' disabled='' id='landlord_ref_name' placeholder='Jim Smith'></input><br>" +
             "<label for='landlord_ref_number'>Landlord Phone Number:  </label>" +
-            "<input type='text' disabled='' id=landlord_ref_number' maxlength='10' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='5085885858'></input>" +
+            "<input type='text' disabled='' id=landlord_ref_number' maxlength='12' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='5085885858'></input>" +
         "</fieldset>" +
         "</form>" +
     "</div>"
@@ -653,9 +651,9 @@ var clientMedicalDisplay =
         "<label for='pcp_name'>Primary Care Physician:  </label>" +
         "<input type='text' disabled='' id='pcp_name' placeholder='Dr.John Smith'></input><br>" +
         "<label for='pcp_phone'>PCP Phone Number:  </label>" +
-        "<input type='text' disabled='' id='pcp_phone' maxlength='10' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='5085558888'></input>" +
+        "<input type='text' disabled='' id='pcp_phone' maxlength='12' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='5085558888'></input>" +
         "<label for='pcp_fax'>PCP Fax Number:  </label>" +
-        "<input type='text' disabled='' id='pcp_fax' maxlength='10' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='5088885555'></input><br>" +
+        "<input type='text' disabled='' id='pcp_fax' maxlength='12' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='5088885555'></input><br>" +
         "<label for='pcp_street'>Street:  </label>" +
         "<input type='text' disabled='' id='pcp_street' placeholder='123 Prospect St.'>" +
         "<label for='pcp_city'>City:  </label>" +
@@ -971,7 +969,7 @@ function displayClientData(data) {
         contactDisplay.find('#contact_primary_phone').val(data.contact.contactPrimaryPhone);
         contactDisplay.find('#contact_alt_phone').val(data.contact.contactSecondaryPhone);
         contactDisplay.find('#contact_email').val(data.contact.contactEmail);
-        contactDisplay.find('input[name="rel_to_prospect"]:checked').val(data.contact.relationToProspect);
+        contactDisplay.find('input[name="rel_to_prospect"][value="' + data.contact.relationToProspect + '"]').prop('defaultChecked', true);
         contactDisplay.find('#first_contact_date').val(data.contact.dateOfFirstContact);
         var prospectDisplay = $(clientProspectDisplay);
         prospectDisplay.find('#prospect_first_name').val(data.prospect.prospectName.prospectFirstName);
@@ -1150,6 +1148,7 @@ function clientListSelectHandler() {
         $('.client_search_results_list').toggleClass('hidden');
         $('#manip_data_buttons').show();
         $('#client_dash').removeClass('hidden');
+        $('span').removeClass('onclick');
         $('span[js_display="contact_block"]').addClass('onclick');
     });
 }

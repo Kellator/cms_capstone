@@ -23,21 +23,21 @@ var LocalStrategy = require('passport-local').Strategy;
 //coordinates the connection to the database, and the running on the HTTP server
 var runServer = function(callback) {
     mongoose.connect(config.DATABASE_URL, function(err) {
-        if(err && callback) {
+        if (err && callback) {
             return callback(err);
         }
         app.listen(config.PORT, function() {
-            console.log('Listening on localhost:', + config.PORT);
-            if(callback) {
+            console.log('Listening on localhost:', +config.PORT);
+            if (callback) {
                 callback();
             }
         });
     });
 };
 //makes file both executable script and a module
-if(require.main === module) {
+if (require.main === module) {
     runServer(function(err) {
-        if(err) {
+        if (err) {
             console.error(err);
         }
     });
@@ -78,23 +78,32 @@ if(require.main === module) {
 //         if (!user) {return callback(null, false); }
 //         if (user.password != password) { return callback(null, false); }
 //     });
-    
+
 // });
 // // var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
 // passport.use(localStrat);
 passport.use(new LocalStrategy(
-  function(username, password, done) {
-    User.findByUsername({ username: username }, function(err, user) {
-      if (err) { console.log(err) ;return done(err); }
-      if (!user) {
-        return done(null, false, { message: 'Incorrect username.' });
-      }
-      if (!user.validPassword(password)) {
-        return done(null, false, { message: 'Incorrect password.' });
-      }
-      return done(null, user);
-    });
-  }
+    function(username, password, done) {
+        User.findByUsername(username, function(err, user) {
+            if (err) {
+                console.log(err);
+                return done(err);
+            }
+            if (!user) {
+                return done(null, false, {
+                    message: 'Incorrect username.'
+                });
+            }
+            user.validatePassword(password, function(err) {
+                if (err) {
+                    return done(null, false, {
+                        message: 'Incorrect password.'
+                    });
+                }
+                return done(null, user);
+            });
+        });
+    }
 ));
 //authenticated session persistance
 passport.serializeUser(function(user, callback) {
@@ -104,14 +113,20 @@ passport.serializeUser(function(user, callback) {
 passport.deserializeUser(function(id, callback) {
     console.log("deserialize");
     User.findById(id, function(err, user) {
-        if (err) { return callback(err); }
+        if (err) {
+            return callback(err);
+        }
         callback(null, user);
     });
 });
 // passport.use(strategy);
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(require('express-session')({ secret: 'pickle relish', resave: false, saveUninitialized: false }));
+app.use(require('express-session')({
+    secret: 'pickle relish',
+    resave: false,
+    saveUninitialized: false
+}));
 app.use(flash());
 
 // app.get('/logout', function(req, res) { 
@@ -125,7 +140,9 @@ app.get('/alcis/clients', function(req, res) {
     var searchLastName = req.query.lastName;
     console.log(req.query);
     if (!searchLastName) {
-        Client.find({'contact.contactName.contactFirstName' : searchFirstName}).exec(function(err, clients) {
+        Client.find({
+            'contact.contactName.contactFirstName': searchFirstName
+        }).exec(function(err, clients) {
             if (err) {
                 console.log(err);
                 console.log('cannot search by first name');
@@ -137,7 +154,9 @@ app.get('/alcis/clients', function(req, res) {
         });
     }
     if (!searchFirstName) {
-        Client.find({'contact.contactName.contactLastName' : searchLastName}).exec(function(err, clients) {
+        Client.find({
+            'contact.contactName.contactLastName': searchLastName
+        }).exec(function(err, clients) {
             if (err) {
                 console.log(err);
                 console.log('cannot search by last name');
@@ -148,7 +167,24 @@ app.get('/alcis/clients', function(req, res) {
             res.json(clients);
         });
     }
-    // if (!searchFirstName && !searchLastName) {
+    if (searchFirstName && searchLastName) {
+        Client.find({
+            $and: [{
+                'contact.contactName.contactLastName': searchLastName
+            }, {
+                'contact.contactName.contactFirstName': searchFirstName
+            }]
+        }).exec(function(err, clients) {
+            if (err) {
+                console.log(err);
+                return res.status(500).json({
+                    message: 'Internal Server Error'
+                });
+            }
+            res.json(clients);
+        });
+    }
+    // else {
     //     Client.find().exec(function(err, clients) {
     //         if (err) {
     //             console.log(err);
@@ -159,25 +195,8 @@ app.get('/alcis/clients', function(req, res) {
     //         res.json(clients);
     //     });
     // }
-    if (searchFirstName && searchLastName) {
-        Client.find({ $and: [ {'contact.contactName.contactLastName' : searchLastName}, 
-            {'contact.contactName.contactFirstName' : searchFirstName}]}).exec(function(err, clients) {
-            if (err) {
-                console.log(err);
-                return res.status(500).json({
-                    message: 'Internal Server Error'
-                });
-            }
-            res.json(clients);
-        });
-    }
 });
-
-// });
-//test find
-    
-// });
-//api endpoint to retrieve client document from collection for search list results
+//endpoint to retrieve client document from collection for search list results
 app.get('/alcis/clients/:client_id', function(req, res) {
     var client_id = req.params.client_id;
     Client.findById(client_id, function(err, client) {
@@ -189,7 +208,7 @@ app.get('/alcis/clients/:client_id', function(req, res) {
         return res.send(client);
     });
 });
-
+//log in authentication request
 app.post('/alcis/login', passport.authenticate('local'), function(req, res) {
     console.log(req.body);
     res.status(200).json({
@@ -206,7 +225,9 @@ app.post('/alcis/clients/', function(req, res) {
         if (err || !client) {
             console.error("could not create client");
             console.log(err);
-            return res.status(500).json({message: 'Internal Server Error'});
+            return res.status(500).json({
+                message: 'Internal Server Error'
+            });
         }
         console.log("created client " + client._id);
         res.status(201).json(client);
@@ -269,7 +290,7 @@ app.post('/alcis/users', function(req, res) {
     }
     var password = req.body.password;
     console.log(password);
-    if (typeof password !=='string') {
+    if (typeof password !== 'string') {
         return res.status(422).json({
             message: "Incorrect Field Type: password"
         });
@@ -294,7 +315,7 @@ app.post('/alcis/users', function(req, res) {
                     message: "Internal Server Error"
                 });
             }
-            var user = new User ({
+            var user = new User({
                 username: username,
                 password: hash
             });
@@ -311,28 +332,9 @@ app.post('/alcis/users', function(req, res) {
         });
     });
 });
-//endpoint protected by authenticate strategy
-// app.get('/login', passport.authenticate('local', {failureRedirect: '/'}), function(req, res) {
-//     console.log(req.body);
-//     res.json({
-//         message: "Autheticated"
-//     });
-// });
+
 exports.app = app;
 exports.runServer = runServer;
-
-// Client.create(sampleData_2, function(err, client) {
-//             if (err || !client) {
-//                 console.error("could not create client"); //example has , name
-//             }
-//             console.log("created client"); //example has snippet.name
-//         });
-// Client.create(sampleData_3, function(err, client) {
-//     if (err || !client) {
-//         console.error("could not create client"); //example has , name
-//     }
-//     console.log("created client"); //example has snippet.name
-// });
 // var client_id = '587ec4c2be5a2261d968b874'
 //     Client.findOneAndRemove(client_id, function(err, client) {
 //         if (err) {

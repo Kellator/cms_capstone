@@ -34,7 +34,7 @@ var clientSchema = new mongoose.Schema({
             prospectZip: String
         },
         dateOfBirth: Date,
-        socialSecurityNum: Date,
+        socialSecurityNum: String,
         insuranceNums: {
             medicareNum: String, //9 digit number with one or two letters
             massHealth: String,
@@ -120,11 +120,11 @@ var clientSchema = new mongoose.Schema({
         },
         bankReference: {
             bankRefName: String,
-            bankRefNumber: Number
+            bankRefNumber: String
         },
         landlordReference: {
             landlordRefName: String,
-            landlordRefNum: Number
+            landlordRefNum: String
         }
     },
     medical: {
