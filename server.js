@@ -123,28 +123,60 @@ app.use(flash());
 app.get('/alcis/clients', function(req, res) {
     var searchFirstName = req.query.firstName;
     var searchLastName = req.query.lastName;
-//     Client.find({ $and: [ {'contact.contactName.contactLastName' : searchLastName}, {'contact.contactName.contactFirstName' : searchFirstName}]}).exec(function(err, clients) {
-//     // Client.find( {'contact.contactName.contactLastName' : { $regex: new RegExp('^' + searchLastName.toLowerCase()) } }).exec(function(err, clients) {
-//         if (err) {
-//             console.log(err);
-//             return res.status(500).json({
-//             message: 'Internal Server Error'
-//             });
-//         }
-//         res.json(clients);
-//     });
+    console.log(req.query);
+    if (!searchLastName) {
+        Client.find({'contact.contactName.contactFirstName' : searchFirstName}).exec(function(err, clients) {
+            if (err) {
+                console.log(err);
+                console.log('cannot search by first name');
+                return res.status(500).json({
+                    message: 'Internal Server Error'
+                });
+            }
+            res.json(clients);
+        });
+    }
+    if (!searchFirstName) {
+        Client.find({'contact.contactName.contactLastName' : searchLastName}).exec(function(err, clients) {
+            if (err) {
+                console.log(err);
+                console.log('cannot search by last name');
+                return res.status(500).json({
+                    message: 'Internal Server Error'
+                });
+            }
+            res.json(clients);
+        });
+    }
+    // if (!searchFirstName && !searchLastName) {
+    //     Client.find().exec(function(err, clients) {
+    //         if (err) {
+    //             console.log(err);
+    //             return res.status(500).json({
+    //                 message: 'Internal Server Error'
+    //             });
+    //         }
+    //         res.json(clients);
+    //     });
+    // }
+    if (searchFirstName && searchLastName) {
+        Client.find({ $and: [ {'contact.contactName.contactLastName' : searchLastName}, 
+            {'contact.contactName.contactFirstName' : searchFirstName}]}).exec(function(err, clients) {
+            if (err) {
+                console.log(err);
+                return res.status(500).json({
+                    message: 'Internal Server Error'
+                });
+            }
+            res.json(clients);
+        });
+    }
+});
+
 // });
 //test find
-    Client.find().exec(function(err, clients) {
-        if (err) {
-            console.log(err);
-            return res.status(500).json({
-            message: 'Internal Server Error'
-            });
-        }
-        res.json(clients);
-    });
-});
+    
+// });
 //api endpoint to retrieve client document from collection for search list results
 app.get('/alcis/clients/:client_id', function(req, res) {
     var client_id = req.params.client_id;
