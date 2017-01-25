@@ -1078,7 +1078,9 @@ function newClientHandler() {
     $('body').on('click', '#new_client_button', function(event) {
         event.preventDefault();
         enterNewClientData();
+        console.log("new button");
         $('.display_area :input').prop('disabled', false);
+        $('manip_data_buttons').show();
         $('#submit_data_button').show();
         $('#edit_data_button').addClass('hidden');
         $('.client_search_results_list' ).empty();
@@ -1087,7 +1089,7 @@ function newClientHandler() {
         $('#data_block').children('div').hide();
         $('#data_nav_bar').removeClass('hidden');
         $('#contact_block').show();
-        $('manip_data_buttons').show();
+        $('span[js_display="contact_block"]').addClass('onclick');
     });
 }
 //submits username and password for authentication
@@ -1148,6 +1150,7 @@ function clientListSelectHandler() {
         $('.client_search_results_list').toggleClass('hidden');
         $('#manip_data_buttons').show();
         $('#client_dash').removeClass('hidden');
+        $('span[js_display="contact_block"]').addClass('onclick');
     });
 }
 //handler for button to allow user to edit client document
@@ -1215,7 +1218,7 @@ function tabNavHandler() {
         $('#data_block').children('div').hide();
         $('.tab_nav').removeClass('onclick');
         $('#data_block').find('#' + displayDiv).show();
-        // $('#holder').find('span').attr('js_display').addClass('onclick');
+        $('span[js_display="' + displayDiv + '"]').addClass('onclick');
         $('#manip_data_buttons').show();
     });
 }
