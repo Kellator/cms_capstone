@@ -687,13 +687,17 @@ var clientMedicalDisplay =
 //var for comments display - used for displaying and adding comments
 var clientCommentsDisplay;
 //display as username: date: <br> comment:
-var buttonDisplay = 
+var submitNewButtonDisplay = 
     "<label for='submit_data_button'></label>" +
-    "<button name='submit_data_button' id='submit_data_button' class='hidden'>Submit</button>" +
+    "<button name='submit_data_button' id='submit_data_button' class='flex_button'>Submit</button>"
+    ;
+var editButtonDisplay = 
     "<label for='edit_data_button'></label>" +
-    "<button name='edit_data_button' id='edit_data_button' class=''>Edit</button>" +
-    "<label for='submit_changes_button'></label>" +
-    "<button name='submit_changes_button' id='submit_changes_button' class='hidden'>Submit Changes</button>"
+    "<button name='edit_data_button' id='edit_data_button' class='flex_button'>Edit</button>"
+    ;
+var submitChangesButtonDisplay =
+"<label for='submit_changes_button'></label>" +
+    "<button name='submit_changes_button' id='submit_changes_button' class='flex_button'>Submit Changes</button>"
     ;
 //used for update commands to document for contact data
 function generateClientPackage(client_id) {
@@ -923,7 +927,7 @@ function enterNewClientData() {
     $("#financials_block").html(clientFinancialDisplay);
     $("#medical_block").html(clientMedicalDisplay);
     $("#comments_block").html();
-    $("#manip_data_buttons").html(buttonDisplay);
+    $("#manip_data_buttons").html(submitNewButtonDisplay);
 }
 //renders list of search results from READ call in html - client names are rendered as links to collection documents
 function displayClientList(data) {
@@ -957,30 +961,30 @@ function displayClientData(data) {
         //information display variables - contain HTML
         var clientDashDisplay =
             "<div class='client_dash_display'>" +
-                "<div class='dash_top'>" +
+                // "<div class='dash_top'>" +
                     "<div class='dash_1 dash'>" +
                         "<h3 class='client_dash_head'>Client Dashboard</h3>" +
                     "</div>" +
-                    "<form action='' method='post' class=' dash'>" +
-                        "<label for='delete_client_button'></label>" +
-                        "<button class='dash_2' client_id='" + data._id + "' name='delete_client' id='client_delete_button' value='Delete All Client Information'>Delete Client</button>" +
-                    "</form>" +
-                "</div>" + 
+                // "</div>" + 
                 "<div class='client_dash_info dash_bottom'>" +
                     "<ul class='dash_3 dash'>" +
-                        "<li>Prospect Name:  " + data.prospect.prospectName.prospectFirstName + " " + data.prospect.prospectName.prospectLastName + "</li>" +
+                        "<li>Prospect:  " + data.prospect.prospectName.prospectFirstName + " " + data.prospect.prospectName.prospectLastName + "</li>" +
                         "<li>DOB:  " + data.prospect.dateOfBirth + "</li>" +
                     "</ul>" +
-                    "<ul class='dash_4 dash>" +
-                        "<li id='dash_contact_name'>Contact Name:  " + data.contact.contactName.contactFirstName + " " + data.contact.contactName.contactLastName + "</li>" +
-                        "<li>Contact Primary Phone:  " + data.contact.contactPrimaryPhone + "</li>" +
+                    "<ul class='dash_4 dash'>" +
+                        "<li id='dash_contact_name'>Contact:  " + data.contact.contactName.contactFirstName + " " + data.contact.contactName.contactLastName + "</li>" +
+                        "<li>Contact Phone:  " + data.contact.contactPrimaryPhone + "</li>" +
                     "</ul>" +
-                    "<ul class='dash_5 dash>" +
+                    "<ul class='dash_5 dash'>" +
                         "<li id='dash_lead_status'>Lead Status:  " + data.prospect.leadStatus + "</li>" +
                         "<li id='dash_hospital'>Hospital:  " + data.prospect.prefHospital + "</li>" +
                         "<li id='dash_dnr_status'>DNR Status:  " + data.prospect.dnr + "</li>" +
                     "</ul>" +
                 "</div>" +
+                "<form action='' method='post' id='dash_delete'>" +
+                    "<label for='delete_client_button'></label>" +
+                    "<button class='dash_2' client_id='" + data._id + "' name='delete_client' id='client_delete_button' value='Delete All Client Information'>Delete Client</button>" +
+                "</form>" +
             "</div>";
         var contactDisplay = $(clientContactDisplay);
         var prospectDisplay = $(clientProspectDisplay);
@@ -1094,7 +1098,7 @@ function displayClientData(data) {
         $('#medical_block').html(medicalDisplay);
         $('#comments_block').html(commentsDisplay);
         $('#client_dash').html(clientDashDisplay);
-        $("#manip_data_buttons").html(buttonDisplay);
+        $("#manip_data_buttons").html(editButtonDisplay);
     }
 }
 //EVENT HANDLERS
@@ -1185,7 +1189,8 @@ function editContactHandler() {
         event.preventDefault();
         if (confirm("Are you sure you want to change client information?")) {
             $('.display_area :input').prop('disabled', false);
-            $('#submit_changes_button').removeClass('hidden');
+            $('#manip_data_buttons').empty();
+            $('#manip_data_buttons').html(submitChangesButtonDisplay);
             $('#edit_data_button').addClass('hidden');
         } else {
             console.log("you don't want to make a change");
@@ -1198,6 +1203,9 @@ function submitChangesHandler() {
         event.preventDefault();
         var client_id = $('#client_delete_button').attr('client_id');
         updateClientInformation(client_id, alertForUpdatedClient);
+        $('#manip_data_buttons').empty();
+        $('#manip_data_buttons').html(editButtonDisplay);
+        $('#client_dash').removeClass('hidden');
     });
 }
 //handler for delete client document button
@@ -1221,7 +1229,7 @@ function resetClientSearchHandler() {
         $('#data_block').children('div').empty();
         $('#data_block').children('div').addClass('hidden');
         $('#data_block').addClass('hidden');
-        $('#client_dash').empty();
+        $('#client_dash').empty().addClass('hidden');
         $('#data_nav_bar').addClass('hidden');
     });
 }
