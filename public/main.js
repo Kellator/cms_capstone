@@ -257,9 +257,9 @@ var clientContactDisplay =
                 "<label for='contact_street'>Street:  </label>" +
                 "<input type='text' disabled='' id='contact_street' placeholder='123 Prospect St.'>" +
                 "<label for='contact_city'>City:  </label>" +
-                "<input type='text' disabled='' id='contact_city' placeholder='Brockton'>" +
+                "<input type='text' disabled='' id='contact_city' placeholder='Brockton'>" + "<br>" +
                 "<label for='contact_state'>State:  </label>" +
-                "<input type='text' disabled='' id='contact_state' placeholder='MA'>" +
+                "<input type='text' disabled='' id='contact_state' placeholder='MA'>" + 
                 "<label for='contact_zipcode'>Zip:  </label>" +
                 "<input type='text' disabled='' id='contact_zipcode' pattern='[0-9]{5}' placeholder='02301'>" +
     
@@ -321,7 +321,7 @@ var clientProspectDisplay =
             "<label for='prospect_street'>Street:  </label>" +
             "<input type='text' disabled='' id='prospect_street' placeholder='123 Prospect St.'>" +
             "<label for='prospect_city'>City:  </label>" +
-            "<input type='text' disabled='' id='prospect_city' placeholder='Brockton'>" +
+            "<input type='text' disabled='' id='prospect_city' placeholder='Brockton'>" + "<br>" +
             "<label for='prospect_state'>State:  </label>" +
             "<input type='text' disabled='' id='prospect_state' placeholder='MA'>" +
             "<label for='prospect_zipcode'>Zip:  </label>" +
@@ -338,9 +338,9 @@ var clientProspectDisplay =
             "<label for='ssn'>Social Security Number </label>" +
             "<input type='text' disabled='' id='ssn' maxlength='9' required placeholder='000112222'> " +
             "<label for='medicare'>Medicare Number </label>" +
-            "<input type='text' disabled='' id='medicare' required placeholder='000112222A'>" +
+            "<input type='text' disabled='' id='medicare' required placeholder='000112222A'>" + "<br>" +
             "<label for='massHealth'>MassHealth Number </label>" +
-            "<input type='text' disabled='' id='massHealth' placeholder='000111222333'>" +
+            "<input type='text' disabled='' id='massHealth' placeholder='000111222333'>" + + "<br>" +
             "<label for='other_ins'>Other Insurance </label>" +
             "<input type='text' disabled='' id='other_ins' placeholder='BCBS XX010101010'>" +
         "</fieldset>" +
@@ -391,11 +391,11 @@ var clientProspectDisplay =
             "<label for='lead_status'>Lead Status</label>" +
             "<ul>" +
                 "<li><input type='radio' disabled='' name='lead_status' value='hot' id='lead_hot'>Hot</>" +
-                "<p>Move-in within 1-3 months.</p>" +
+                "<p class='text_left' >Move-in within 1-3 months.</p>" +
                 "<li><input type='radio' disabled='' name='lead_status' value='warm' id='lead_warm'>Warm</>" +
-                "<p>Move-in within 3-6 months.</p>" +
+                "<p class='text_left'>Move-in within 3-6 months.</p>" +
                 "<li><input type='radio' disabled='' name='lead_status' value='cool' id='lead_cool'>Cool</>" +
-                "<p>Move-in after 6 months.</p>" +
+                "<p class='text_left'>Move-in after 6 months.</p>" +
             "</ul>" +
             "<label for='date_to_alcis'>Date Entered in ALCIS:  </label>" + 
             "<input type='date' disabled='' id='date_to_alcis' name='date_to_alcis'>" +
@@ -657,7 +657,7 @@ var clientMedicalDisplay =
         "<label for='pcp_street'>Street:  </label>" +
         "<input type='text' disabled='' id='pcp_street' placeholder='123 Prospect St.'>" +
         "<label for='pcp_city'>City:  </label>" +
-        "<input type='text' disabled='' id='pcp_city' placeholder='Brockton'>" +
+        "<input type='text' disabled='' id='pcp_city' placeholder='Brockton'>" + "<br>" +
         "<label for='pcp_state'>State:  </label>" +
         "<input type='text' disabled='' id='pcp_state' placeholder='MA'>" +
         "<label for='pcp_zipcode'>Zip:  </label>" +
@@ -957,22 +957,30 @@ function displayClientData(data) {
         //information display variables - contain HTML
         var clientDashDisplay =
             "<div class='client_dash_display'>" +
-                "<h3 class='client_dash_head'>Client Dashboard</h3>" +
-                "<div class='client_dash_info'>" +
-                    "<ul>" +
+                "<div class='dash_top'>" +
+                    "<div class='dash_1 dash'>" +
+                        "<h3 class='client_dash_head'>Client Dashboard</h3>" +
+                    "</div>" +
+                    "<form action='' method='post' class=' dash'>" +
+                        "<label for='delete_client_button'></label>" +
+                        "<button class='dash_2' client_id='" + data._id + "' name='delete_client' id='client_delete_button' value='Delete All Client Information'>Delete Client</button>" +
+                    "</form>" +
+                "</div>" + 
+                "<div class='client_dash_info dash_bottom'>" +
+                    "<ul class='dash_3 dash'>" +
                         "<li>Prospect Name:  " + data.prospect.prospectName.prospectFirstName + " " + data.prospect.prospectName.prospectLastName + "</li>" +
                         "<li>DOB:  " + data.prospect.dateOfBirth + "</li>" +
+                    "</ul>" +
+                    "<ul class='dash_4 dash>" +
                         "<li id='dash_contact_name'>Contact Name:  " + data.contact.contactName.contactFirstName + " " + data.contact.contactName.contactLastName + "</li>" +
                         "<li>Contact Primary Phone:  " + data.contact.contactPrimaryPhone + "</li>" +
+                    "</ul>" +
+                    "<ul class='dash_5 dash>" +
                         "<li id='dash_lead_status'>Lead Status:  " + data.prospect.leadStatus + "</li>" +
                         "<li id='dash_hospital'>Hospital:  " + data.prospect.prefHospital + "</li>" +
                         "<li id='dash_dnr_status'>DNR Status:  " + data.prospect.dnr + "</li>" +
                     "</ul>" +
                 "</div>" +
-                "<form action='' method='post'>" +
-                    "<label for='delete_client_button'></label>" +
-                    "<button client_id='" + data._id + "' name='delete_client' id='client_delete_button' value='Delete All Client Information'>Delete Client</button>" +
-                "</form>" +
             "</div>";
         var contactDisplay = $(clientContactDisplay);
         var prospectDisplay = $(clientProspectDisplay);
