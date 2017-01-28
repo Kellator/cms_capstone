@@ -2,12 +2,8 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var config = require('./config');
-
 var app = express();
 var bcrypt = require('bcryptjs');
-app.use(bodyParser.json());
-app.use(express.static('public'));
-
 var http = require('http');
 var cookieParser = require('cookie-parser');
 var server = http.Server(app);
@@ -18,7 +14,6 @@ var Client = require('./models/clients');
 var User = require('./models/users');
 //Local Authentication
 var passport = require('passport');
-var BasicStrategy = require('passport-http').BasicStrategy;
 var LocalStrategy = require('passport-local').Strategy;
 //coordinates the connection to the database, and the running on the HTTP server
 var runServer = function(callback) {
@@ -43,45 +38,6 @@ if (require.main === module) {
     });
 }
 
-// var strategy = new BasicStrategy(function(username, password, callback) {
-//     User.findOne({
-//         username: username
-//     }, function(err, user) {
-//         if (err) {
-//             callback(err);
-//             return;
-//         }
-//         if (!user) {
-//             return callback(null, false, {
-//                 message: "Incorrect username"
-//             });
-//         }
-//         user.validatePassword(password, function(err, isValid) {
-//             if (err) {
-//                 return callback(err);
-//             }
-//             if (!isValid) {
-//                 return callback(null, false, {
-//                     message: "Incorrect password"
-//                 });
-//             }
-//             return callback(null, user);
-//         });
-//     });
-// });
-//verify credentials submitted by user
-// var localStrat = new LocalStrategy(function(username, password, callback) {
-//     console.log(username + ' ' + password);
-//     User.findByUsername(username, function(err, user) {
-//         console.log(username);
-//         if (err) {console.log(err); return callback(err); }
-//         if (!user) {return callback(null, false); }
-//         if (user.password != password) { return callback(null, false); }
-//     });
-
-// });
-// // var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
-// passport.use(localStrat);
 passport.use(new LocalStrategy(
     function(username, password, done) {
         User.findByUsername(username, function(err, user) {
@@ -119,6 +75,8 @@ passport.deserializeUser(function(id, callback) {
         callback(null, user);
     });
 });
+app.use(bodyParser.json());
+app.use(express.static('public'));
 // passport.use(strategy);
 app.use(passport.initialize());
 app.use(passport.session());
@@ -128,139 +86,6 @@ app.use(require('express-session')({
     saveUninitialized: false
 }));
 app.use(flash());
-
-// app.get('/logout', function(req, res) { 
-//     req.logout();
-//     res.redirect('/');
-// });
-
-//performs initial search of collection based on search name criteria and retrieves list of clients from collection
-app.get('/alcis/clients', function(req, res) {
-    var searchFirstName = req.query.firstName;
-    var searchLastName = req.query.lastName;
-    console.log(req.query);
-    if (!searchLastName) {
-        Client.find({
-            'contact.contactName.contactFirstName': searchFirstName
-        }).exec(function(err, clients) {
-            if (err) {
-                console.log(err);
-                console.log('cannot search by first name');
-                return res.status(500).json({
-                    message: 'Internal Server Error'
-                });
-            }
-            res.json(clients);
-        });
-    }
-    if (!searchFirstName) {
-        Client.find({
-            'contact.contactName.contactLastName': searchLastName
-        }).exec(function(err, clients) {
-            if (err) {
-                console.log(err);
-                console.log('cannot search by last name');
-                return res.status(500).json({
-                    message: 'Internal Server Error'
-                });
-            }
-            res.json(clients);
-        });
-    }
-    if (searchFirstName && searchLastName) {
-        Client.find({
-            $and: [{
-                'contact.contactName.contactLastName': searchLastName
-            }, {
-                'contact.contactName.contactFirstName': searchFirstName
-            }]
-        }).exec(function(err, clients) {
-            if (err) {
-                console.log(err);
-                return res.status(500).json({
-                    message: 'Internal Server Error'
-                });
-            }
-            res.json(clients);
-        });
-    }
-    // else {
-    //     Client.find().exec(function(err, clients) {
-    //         if (err) {
-    //             console.log(err);
-    //             return res.status(500).json({
-    //                 message: 'Internal Server Error'
-    //             });
-    //         }
-    //         res.json(clients);
-    //     });
-    // }
-});
-//endpoint to retrieve client document from collection for search list results
-app.get('/alcis/clients/:client_id', function(req, res) {
-    var client_id = req.params.client_id;
-    Client.findById(client_id, function(err, client) {
-        if (err) {
-            return res.status(500).json({
-                message: 'Internal Server Error'
-            });
-        }
-        return res.send(client);
-    });
-});
-//log in authentication request
-app.post('/alcis/login', passport.authenticate('local'), function(req, res) {
-    console.log(req.body);
-    res.status(200).json({
-        status: 'Login successful!'
-    });
-});
-//creates new document for the collection
-app.post('/alcis/clients/', function(req, res) {
-    console.log(req.body);
-    console.log('POST: ');
-    var client = req.body;
-    console.log(client._id);
-    Client.create(client, function(err, client) {
-        if (err || !client) {
-            console.error("could not create client");
-            console.log(err);
-            return res.status(500).json({
-                message: 'Internal Server Error'
-            });
-        }
-        console.log("created client " + client._id);
-        res.status(201).json(client);
-    });
-});
-//makes a change to an existing document in the collection
-app.put('/alcis/clients/:client_id', function(req, res) {
-    console.log(req.params);
-    console.log(req.body);
-    var client_id = req.params.client_id;
-    var update = req.body;
-    Client.findByIdAndUpdate(client_id, update, function(err, clients) {
-        if (err) {
-            return res.status(500).json({
-                message: 'Internal Server Error'
-            });
-        }
-        return res.status(201).json(clients);
-    });
-});
-//deletes and item from the collection (will eventually update a key 'deleted' to TRUE so all clients remain in db but are not displayed if inactive)
-app.delete('/alcis/clients/:client_id', function(req, res) {
-    var client_id = req.params.client_id;
-    console.log(req.params);
-    Client.findByIdAndRemove(client_id, function(err, client) {
-        if (err) {
-            console.log(err);
-            console.error('could not delete client');
-        }
-        console.log('client deleted');
-        return res.status(204).end();
-    });
-});
 //userName & password endpoints
 //creating a username & password (admin level)
 app.post('/alcis/users', function(req, res) {
@@ -332,7 +157,141 @@ app.post('/alcis/users', function(req, res) {
         });
     });
 });
-
+//log in authentication request
+app.post('/alcis/login', passport.authenticate('local'), function(req, res) {
+    console.log(req.body);
+    res.status(200).json({
+        status: 'Login successful!'
+    });
+});
+//log out of alcis
+app.get('/alcis/logout', function(req, res) { 
+    req.logout();
+    res.redirect('/');
+});
+//client (customer) database endpoints
+//creates new document for the collection
+app.post('/alcis/clients/', function(req, res) {
+    console.log(req.body);
+    console.log('POST: ');
+    var client = req.body;
+    console.log(client._id);
+    Client.create(client, function(err, client) {
+        if (err || !client) {
+            console.error("could not create client");
+            console.log(err);
+            return res.status(500).json({
+                message: 'Internal Server Error'
+            });
+        }
+        console.log("created client " + client._id);
+        res.status(201).json(client);
+    });
+});
+//performs initial search of collection based on search name criteria and retrieves list of clients from collection
+app.get('/alcis/clients', function(req, res) {
+    var searchFirstName = req.query.firstName;
+    var searchLastName = req.query.lastName;
+    console.log(req.query);
+    if (searchFirstName == "" && searchLastName == "") {
+        Client.find().exec(function(err, clients) {
+            if (err) {
+                console.log(err);
+                return res.status(500).json({
+                    message: 'Internal Server Error'
+                });
+            }
+            res.json(clients);
+        });
+    }
+    else { 
+        if (!searchLastName) {
+            Client.find({
+                'contact.contactName.contactFirstName': searchFirstName
+            }).exec(function(err, clients) {
+                if (err) {
+                    console.log(err);
+                    console.log('cannot search by first name');
+                    return res.status(500).json({
+                        message: 'Internal Server Error'
+                    });
+                }
+                res.json(clients);
+            });
+        }
+        if (!searchFirstName) {
+            Client.find({
+                'contact.contactName.contactLastName': searchLastName
+            }).exec(function(err, clients) {
+                if (err) {
+                    console.log(err);
+                    console.log('cannot search by last name');
+                    return res.status(500).json({
+                        message: 'Internal Server Error'
+                    });
+                }
+                res.json(clients);
+            });
+        }
+        if (searchFirstName && searchLastName) {
+            Client.find({
+                $and: [{
+                    'contact.contactName.contactLastName': searchLastName
+                }, {
+                    'contact.contactName.contactFirstName': searchFirstName
+                }]
+            }).exec(function(err, clients) {
+                if (err) {
+                    console.log(err);
+                    return res.status(500).json({
+                        message: 'Internal Server Error'
+                    });
+                }
+                res.json(clients);
+            });
+        }
+    }
+});
+//endpoint to retrieve client document from collection for search list results
+app.get('/alcis/clients/:client_id', function(req, res) {
+    var client_id = req.params.client_id;
+    Client.findById(client_id, function(err, client) {
+        if (err) {
+            return res.status(500).json({
+                message: 'Internal Server Error'
+            });
+        }
+        return res.send(client);
+    });
+});
+//makes a change to an existing document in the collection
+app.put('/alcis/clients/:client_id', function(req, res) {
+    console.log(req.params);
+    console.log(req.body);
+    var client_id = req.params.client_id;
+    var update = req.body;
+    Client.findByIdAndUpdate(client_id, update, function(err, clients) {
+        if (err) {
+            return res.status(500).json({
+                message: 'Internal Server Error'
+            });
+        }
+        return res.status(201).json(clients);
+    });
+});
+//deletes and item from the collection (will eventually update a key 'deleted' to TRUE so all clients remain in db but are not displayed if inactive)
+app.delete('/alcis/clients/:client_id', function(req, res) {
+    var client_id = req.params.client_id;
+    console.log(req.params);
+    Client.findByIdAndRemove(client_id, function(err, client) {
+        if (err) {
+            console.log(err);
+            console.error('could not delete client');
+        }
+        console.log('client deleted');
+        return res.status(204).end();
+    });
+});
 exports.app = app;
 exports.runServer = runServer;
 // var client_id = '587ec4c2be5a2261d968b874'

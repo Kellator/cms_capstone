@@ -855,6 +855,8 @@ function loginRequest(username, password, callback) {
         success:  function(data) {
             callback(data);
             console.log(data);
+            $('#login_page').hide();
+            $('#dashboard').show();
         }
     };
     $.ajax(settings);
@@ -873,6 +875,19 @@ function createLoginCredentials(username, password, callback) {
         success: function(data) {
             callback(data);
             console.log(data);
+        }
+    };
+    $.ajax(settings);
+}
+//log out of alcis
+function logoutRequest(callback) {
+    var settings = {
+        url: databaseURL + '/alcis/logout',
+        dataType: 'json',
+        method: 'GET',
+        success: function() {
+            $('#dashboard').hide();
+            $('#login_page').show();
         }
     };
     $.ajax(settings);
@@ -960,6 +975,10 @@ function displayClientData(data) {
                 "</form>" +
             "</div>";
         var contactDisplay = $(clientContactDisplay);
+        var prospectDisplay = $(clientProspectDisplay);
+        var housingDisplay = $(clientHousingDisplay);
+        var financialDisplay = $(clientFinancialDisplay);
+        var medicalDisplay = $(clientMedicalDisplay);
         contactDisplay.find('#contact_first_name').val(data.contact.contactName.contactFirstName);
         contactDisplay.find('#contact_last_name').val(data.contact.contactName.contactLastName);
         contactDisplay.find('#contact_street').val(data.contact.contactAddress.contactStreet);
@@ -969,9 +988,9 @@ function displayClientData(data) {
         contactDisplay.find('#contact_primary_phone').val(data.contact.contactPrimaryPhone);
         contactDisplay.find('#contact_alt_phone').val(data.contact.contactSecondaryPhone);
         contactDisplay.find('#contact_email').val(data.contact.contactEmail);
-        contactDisplay.find('input[name="rel_to_prospect"][value="' + data.contact.relationToProspect + '"]').prop('defaultChecked', true);
+        contactDisplay.find('input[name="rel_to_prospect"][value="' + data.contact.relToProspect + '"]').attr('checked', true);
         contactDisplay.find('#first_contact_date').val(data.contact.dateOfFirstContact);
-        var prospectDisplay = $(clientProspectDisplay);
+        
         prospectDisplay.find('#prospect_first_name').val(data.prospect.prospectName.prospectFirstName);
         prospectDisplay.find('#prospect_last_name').val(data.prospect.prospectName.prospectLastName);
         prospectDisplay.find('#prospect_phone').val(data.prospect.prospectPhone);
@@ -984,14 +1003,14 @@ function displayClientData(data) {
         prospectDisplay.find('#medicare').val(data.prospect.insuranceNums.medicareNum);
         prospectDisplay.find('#masshealth').val(data.prospect.insuranceNums.massHealth);
         prospectDisplay.find('#other_ins').val(data.prospect.insuranceNums.insuranceNum);
-        prospectDisplay.find('input[name="gender"]:checked').val(data.prospect.gender);
-        prospectDisplay.find('input[name="marital_status"]:checked').val(data.prospect.maritalStatus);
-        prospectDisplay.find('input[name="veteran_status"]:checked').val(data.prospect.veteranStatus);
+        prospectDisplay.find('input[name="gender"][value="' + data.prospect.gender + '"]').attr('checked', true);
+        prospectDisplay.find('input[name="marital_status"][value="' + data.prospect.maritalStatus + '"]').attr('checked', true);
+        prospectDisplay.find('input[name="veteran_status"][value="' + data.prospect.veteranStatus + '"]').attr('checked', true);
         prospectDisplay.find('#service_branch').val(data.prospect.serviceBranch);
         prospectDisplay.find('#religion').val(data.prospect.religion);
-        prospectDisplay.find('input[name="education"]:checked').val(data.prospect.levelOfEducation);
-        prospectDisplay.find('input[name="current_housing"]:checked').val(data.prospect.currentHousing);
-        prospectDisplay.find('input[name="lead_status"]:checked').val(data.prospect.leadStatus);
+        prospectDisplay.find('input[name="education"][value="' + data.prospect.levelOfEducation + '"]').attr('checked', true);
+        prospectDisplay.find('input[name="current_housing"][value="' + data.prospect.currentHousing + '"]').attr('checked', true);
+        prospectDisplay.find('input[name="lead_status"][value="' + data.prospect.leadStatus + '"]').attr('checked', true);
         prospectDisplay.find('#poa_first_name').val(data.prospect.poa.poaName.poaFirstName);
         prospectDisplay.find('#poa_last_name').val(data.prospect.poa.poaName.poaLastName);
         prospectDisplay.find('#poa_primary_phone').val(data.prospect.poa.poaPhone);
@@ -1008,20 +1027,20 @@ function displayClientData(data) {
         prospectDisplay.find('#sec_last_name').val(data.prospect.altEmergContact.altContactName.altContactLastName);
         prospectDisplay.find('#sec_primary_phone').val(data.prospect.altEmergContact.altContactPhone);
         prospectDisplay.find('#sec_alt_phone').val(data.prospect.altEmergContact.altContactAltPhone);
-        var housingDisplay = $(clientHousingDisplay);
-        housingDisplay.find('input[name="type_of_housing"]:checked').val();
+        
+        housingDisplay.find('input[name="type_of_housing"][value="' + data.housingAssistance.housingType + '"]').attr('checked', true);
         housingDisplay.find('input[name="assistance_needed"]:checked').val();
         housingDisplay.find('#bathing_detail').val(data.housingAssistance.assistanceNeeded.bathing);
         housingDisplay.find('#dressing_detail').val(data.housingAssistance.assistanceNeeded.dressing);
         housingDisplay.find('#grooming_detail').val(data.housingAssistance.assistanceNeeded.grooming);
         housingDisplay.find('#ambulation_detail').val(data.housingAssistance.assistanceNeeded.ambulation);
         housingDisplay.find('#toileting_detail').val(data.housingAssistance.assistanceNeeded.toileting);
-        housingDisplay.find('input[name="prim_apt_pref"]:checked').val(data.housingAssistance.primaryAptPref);
-        housingDisplay.find('input[name="sec_apt_pref"]:checked').val(data.housingAssistance.secondaryAptPref);
-        housingDisplay.find('input[name="additional_services"]:checked').val(data.housingAssistance.additionalServices);
+        housingDisplay.find('input[name="prim_apt_pref"][value="' + data.housingAssistance.primaryAptPref + '"]').attr('checked', true);
+        housingDisplay.find('input[name="sec_apt_pref"][value="' + data.housingAssistance.secondaryAptPref + '"]').attr('checked', true);
+        housingDisplay.find('input[name="additional_services"][value="' + data.housingAssistance.additionalServices + '"]').attr('checked', true);
         housingDisplay.find('#est_move_date');
-        var financialDisplay = $(clientFinancialDisplay);
-        financialDisplay.find('input[name="payer_source"]:checked').val(data.financials.payerSource);
+        
+        financialDisplay.find('input[name="payer_source"][value=" ' + data.financials.payerSource + '"]').attr('checked', true);
         financialDisplay.find('#income_monthly').val(data.financials.income.monthlyIncome);
         financialDisplay.find('#income_social').val(data.financials.income.socSecMonthly);
         financialDisplay.find('#income_pension').val(data.financials.income.pension);
@@ -1038,18 +1057,18 @@ function displayClientData(data) {
         financialDisplay.find('#bank_ref_number').val(data.financials.bankReference.bankRefNumber);
         financialDisplay.find('#landlord_ref_name').val(data.financials.landlordReference.landlordRefName);
         financialDisplay.find('#landlord_ref_number').val(data.financials.landlordReference.landlordRefNum);
-        var medicalDisplay = $(clientMedicalDisplay);
+        
         medicalDisplay.find('#assess_date').val(data.medical.initialAssessment.assessSchedDate);
         medicalDisplay.find('#assess_date_comepleted').val(data.medical.initialAssessment.assessCompDate);
         medicalDisplay.find('#assessed_by').val(data.medical.initialAssessment.assessedBy);
-        medicalDisplay.find('input[name="level_of_care"]:checked').val(data.medical.alfPlanType);
-        medicalDisplay.find('input[name="other_plans"]:checked').val(data.medical.otherPlan);
+        medicalDisplay.find('input[name="level_of_care"][value="' + data.medical.alfPlanType + '"]').attr('checked', true);
+        medicalDisplay.find('input[name="other_plans"][value="' + data.medical.otherPlan + '"]').attr('checked', true);
         medicalDisplay.find('#allergies').val(data.medical.allergies);
         medicalDisplay.find('#meds_on_admit').val(data.medical.medsOnAdmit);
         medicalDisplay.find('#health_issues').val(data.medical.healthIssues);
         medicalDisplay.find('').val(data.medical.ambulation);
         medicalDisplay.find('').val(data.medical.homeCareOnAdmit);
-        medicalDisplay.find('input[name="dietary"]:checked').val(data.medical.diet);
+        medicalDisplay.find('input[name="dietary"][value="' + data.medical.diet + '"]').attr('checked', true);
         medicalDisplay.find('#pcp_name').val(data.medical.pcp.pcpName);
         medicalDisplay.find('#pcp_phone').val(data.medical.pcp.pcpNum);
         medicalDisplay.find('#pcp_fax').val(data.medical.pcp.pcpFax);
@@ -1058,7 +1077,7 @@ function displayClientData(data) {
         medicalDisplay.find('#pcp_state').val(data.medical.pcp.pcpAddress.pcpState);
         medicalDisplay.find('#pcp_zipcode').val(data.medical.pcp.pcpAddress.pcpZip);
         medicalDisplay.find('#phys_form_date').val(data.medical.physFormRec);
-        medicalDisplay.find('input[name="pharmacy_choice"]:checked').val(data.medical.pharmacy);
+        medicalDisplay.find('input[name="pharmacy_choice"][value="' + data.medical.pharmacy + '"]').attr('checked', true);
         var commentsDisplay;
         $('#contact_block').html(contactDisplay);
         $('#prospect_block').html(prospectDisplay);
