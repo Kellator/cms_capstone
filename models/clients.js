@@ -88,6 +88,7 @@ var clientSchema = new mongoose.Schema({
     housingAssistance: {
         housingType: String, // radio Independent, Assisted Living, Memory Care, GAFC
         assistanceNeeded: {
+            assistance_needed: Object,
             bathing: String,
             dressing: String,
             grooming: String,

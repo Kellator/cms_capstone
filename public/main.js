@@ -128,7 +128,7 @@ ClientDataPackage.prototype.add_hospital = function(hospital) {
     this.prospect.prefHospital = hospital;
 };
 ClientDataPackage.prototype.add_followup_date = function(date) {
-    this.prospect.followUpDate = date.toString();
+    this.prospect.followUpDate = date;
 };
 ClientDataPackage.prototype.add_date_added = function() {
     this.prospect.dateAddedtoDB = Date.now().toString();
@@ -137,8 +137,17 @@ ClientDataPackage.prototype.add_date_added = function() {
 ClientDataPackage.prototype.add_housing_type = function(housing) {
     this.housingAssistance.housingType = housing;
 };
-ClientDataPackage.prototype.add_assistance = function(bath, dress, groom, med, amb) {
+ClientDataPackage.prototype.add_assistance = function(assist, bath, dress, groom, med, amb) {
     this.housingAssistance.assistanceNeeded = {};
+    // var bathing = assistArray[0].value;
+    // var dressing = assistArray[1].value;
+    // var grooming = assistArray[2].value;
+    // var medication = assistArray[3].value;
+    // var ambulation = assistArray[4].value;
+    // var toileting = assistArray[5].value;
+    // var assistance = (bathing + ', ' + dressing + ', ' + grooming + ', ' + medication + ', ' + ambulation + ', ' + toileting);
+    this.housingAssistance.assistanceNeeded.assistance_needed = assist;
+    console.log(assist);
     this.housingAssistance.assistanceNeeded.bathing = bath;
     this.housingAssistance.assistanceNeeded.dressing = dress;
     this.housingAssistance.assistanceNeeded.grooming = groom;
@@ -296,7 +305,7 @@ var clientContactDisplay =
                     "<li><input type='radio' disabled='' required name='referral_source' value='Health Care Provider' id='ref_hcp'>Health Care Provider</><br><input type='text' id='referred_by' placeholder='Referred by'/>" +
                 "</ul>" +
                 "<label for='first_contact_date'>Date of First Contact </label>" +
-                "<input type='date' disabled='' name='first_contact_date'>" +
+                "<input type='date' disabled='' id='first_contact_date' name='first_contact_date'>" +
             "</fieldset>" +
             "</form>" +
         "</div>" +
@@ -701,7 +710,6 @@ var submitChangesButtonDisplay =
     ;
 //used for update commands to document for contact data
 function generateClientPackage(client_id) {
-    console.log(client_id);
     var client = new ClientDataPackage(client_id);
     genContactPackage(client);
     genProspectPackage(client);
@@ -744,18 +752,28 @@ function genProspectPackage(client) {
 }
 function genHousingPackage(client) {
     client.add_housing_type($('input[name="type_of_housing"]:checked').val());
-    client.add_assistance($('#bathing_detail').val(), $('#dressing_detail').val(), $('#grooming_detail').val(), $('#med_assist_detail').val(), 
-    $('#ambulation_detail').val(), $('#toileting_detail').val());
+    client.add_assistance($('input[name="assistance_needed"]').on('change', function() {
+        var values = [];
+        console.log('here');
+        var items = $('input(name="assistance_needed"]');
+        $.each(items, function(index, item) {
+            if($(item).prop('checked')){
+                values.push($(item).val());
+            }
+        });
+    }), 
+        $('#bathing_detail').val(), $('#dressing_detail').val(), $('#grooming_detail').val(), $('#med_assist_detail').val(), 
+        $('#ambulation_detail').val(), $('#toileting_detail').val());
     client.add_apt_preference($('input[name="prim_apt_pref"]:checked').val(), $('input[name="sec_apt_pref"]:checked').val());
     client.add_move_date($('#est_move_date').val());
     client.add_additional_service($('input[name="additional_services"]:checked').val());
 }
+
 function genFinancialPackage(client) {
     client.add_payer_source($('input[name="payer_source"]:checked').val());
     client.add_income($('#income_social').val(), $('#income_pension').val(), $('#income_ssi').val(), $('#income_va').val(), $('#income_other').val(), $('#income_other_source').val());
     client.add_assets($('#property_value').val(), $('#bank_value').val(), $('#life_ins_value').val(), $('#other_value').val());
     client.add_references($('#bank_ref_name').val(), $('#bank_ref_number').val(), $('#landlord_ref_name').val(), $('#landlord_ref_number').val());
-    console.log(client.financials.income.otherIncome);
 }
 function genMedicalPackage(client){
     client.add_initial_assessment($('#assess_date').val(), $('assess_date_completed').val(), $('#assessed_by').val());
@@ -821,7 +839,6 @@ function getClientInformation(client_id, callback) {
 }
 //(UPDATE) updates components of client data document per user input
 function updateClientInformation(client_id, callback) {
-    console.log(client_id);
     var update = generateClientPackage(client_id);
     var settings = {
         url: databaseUrl + '/alcis/clients/' + client_id,
@@ -886,15 +903,29 @@ function createLoginCredentials(username, password, callback) {
 //log out of alcis
 function logoutRequest(callback) {
     var settings = {
-        url: databaseURL + '/alcis/logout',
+        url: databaseUrl + '/alcis/logout',
         dataType: 'json',
         method: 'GET',
         success: function() {
-            $('#dashboard').hide();
-            $('#login_page').show();
+            callback();
+            console.log('completed');
         }
     };
     $.ajax(settings);
+}
+//callback function for log out
+function logoutCallback() {
+    alert("Thank you for using ALCIS");
+    $('#dashboard').hide();
+    $('#login_page').show();
+    $('#client_dash').empty();
+    $('#manip_data_buttons').empty();
+    $('#contact_block').empty();
+    $('#prospect_block').empty();
+    $('#housing_block').empty();
+    $('#financials_block').empty();
+    $('#medical_block').empty();
+    $('.client_search_results_list').empty();
 }
 //alert callback for creation of new client document
 function alertForCreatedClient() {
@@ -931,7 +962,6 @@ function enterNewClientData() {
 }
 //renders list of search results from READ call in html - client names are rendered as links to collection documents
 function displayClientList(data) {
-    console.log('display client list');
     var resultElement = '';
     if (data) {
         $('.client_search_results_list' ).html('<div id="search_display">Client Search Results</div>');
@@ -942,7 +972,7 @@ function displayClientList(data) {
                     '<li>Contact Name:  ' + client.contact.contactName.contactFirstName + ' ' + client.contact.contactName.contactLastName + '</li>' +
                     '<li>Contact Phone:  ' + client.contact.contactPrimaryPhone + '</li>' +
                     '<li>Prospect Name:  ' + client.prospect.prospectName.prospectFirstName + ' ' + client.prospect.prospectName.prospectLastName + '</li> ' +
-                    '<li>DOB:  ' + client.prospect.date_of_birth + '</li>' +
+                    '<li>DOB:  ' + client.prospect.dateOfBirth + '</li>' +
                     '<li>Gender:  ' + client.prospect.gender + '</li>' +
                     '<li>Housing Type:  ' + client.housingAssistance.housingType + '</li>' +
                 '</ul>' +
@@ -956,7 +986,6 @@ function displayClientList(data) {
     }
 //renders essential client data to dashboard and all of the document's data to individual display sections or form inputs
 function displayClientData(data) {
-    console.log(data);
     if (data) {
         //information display variables - contain HTML
         var clientDashDisplay =
@@ -1001,7 +1030,7 @@ function displayClientData(data) {
         contactDisplay.find('#contact_alt_phone').val(data.contact.contactSecondaryPhone);
         contactDisplay.find('#contact_email').val(data.contact.contactEmail);
         contactDisplay.find('input[name="rel_to_prospect"][value="' + data.contact.relToProspect + '"]').attr('checked', true);
-        contactDisplay.find('#first_contact_date').val(data.contact.dateOfFirstContact);
+        contactDisplay.find('#first_contact_date').val(toString(data.contact.dateOfFirstContact));
         
         prospectDisplay.find('#prospect_first_name').val(data.prospect.prospectName.prospectFirstName);
         prospectDisplay.find('#prospect_last_name').val(data.prospect.prospectName.prospectLastName);
@@ -1135,17 +1164,11 @@ function loginSubmitHandler() {
         });
     });
 }
-//allows creation of user credentials
-function devCredCreationHandler() {
-    $('body').on('click', '#dev_create_login', function(event) {
+function logOutHandler() {
+    $('body').on('click', '#logout_button', function(event) {
         event.preventDefault();
-        console.log("creating new user");
-        var username = $('#username').val();
-        var password = $('#password').val();
-        createLoginCredentials(username, password, function() {
-            console.log(username + ' ' + password);
-            alert("user create");
-        });
+        console.log('you have logged out');
+        logoutRequest(logoutCallback());
     });
 }
 //triggers the CREATE API call and creates new document in the collection
@@ -1235,6 +1258,19 @@ function resetClientSearchHandler() {
         $('#manip_data_buttons').empty();
     });
 }
+//navigation tabs handler
+function tabNavHandler() {
+    $('div').on('click', '.tab_nav', function(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        var displayDiv = $(this).attr('js_display');
+        $('#data_block').children('div').hide();
+        $('.tab_nav').removeClass('onclick');
+        $('#data_block').find('#' + displayDiv).show();
+        $('span[js_display="' + displayDiv + '"]').addClass('onclick');
+        $('#manip_data_buttons').show();
+    });
+}
 //for development only
 function bypassLoginHandler() {
     $('body').on('click', '#bypass_login', function(event) {
@@ -1243,19 +1279,15 @@ function bypassLoginHandler() {
         $('#dashboard').removeClass('hidden');
     });
 }
-function tabNavHandler() {
-    $('div').on('click', '.tab_nav', function(event) {
+//allows creation of user credentials
+function devCredCreationHandler() {
+    $('body').on('click', '#dev_create_login', function(event) {
         event.preventDefault();
-        event.stopPropagation();
-        console.log('clicked a nav tab');
-        console.log(this);
-        var displayDiv = $(this).attr('js_display');
-        console.log(displayDiv);
-        $('#data_block').children('div').hide();
-        $('.tab_nav').removeClass('onclick');
-        $('#data_block').find('#' + displayDiv).show();
-        $('span[js_display="' + displayDiv + '"]').addClass('onclick');
-        $('#manip_data_buttons').show();
+        var username = $('#username').val();
+        var password = $('#password').val();
+        createLoginCredentials(username, password, function() {
+            alert("user create");
+        });
     });
 }
 //ready function
@@ -1272,4 +1304,5 @@ $(function() {
     deleteClientHandler();
     devCredCreationHandler();
     tabNavHandler();
+    logOutHandler()
 });

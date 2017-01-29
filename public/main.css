@@ -63,7 +63,7 @@ header {
     text-align: center;
 }
 #dashboard {
-    max-width: 80%;
+    max-width: 1000px;
     margin: auto;
     padding-top: 20px;
 }
@@ -89,7 +89,7 @@ fieldset {
     border: 1px solid #00241f;
 }
 .main_content {
-    max-width: 80%;
+    max-width: 1000px;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
