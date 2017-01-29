@@ -9,13 +9,17 @@
 }
 body {
     font-size: 1em;
-    max-width: 1000px;
     margin: auto;
 }
 input {
     padding: 1px 2px 1px 5px;
     margin-right: 5px;
     margin-bottom: 5px;
+}
+input:focus {
+    outline: none;
+    box-shadow: 0 0 5px #f79425;
+    border-color: #f79425;
 }
 button {
     border-radius: 5px;
@@ -30,8 +34,8 @@ input {
 input[type=text] {
     min-width: 280px;
 }
-header .header_bar {
-    min-width: 100vw;
+header {
+    background: cover;
     background-color: #4d5355;
     width: 100%;
     height: 75px;
@@ -50,11 +54,18 @@ header .header_bar {
     color: #dbdbdb;
     background-color: #4d5355;
     margin: auto;
-    flex: none, 1, auto;
-    align-self: center;
+    /*flex: none, 1, auto;*/
+    /*align-self: center;*/
     letter-spacing: 2px;
     padding: 10px;
     font-size: 2em;
+    max-width: 80%;
+    text-align: center;
+}
+#dashboard {
+    max-width: 80%;
+    margin: auto;
+    padding-top: 20px;
 }
 .hidden {
     display: none;
@@ -78,12 +89,14 @@ fieldset {
     border: 1px solid #00241f;
 }
 .main_content {
+    max-width: 80%;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: center;
     align-items: center;
     align-content: center;
+    margin: auto;
 }
 #login_page {
     flex-basis: 50%;
@@ -175,7 +188,8 @@ a {
     position: relative;
 }
 #data_nav_bar {
-   width: 660px; 
+   width: 660px;
+   padding-top: 12px;
 }
 #data_nav_bar #holder {
     height: 55px;
@@ -290,6 +304,7 @@ a {
 }
 #manip_data_buttons {
     float: right;
+    padding-top: 12px;
 }
 .flex_button {
     align-self: flex-end;

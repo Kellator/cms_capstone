@@ -662,7 +662,7 @@ var clientMedicalDisplay =
         "<input type='text' disabled='' id='pcp_state' placeholder='MA'>" +
         "<label for='pcp_zipcode'>Zip:  </label>" +
         "<input type='text' disabled='' id='pcp_zipcode' placeholder='02301'>" +
-        "<label for='phys_form'>Physician Form Received</input>" +
+        "<label for='phys_form'>Physician Form Received</input>" + "<br>" +
         "<input type='checkbox' disabled='' name='phys_form' id='phys_form_box' value='Physician Form Received'></input>" +
         "<input type='date' disabled='' name='phys_form' id='phys_form_date'></input>" +
         "</fieldset>" +
@@ -1118,6 +1118,7 @@ function newClientHandler() {
         $('#data_block').children('div').hide();
         $('#data_nav_bar').removeClass('hidden');
         $('#contact_block').show();
+        $('span').removeClass('onclick');
         $('span[js_display="contact_block"]').addClass('onclick');
     });
 }
@@ -1231,6 +1232,7 @@ function resetClientSearchHandler() {
         $('#data_block').addClass('hidden');
         $('#client_dash').empty().addClass('hidden');
         $('#data_nav_bar').addClass('hidden');
+        $('#manip_data_buttons').empty();
     });
 }
 //for development only
