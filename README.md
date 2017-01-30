@@ -4,9 +4,9 @@
 ### Documentation:
 
 ### Screenshots:
-![Image of ALCIS Login Screen]("https://github/com/kellator/cms_capstone/images/ALCIS Screenshots/ALCIS_login.png")
-![Image of ALCIS Search Screen with Returned Results]("https://github/com/kellator/cms_capstone/images/ALCIS Screenshots/ALCIS_search_results.png")
-![image of ALCIS Client Display]("https://github/com/kellator/cms_capstone/images/ALCIS Screenshots/ALCIS_dashboard.png")
+![Image of ALCIS Login Screen](https://github/com/kellator/cms_capstone/images/ALCIS Screenshots/ALCIS_login.png)
+![Image of ALCIS Search Screen with Returned Results](https://github/com/kellator/cms_capstone/images/ALCIS Screenshots/ALCIS_search_results.png)
+![image of ALCIS Client Display](https://github/com/kellator/cms_capstone/images/ALCIS Screenshots/ALCIS_dashboard.png)
 
 ### Summary:  
 >ALCIS was designed as a simple, low cost, easily maintainable and customizable client management system for a non-profit assisted living community.  ALCIS is an easy to use database for client information including admissions, medical, and financial data.  The purpose of the database is to streamline the admissions data collection process, improve communication between the multiple departments involved in admissions and screening, and to improve the admissions and screening process for both clients and employees.
