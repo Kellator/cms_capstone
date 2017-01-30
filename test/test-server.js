@@ -21,13 +21,13 @@ describe('Client DB', function() {
                         contactFirstName: "John",
                         contactLastName: "Jones"
                     },
-                    contactPrimaryPhone: 5558885858,
-                    contactSecondaryPhone: 8885558585,
+                    contactPrimaryPhone: "555-888-5858",
+                    contactSecondaryPhone: "888-555-8585",
                     contactAddress: {
                         contactStreet: "42 World's End Way",
                         contactCity: "Carver",
                         contactState: "MA",
-                        contactZip: 02024
+                        contactZip: "02024"
                     },
                     contactEmail: "JohnJones@myEmail.com",
                     relToProspect: "adult child",
@@ -46,19 +46,19 @@ describe('Client DB', function() {
         });
     });
 });
-    it('returns status 200', function(done) {
+    it('returns status 201', function(done) {
         chai.request(app)
-        .get("/clients")
+        .get("/alcis/clients/")
         .end(function(err, res) {
             should.equal(err, null);
-            res.should.have.status(200);
+            res.should.have.status(201);
             res.body.should.be.a('object');
             done();
         });
     });
     it('should add an item on POST', function(done) {
         chai.request(app)
-            .post('/clients')
+            .post('/alcis/clients/')
             .send({'client_id' : 'client_id'})
             // .send({ "contact": {
             //             "contactName": {
