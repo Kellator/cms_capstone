@@ -7,7 +7,6 @@ var bcrypt = require('bcryptjs');
 var http = require('http');
 var server = http.Server(app);
 var session = require('express-session');
-var flash = require("connect-flash");
 //middlewares
 var Client = require('./models/clients');
 var User = require('./models/users');
@@ -85,7 +84,6 @@ app.use(require('express-session')({
     resave: false,
     saveUninitialized: false
 }));
-app.use(flash());
 //userName & password endpoints
 //creating a username & password (admin level)
 app.post('/alcis/users', function(req, res) {
