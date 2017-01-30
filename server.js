@@ -5,7 +5,6 @@ var config = require('./config');
 var app = express();
 var bcrypt = require('bcryptjs');
 var http = require('http');
-var cookieParser = require('cookie-parser');
 var server = http.Server(app);
 var session = require('express-session');
 var flash = require("connect-flash");
@@ -80,6 +79,7 @@ app.use(express.static('public'));
 // passport.use(strategy);
 app.use(passport.initialize());
 app.use(passport.session());
+//should this be app.use(expressSession({secret stuff})
 app.use(require('express-session')({
     secret: 'pickle relish',
     resave: false,

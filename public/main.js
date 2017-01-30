@@ -324,7 +324,7 @@ var clientProspectDisplay =
             
             "<legend>Prospect Phone Numbers</legend>" +
             "<label for='prospect_phone'>Prospect Phone:  </label>" +
-            "<input type='text' disabled='' maxlength='10' required id='prospect_primary_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='508-588-5555'>" +
+            "<input type='text' disabled='' maxlength='12' required id='prospect_primary_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='508-588-5555'>" +
             
             "<legend>Prospect Address</legend>" +
             "<label for='prospect_street'>Street:  </label>" +
@@ -926,6 +926,8 @@ function logoutCallback() {
     $('#financials_block').empty();
     $('#medical_block').empty();
     $('.client_search_results_list').empty();
+    $('#username').val('');
+    $('#password').val('');
 }
 //alert callback for creation of new client document
 function alertForCreatedClient() {
@@ -1272,28 +1274,28 @@ function tabNavHandler() {
     });
 }
 //for development only
-function bypassLoginHandler() {
-    $('body').on('click', '#bypass_login', function(event) {
-        event.preventDefault();
-        $('#login_page').addClass('hidden');
-        $('#dashboard').removeClass('hidden');
-    });
-}
+// function bypassLoginHandler() {
+//     $('body').on('click', '#bypass_login', function(event) {
+//         event.preventDefault();
+//         $('#login_page').addClass('hidden');
+//         $('#dashboard').removeClass('hidden');
+//     });
+// }
 //allows creation of user credentials
-function devCredCreationHandler() {
-    $('body').on('click', '#dev_create_login', function(event) {
-        event.preventDefault();
-        var username = $('#username').val();
-        var password = $('#password').val();
-        createLoginCredentials(username, password, function() {
-            alert("user create");
-        });
-    });
-}
+// function devCredCreationHandler() {
+//     $('body').on('click', '#dev_create_login', function(event) {
+//         event.preventDefault();
+//         var username = $('#username').val();
+//         var password = $('#password').val();
+//         createLoginCredentials(username, password, function() {
+//             alert("user create");
+//         });
+//     });
+// }
 //ready function
 $(function() {
     loginSubmitHandler();
-    bypassLoginHandler();
+    // bypassLoginHandler();
     newClientHandler();
     dataSubmitHandler();
     submitChangesHandler();
@@ -1302,7 +1304,7 @@ $(function() {
     submitClientSearchHandler();
     clientListSelectHandler();
     deleteClientHandler();
-    devCredCreationHandler();
+    // devCredCreationHandler();
     tabNavHandler();
     logOutHandler()
 });
