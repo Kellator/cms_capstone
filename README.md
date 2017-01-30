@@ -1,11 +1,13 @@
-
 # ALCIS | Assisted Living Client Information System 
 
 ### Documentation:
 
 ### Screenshots:
+#### ALCIS Login screen:
 ![Image of ALCIS Login Screen](https://github.com/Kellator/cms_capstone/blob/client_entry/images/ALCIS%20Screenshots/ALCIS_login.png)
+#### ALCIS Client Search with Name Search; New Client Entry, Reset, and Logout Buttons; and sample of returned client data.
 ![Image of ALCIS Search Screen with Returned Results](https://github.com/Kellator/cms_capstone/blob/client_entry/images/ALCIS%20Screenshots/ALCIS_search_results.png)
+#### ALCIS Client Dashboard shows quick view of pertinent information above main data display fields.
 ![image of ALCIS Client Display](https://github.com/Kellator/cms_capstone/blob/client_entry/images/ALCIS%20Screenshots/ALCIS_dashboard.png)
 
 ### Summary:  

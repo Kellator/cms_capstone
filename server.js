@@ -165,7 +165,7 @@ app.post('/alcis/login', passport.authenticate('local'), function(req, res) {
     });
 });
 //log out of alcis
-app.get('/alcis/logout', function(req, res) { 
+app.get('/alcis/logout', function(req, res) {
     req.logout();
     res.redirect('/');
 });
@@ -204,7 +204,7 @@ app.get('/alcis/clients', function(req, res) {
             res.json(clients);
         });
     }
-    else { 
+    else {
         if (!searchLastName) {
             Client.find({
                 'contact.contactName.contactFirstName': searchFirstName
