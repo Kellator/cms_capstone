@@ -10,7 +10,6 @@ var User = require('../models/users');
 var should = chai.should();
 var app = server.app;
 
-
 chai.use(chaiHttp);
 
 describe('alcis', function() {
