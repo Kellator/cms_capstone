@@ -86,7 +86,7 @@ var clientSchema = new mongoose.Schema({
         dateAddedtoDB: Date,
     },
     housingAssistance: {
-        housingType: String, // radio Independent, Assisted Living, Memory Care, GAFC
+        housingType: String, 
         assistanceNeeded: {
             assistance_needed: Object,
             bathing: String,
@@ -97,20 +97,19 @@ var clientSchema = new mongoose.Schema({
         },
         primaryAptPref: String,
         secondaryAptPref: String,
-        estimatedMoveDate: Date, //8 digit date
-        additionalServices: Array //this may be more than one or none, should this be array?
-            //appOrDec: Boolean
+        estimatedMoveDate: String, 
+        additionalServices: Array 
     },
     financials: {
-        payerSource: String, //private, LTC ins, MassHealth, Navicare, etc
+        payerSource: String,
         income: {
             monthlyIncome: Number, //should generate from other entries
-            pension: Number, //income is numbers only
+            pension: Number, 
             socSecMonthly: Number,
             ssi: Number,
             vaBenefits: Number,
             otherIncome: Number,
-            otherIncomeSource: String //text input    
+            otherIncomeSource: String     
         },
         assets: {
             propertyValue: Number,
@@ -130,8 +129,8 @@ var clientSchema = new mongoose.Schema({
     },
     medical: {
         initialAssessment: {
-            assessSchedDate: Date, //8 digit date of initial assessment
-            assessCompDate: Date,
+            assessSchedDate: String,
+            assessCompDate: String,
             assessedBy: String
         },
         alfPlanType: String,
@@ -154,9 +153,8 @@ var clientSchema = new mongoose.Schema({
                 pcpZip: String
             },
         },
-        physFormRec: Date, //8 digit date physician form received
+        physFormRec: String,
         pharmacy: String,
-        //following information is collected in prospect section
         poa: {
             poaName: {
                 poaFirstName: String,

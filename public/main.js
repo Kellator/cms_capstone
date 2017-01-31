@@ -128,10 +128,12 @@ ClientDataPackage.prototype.add_hospital = function(hospital) {
     this.prospect.prefHospital = hospital;
 };
 ClientDataPackage.prototype.add_followup_date = function(date) {
+    // this.prospect.followUpDate = Date.today().add(3).months();
     this.prospect.followUpDate = date;
 };
-ClientDataPackage.prototype.add_date_added = function() {
-    this.prospect.dateAddedtoDB = Date.now().toString();
+ClientDataPackage.prototype.add_date_added = function(date) {
+    this.prospect.dateAddedtoDB = date;
+    // Date.today().toString();
 };
 //constructor components for housing data
 ClientDataPackage.prototype.add_housing_type = function(housing) {
@@ -342,7 +344,7 @@ var clientProspectDisplay =
     "<fieldset>" +
     "<legend>Prospect Identification</legend>" +
     "<label for='date_of_birth'>Date of Birth </label>" +
-    "<input type='date' disabled='' id='date_of_birth' required name='date_of_birth'>" +
+    "<input type='text' disabled='' id='date_of_birth' required name='date_of_birth'>" +
     "<label for='ssn'>Social Security Number </label>" +
     "<input type='text' disabled='' id='ssn' maxlength='9' required placeholder='000112222'> " +
     "<label for='medicare'>Medicare Number </label>" +
@@ -521,7 +523,7 @@ var clientHousingDisplay =
     "<li><input type='checkbox' disabled='' name='additional_services' value='Meals' id='addt_meals'>Meals</input></li>" +
     "</ul>" +
     "<label for='est_move_date'>Estimated Move-in Date: </label>" +
-    "<input type='date' id='est_move_date'>" +
+    "<input type='text' id='est_move_date'>" +
     "</fieldset>" +
     "</form>" +
     "</div>";
@@ -592,9 +594,9 @@ var clientMedicalDisplay =
     "<fieldset>" +
     "<legend>Assessment Information</legend>" +
     "<label for='assess_date'>Initial Assessment Scheduled:  </label>" +
-    "<input type='date' disabled='' id='assess_date'></input><br>" +
+    "<input type='text' disabled='' id='assess_date'></input><br>" +
     "<label for='assess_date_completed'>Initial Assessment Completed:  </label>" +
-    "<input type='date' disabled='' id='assess_date_completed'></input><br>" +
+    "<input type='text' disabled='' id='assess_date_completed'></input><br>" +
     "<label for='assessed_by'>Initial Assessment Completed By:  </label>" +
     "<input type='text' disabled='' id='assessed_by' placeholder='Jane Smith, R.N.'></input><br>" +
     "<label for='level_of_care'>Level Of Care</label>" +
@@ -670,7 +672,7 @@ var clientMedicalDisplay =
     "<input type='text' disabled='' id='pcp_zipcode' placeholder='02301'>" +
     "<label for='phys_form'>Physician Form Received</input>" + "<br>" +
     "<input type='checkbox' disabled='' name='phys_form' id='phys_form_box' value='Physician Form Received'></input>" +
-    "<input type='date' disabled='' name='phys_form' id='phys_form_date'></input>" +
+    "<input type='text' disabled='' name='phys_form' id='phys_form_date'></input>" +
     "</fieldset>" +
     "</form>" +
     "</div>" +
@@ -1312,5 +1314,5 @@ $(function() {
     deleteClientHandler();
     // devCredCreationHandler();
     tabNavHandler();
-    logOutHandler()
+    logOutHandler();
 });
