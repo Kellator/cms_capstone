@@ -6,6 +6,7 @@ var server = require('../server.js');
 
 var Client = require('../models/clients');
 var User = require('../models/users');
+
 var should = chai.should();
 var app = server.app;
 
@@ -21,7 +22,6 @@ describe('alcis', function() {
         });
     });
 });
-
 
 // describe('Client DB', function() {
 //     //add before(function(done) { with hard coded data? then after(function(done) {remove
