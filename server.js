@@ -1,11 +1,18 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+
 var config = require('./config');
+
 var app = express();
-var bcrypt = require('bcryptjs');
+
+app.use(bodyParser.json());
+app.use(express.static('public'));
+
 var http = require('http');
 var server = http.Server(app);
+var bcrypt = require('bcryptjs');
+
 var session = require('express-session');
 //middlewares
 var Client = require('./models/clients');
@@ -13,6 +20,8 @@ var User = require('./models/users');
 //Local Authentication
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+
+
 //coordinates the connection to the database, and the running on the HTTP server
 var runServer = function(callback) {
     mongoose.connect(config.DATABASE_URL, function(err) {
@@ -20,7 +29,7 @@ var runServer = function(callback) {
             return callback(err);
         }
         app.listen(config.PORT, function() {
-            console.log('Listening on localhost:', +config.PORT);
+            console.log('Listening on localhost:', + config.PORT);
             if (callback) {
                 callback();
             }
@@ -73,8 +82,7 @@ passport.deserializeUser(function(id, callback) {
         callback(null, user);
     });
 });
-app.use(bodyParser.json());
-app.use(express.static('public'));
+
 // passport.use(strategy);
 app.use(passport.initialize());
 app.use(passport.session());
@@ -84,6 +92,11 @@ app.use(require('express-session')({
     resave: false,
     saveUninitialized: false
 }));
+
+app.get('/', function(req, res) {
+    return res.sendStatus(200);
+});
+
 //userName & password endpoints
 //creating a username & password (admin level)
 app.post('/alcis/users', function(req, res) {
@@ -170,10 +183,8 @@ app.get('/alcis/logout', function(req, res) {
 //client (customer) database endpoints
 //creates new document for the collection
 app.post('/alcis/clients/', function(req, res) {
-    console.log(req.body);
     console.log('POST: ');
     var client = req.body;
-    console.log(client._id);
     Client.create(client, function(err, client) {
         if (err || !client) {
             console.error("could not create client");
@@ -290,6 +301,7 @@ app.delete('/alcis/clients/:client_id', function(req, res) {
         return res.status(204).end();
     });
 });
+
 exports.app = app;
 exports.runServer = runServer;
 // var client_id = '587ec4c2be5a2261d968b874'
