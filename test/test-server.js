@@ -16,7 +16,7 @@ describe('alcis', function() {
         chai.request(app)
         .get('/')
         .end(function(err, res) {
-            res.should.have.status(201);
+            res.should.have.status(200);
             done();
         });
     });
