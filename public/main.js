@@ -274,9 +274,9 @@ var clientContactDisplay =
 
     "<legend>Contact Phone Numbers</legend>" +
     "<label for='contact_primary_phone'>Primary Phone:  </label>" +
-    "<input type='text' disabled='' maxlength='10' required id='contact_primary_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='5085885555'>" +
+    "<input type='text' disabled='' maxlength='12' required id='contact_primary_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='5085885555'>" +
     "<label for='contact_alt_phone'>Alternate Phone:  </label>" +
-    "<input type='text' disabled='' maxlength='10' id='contact_alt_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='5085885858'>" +
+    "<input type='text' disabled='' maxlength='12' id='contact_alt_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='5085885858'>" +
 
     "<legend>Contact Email</legend>" +
     "<label for='contact_email'>Email:  </label>" +

@@ -170,10 +170,8 @@ app.get('/alcis/logout', function(req, res) {
 //client (customer) database endpoints
 //creates new document for the collection
 app.post('/alcis/clients/', function(req, res) {
-    console.log(req.body);
     console.log('POST: ');
     var client = req.body;
-    console.log(client._id);
     Client.create(client, function(err, client) {
         if (err || !client) {
             console.error("could not create client");
