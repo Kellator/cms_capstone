@@ -44,6 +44,8 @@ if (require.main === module) {
         }
     });
 }
+exports.app = app;
+exports.runServer = runServer;
 
 passport.use(new LocalStrategy(
     function(username, password, done) {
@@ -302,8 +304,7 @@ app.get('/', function(req, res) {
 //     });
 // });
 
-exports.app = app;
-exports.runServer = runServer;
+
 // var client_id = '587ec4c2be5a2261d968b874'
 //     Client.findOneAndRemove(client_id, function(err, client) {
 //         if (err) {
