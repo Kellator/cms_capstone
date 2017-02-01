@@ -1,5 +1,5 @@
 /*global $*/
-var databaseUrl = 'https://secret-castle-60887.herokuapp.com';
+var databaseUrl = 'https://secret-castle-60887.herokuapp.com/';
 //constructor function to create client data package
 function ClientDataPackage() {
     this.contact = {};
@@ -940,6 +940,7 @@ function alertForCreatedClient() {
 function alertForUpdatedClient() {
     alert("You have changed client information.");
     $('.display_area :input').prop('disabled', true);
+    $('#edit_data_button').prop('disabled', false);
 }
 //alert callback for removal of client document
 function alertForDeletedClient() {
@@ -1218,6 +1219,7 @@ function clientListSelectHandler() {
 //handler for button to allow user to edit client document
 function editContactHandler() {
     $('body').on('click', '#edit_data_button', function(event) {
+        console.log('you hit the edit button');
         event.preventDefault();
         if (confirm("Are you sure you want to change client information?")) {
             $('.display_area :input').prop('disabled', false);
