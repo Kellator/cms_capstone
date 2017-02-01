@@ -1,5 +1,5 @@
 /*global $*/
-var databaseUrl = 'https://secret-castle-60887.herokuapp.com';
+var databaseUrl = 'https://secret-castle-60887.herokuapp.com/';
 //constructor function to create client data package
 function ClientDataPackage() {
     this.contact = {};
@@ -350,7 +350,7 @@ var clientProspectDisplay =
     "<label for='medicare'>Medicare Number </label>" +
     "<input type='text' disabled='' id='medicare' required placeholder='000112222A'>" + "<br>" +
     "<label for='massHealth'>MassHealth Number </label>" +
-    "<input type='text' disabled='' id='massHealth' placeholder='000111222333'>" + +"<br>" +
+    "<input type='text' disabled='' id='massHealth' placeholder='000111222333'>" + "<br>" +
     "<label for='other_ins'>Other Insurance </label>" +
     "<input type='text' disabled='' id='other_ins' placeholder='BCBS XX010101010'>" +
     "</fieldset>" +
@@ -659,7 +659,7 @@ var clientMedicalDisplay =
     "<label for='pcp_name'>Primary Care Physician:  </label>" +
     "<input type='text' disabled='' id='pcp_name' placeholder='Dr.John Smith'></input><br>" +
     "<label for='pcp_phone'>PCP Phone Number:  </label>" +
-    "<input type='text' disabled='' id='pcp_phone' maxlength='12' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='5085558888'></input>" +
+    "<input type='text' disabled='' id='pcp_phone' maxlength='12' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='5085558888'></input><br>" +
     "<label for='pcp_fax'>PCP Fax Number:  </label>" +
     "<input type='text' disabled='' id='pcp_fax' maxlength='12' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='5088885555'></input><br>" +
     "<label for='pcp_street'>Street:  </label>" +
@@ -669,8 +669,8 @@ var clientMedicalDisplay =
     "<label for='pcp_state'>State:  </label>" +
     "<input type='text' disabled='' id='pcp_state' placeholder='MA'>" +
     "<label for='pcp_zipcode'>Zip:  </label>" +
-    "<input type='text' disabled='' id='pcp_zipcode' placeholder='02301'>" +
-    "<label for='phys_form'>Physician Form Received</input>" + "<br>" +
+    "<input type='text' disabled='' id='pcp_zipcode' placeholder='02301'>" + "<br>" +
+    "<label for='phys_form'>Physician Form Received</input>" + 
     "<input type='checkbox' disabled='' name='phys_form' id='phys_form_box' value='Physician Form Received'></input>" +
     "<input type='text' disabled='' name='phys_form' id='phys_form_date'></input>" +
     "</fieldset>" +
@@ -940,6 +940,7 @@ function alertForCreatedClient() {
 function alertForUpdatedClient() {
     alert("You have changed client information.");
     $('.display_area :input').prop('disabled', true);
+    $('#edit_data_button').prop('disabled', false);
 }
 //alert callback for removal of client document
 function alertForDeletedClient() {
@@ -1218,6 +1219,7 @@ function clientListSelectHandler() {
 //handler for button to allow user to edit client document
 function editContactHandler() {
     $('body').on('click', '#edit_data_button', function(event) {
+        console.log('you hit the edit button');
         event.preventDefault();
         if (confirm("Are you sure you want to change client information?")) {
             $('.display_area :input').prop('disabled', false);
