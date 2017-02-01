@@ -1,5 +1,5 @@
 /*global $*/
-var databaseUrl = 'https://secret-castle-60887.herokuapp.com/';
+var databaseUrl = 'https://secret-castle-60887.herokuapp.com';
 //constructor function to create client data package
 function ClientDataPackage() {
     this.contact = {};
@@ -804,7 +804,6 @@ function createNewClient(client_id, callback) {
         contentType: 'application/json',
         success: function(data) {
             callback(data);
-            console.log(data);
         }
     };
     $.ajax(settings);
@@ -818,7 +817,6 @@ function getClientList(searchName, callback) {
         method: 'GET',
         success: function(data) {
             callback(data);
-            console.log(data);
         }
     };
     $.ajax(settings);
@@ -831,7 +829,6 @@ function getClientInformation(client_id, callback) {
         method: 'GET',
         success: function(data) {
             callback(data);
-            console.log(data);
         }
     };
     $.ajax(settings);
@@ -848,7 +845,6 @@ function updateClientInformation(client_id, callback) {
         contentType: 'application/json',
         success: function(data) {
             callback(data);
-            console.log(data);
         }
     };
     $.ajax(settings);
@@ -874,7 +870,6 @@ function loginRequest(username, password, callback) {
         method: 'POST',
         success: function(data) {
             callback(data);
-            console.log(data);
             $('#login_page').hide();
             $('#dashboard').show();
         }
@@ -897,7 +892,6 @@ function createLoginCredentials(username, password, callback) {
         contentType: 'application/json',
         success: function(data) {
             callback(data);
-            console.log(data);
         }
     };
     $.ajax(settings);
@@ -1141,7 +1135,6 @@ function newClientHandler() {
     $('body').on('click', '#new_client_button', function(event) {
         event.preventDefault();
         enterNewClientData();
-        console.log("new button");
         $('.display_area :input').prop('disabled', false);
         $('manip_data_buttons').show();
         $('#submit_data_button').show();
@@ -1160,11 +1153,9 @@ function newClientHandler() {
 function loginSubmitHandler() {
     $('body').on('submit', '.login_form', function(event) {
         event.preventDefault();
-        console.log('you are here');
         var username = $('#username').val();
         var password = $('#password').val();
         loginRequest(username, password, function() {
-            console.log('log in successful');
             alert("Welcome to Alcis");
         });
     });
@@ -1173,7 +1164,6 @@ function loginSubmitHandler() {
 function logOutHandler() {
     $('body').on('click', '#logout_button', function(event) {
         event.preventDefault();
-        console.log('you have logged out');
         logoutRequest(logoutCallback());
     });
 }
@@ -1219,7 +1209,6 @@ function clientListSelectHandler() {
 //handler for button to allow user to edit client document
 function editContactHandler() {
     $('body').on('click', '#edit_data_button', function(event) {
-        console.log('you hit the edit button');
         event.preventDefault();
         if (confirm("Are you sure you want to change client information?")) {
             $('.display_area :input').prop('disabled', false);
