@@ -1303,7 +1303,7 @@ $(function() {
     submitClientSearchHandler();
     clientListSelectHandler();
     deleteClientHandler();
-    devCredCreationHandler();
+    // devCredCreationHandler();
     tabNavHandler();
     logOutHandler();
 });
