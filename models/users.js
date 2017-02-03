@@ -26,8 +26,8 @@ UserSchema.statics.findByUsername = function(username, callback) {
 };
 UserSchema.methods.validatePassword = function(password, callback) {
     console.log('validate');
+    console.log('compare ' + password + ' ' + this.password);
     bcrypt.compare(password, this.password, function(err, isValid) {
-        console.log('comparing');
         if(err) {
             console.log('err in comparing');
             callback(err);
@@ -35,6 +35,7 @@ UserSchema.methods.validatePassword = function(password, callback) {
         }
         callback(null, isValid);
         console.log('says valid');
+        console.log(isValid);
     });
 };
 var User = mongoose.model('User', UserSchema);

@@ -51,6 +51,8 @@ passport.use(new LocalStrategy(
     function(username, password, done) {
         console.log('local strat pw ' + password);
         User.findByUsername(username, function(err, user) {
+            console.log(user.username);
+            console.log(user.password);
             if (err) {
                 console.log(err);
                 return done(err);
@@ -60,8 +62,8 @@ passport.use(new LocalStrategy(
                     message: 'Incorrect username.'
                 });
             }
-            user.validatePassword(password, function(err) {
-                if(err) { return done(null, false, {
+            user.validatePassword(password, function(err, isValid) {
+                if(err || !isValid) { return done(null, false, {
                     message: 'Incorrect Password.'
                 });
             }
@@ -240,13 +242,13 @@ app.get('/alcis/clients', function(req, res) {
             });
         }
         if (searchFirstName && searchLastName) {
-            Client.find({
-                $and: [{
-                    'contact.contactName.contactLastName': searchLastName
-                }, {
-                    'contact.contactName.contactFirstName': searchFirstName
-                }]
-            }).exec(function(err, clients) {
+            Client.find( { $or: [  {
+                $and: [{'contact.contactName.contactLastName': searchLastName},
+                {'contact.contactName.contactFirstName': searchFirstName}] }, { 
+                $and: [{'prospect.prospectName.prospectLastName': searchLastName}, 
+                {'prospect.prospectName.prospectFirstName': searchFirstName}] 
+            } ]
+            } ).exec(function(err, clients) {
                 if (err) {
                     console.log(err);
                     return res.status(500).json({
