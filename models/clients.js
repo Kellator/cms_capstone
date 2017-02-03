@@ -33,7 +33,7 @@ var clientSchema = new mongoose.Schema({
             prospectState: String,
             prospectZip: String
         },
-        dateOfBirth: Date,
+        dateOfBirth: String,
         socialSecurityNum: String,
         insuranceNums: {
             medicareNum: String, //9 digit number with one or two letters
@@ -50,16 +50,16 @@ var clientSchema = new mongoose.Schema({
         leadStatus: String,
         poa: {
             poaName: {
-                poaFirstName: String,
-                poaLastName: String
+                poaLastName: String,
+                poaFirstName: String
             },
             poaPhone: String,
             poaSecPhone: String
         },
         hcp: {
             hcpName: {
-                hcpFirstName: String,
-                hcpLastName: String
+                hcpLastName: String,
+                hcpFirstName: String
             },
             hcpPhone: String,
             hcpSecPhone: String
@@ -67,16 +67,16 @@ var clientSchema = new mongoose.Schema({
         dnr: String, //should this be boolean?  then if dnr == true make display box?
         eContact: {
             eContactName: {
-                eContactFirstName: String,
-                eContactLastName: String
+                eContactLastName: String,
+                eContactFirstName: String
             },
             eContactPhone: String,
             eContactAltPhone: String
         },
         altEmergContact: {
             altContactName: {
-                altContactFirstName: String,
-                altContactLastName: String
+                altContactLastName: String,
+                altContactFirstName: String
             },
             altContactPhone: String,
             altContactAltPhone: String
@@ -130,7 +130,7 @@ var clientSchema = new mongoose.Schema({
     medical: {
         initialAssessment: {
             assessSchedDate: String,
-            assessCompDate: String,
+            assessComp: String,
             assessedBy: String
         },
         alfPlanType: String,

@@ -61,12 +61,10 @@ passport.use(new LocalStrategy(
                 });
             }
             user.validatePassword(password, function(err) {
-
-                if (err) {
-                    return done(null, false, {
-                        message: 'Incorrect password.'
-                    });
-                }
+                if(err) { return done(null, false, {
+                    message: 'Incorrect Password.'
+                });
+            }
                 return done(null, user);
             });
         });
@@ -216,9 +214,8 @@ app.get('/alcis/clients', function(req, res) {
     }
     else {
         if (!searchLastName) {
-            Client.find({
-                'contact.contactName.contactFirstName': searchFirstName
-            }).exec(function(err, clients) {
+            Client.find( { $or: [ {'contact.contactName.contactFirstName': searchFirstName }, 
+                {'prospect.prospectName.prospectFirstName': searchFirstName} ] } ).exec(function(err, clients) {
                 if (err) {
                     console.log(err);
                     console.log('cannot search by first name');
@@ -230,9 +227,8 @@ app.get('/alcis/clients', function(req, res) {
             });
         }
         if (!searchFirstName) {
-            Client.find({
-                'contact.contactName.contactLastName': searchLastName
-            }).exec(function(err, clients) {
+            Client.find( { $or: [ {'contact.contactName.contactLastName': searchLastName },
+            {'prospect.prospectName.prospectLastName': searchLastName} ] } ).exec(function(err, clients) {
                 if (err) {
                     console.log(err);
                     console.log('cannot search by last name');
