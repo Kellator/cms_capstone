@@ -1,5 +1,5 @@
 /*global $*/
-var databaseUrl = 'https://node-unit-project-kellator.c9users.io';
+var databaseUrl = 'https://secret-castle-60887.herokuapp.com';
 //constructor function to create client data package
 function ClientDataPackage() {
     this.contact = {};
@@ -1285,16 +1285,16 @@ function tabNavHandler() {
 //     });
 // }
 //allows creation of user credentials
-function devCredCreationHandler() {
-    $('body').on('click', '#dev_create_login', function(event) {
-        event.preventDefault();
-        var username = $('#username').val();
-        var password = $('#password').val();
-        createLoginCredentials(username, password, function() {
-            alert("user create");
-        });
-    });
-}
+// function devCredCreationHandler() {
+//     $('body').on('click', '#dev_create_login', function(event) {
+//         event.preventDefault();
+//         var username = $('#username').val();
+//         var password = $('#password').val();
+//         createLoginCredentials(username, password, function() {
+//             alert("user create");
+//         });
+//     });
+// }
 //ready function
 $(function() {
     loginSubmitHandler();
@@ -1307,7 +1307,7 @@ $(function() {
     submitClientSearchHandler();
     clientListSelectHandler();
     deleteClientHandler();
-    devCredCreationHandler();
+    // devCredCreationHandler();
     tabNavHandler();
     logOutHandler();
 });
