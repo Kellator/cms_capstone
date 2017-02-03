@@ -1,5 +1,5 @@
 /*global $*/
-var databaseUrl = 'https://secret-castle-60887.herokuapp.com';
+var databaseUrl = 'https://node-unit-project-kellator.c9users.io';
 //constructor function to create client data package
 function ClientDataPackage() {
     this.contact = {};

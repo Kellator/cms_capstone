@@ -49,6 +49,7 @@ exports.runServer = runServer;
 
 passport.use(new LocalStrategy(
     function(username, password, done) {
+        console.log('local strat pw ' + password);
         User.findByUsername(username, function(err, user) {
             if (err) {
                 console.log(err);
@@ -60,6 +61,7 @@ passport.use(new LocalStrategy(
                 });
             }
             user.validatePassword(password, function(err) {
+
                 if (err) {
                     return done(null, false, {
                         message: 'Incorrect password.'
@@ -102,7 +104,6 @@ app.get('/', function(req, res) {
 //userName & password endpoints
 //creating a username & password (admin level)
 app.post('/alcis/users', function(req, res) {
-    console.log(req.body);
     if (!req.body) {
         return res.status(400).json({
             message: "No Request Body"
@@ -127,7 +128,6 @@ app.post('/alcis/users', function(req, res) {
         });
     }
     var password = req.body.password;
-    console.log(password);
     if (typeof password !== 'string') {
         return res.status(422).json({
             message: "Incorrect Field Type: password"
@@ -172,7 +172,6 @@ app.post('/alcis/users', function(req, res) {
 });
 //log in authentication request
 app.post('/alcis/login', passport.authenticate('local'), function(req, res) {
-    console.log(req.body);
     res.status(200).json({
         status: 'Login successful!'
     });
@@ -198,12 +197,12 @@ app.post('/alcis/clients/', function(req, res) {
         console.log("created client " + client._id);
         res.status(201).json(client);
     });
+    // console.log(res.body);
 });
 //performs initial search of collection based on search name criteria and retrieves list of clients from collection
 app.get('/alcis/clients', function(req, res) {
     var searchFirstName = req.query.firstName;
     var searchLastName = req.query.lastName;
-    console.log(req.query);
     if (searchFirstName == "" && searchLastName == "") {
         Client.find().exec(function(err, clients) {
             if (err) {
@@ -277,8 +276,8 @@ app.get('/alcis/clients/:client_id', function(req, res) {
 });
 //makes a change to an existing document in the collection
 app.put('/alcis/clients/:client_id', function(req, res) {
-    console.log(req.params);
-    console.log(req.body);
+    // console.log(req.params);
+    // console.log(req.body);
     var client_id = req.params.client_id;
     var update = req.body;
     Client.findByIdAndUpdate(client_id, update, function(err, clients) {
@@ -293,7 +292,6 @@ app.put('/alcis/clients/:client_id', function(req, res) {
 //deletes and item from the collection (will eventually update a key 'deleted' to TRUE so all clients remain in db but are not displayed if inactive)
 app.delete('/alcis/clients/:client_id', function(req, res) {
     var client_id = req.params.client_id;
-    console.log(req.params);
     Client.findByIdAndRemove(client_id, function(err, client) {
         if (err) {
             console.log(err);
