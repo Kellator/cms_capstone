@@ -1276,9 +1276,29 @@ function tabNavHandler() {
         $('#manip_data_buttons').show();
     });
 }
+//for development only
+// function bypassLoginHandler() {
+//     $('body').on('click', '#bypass_login', function(event) {
+//         event.preventDefault();
+//         $('#login_page').addClass('hidden');
+//         $('#dashboard').removeClass('hidden');
+//     });
+// }
+//allows creation of user credentials
+// function devCredCreationHandler() {
+//     $('body').on('click', '#dev_create_login', function(event) {
+//         event.preventDefault();
+//         var username = $('#username').val();
+//         var password = $('#password').val();
+//         createLoginCredentials(username, password, function() {
+//             alert("user create");
+//         });
+//     });
+// }
 //ready function
 $(function() {
     loginSubmitHandler();
+    // bypassLoginHandler();
     newClientHandler();
     dataSubmitHandler();
     submitChangesHandler();
@@ -1287,6 +1307,7 @@ $(function() {
     submitClientSearchHandler();
     clientListSelectHandler();
     deleteClientHandler();
+    // devCredCreationHandler();
     tabNavHandler();
     logOutHandler();
 });
