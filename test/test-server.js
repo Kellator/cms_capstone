@@ -12,89 +12,98 @@ var app = server.app;
 
 chai.use(chaiHttp);
 
-describe('alcis', function() {
-    it('exists', function(done) {
-        chai.request(app)
-        .get('/')
-        .end(function(err, res) {
-            res.should.have.status(200);
-            done();
-        });
-    });
-});
-
-// describe('Client DB', function() {
-//     //add before(function(done) { with hard coded data? then after(function(done) {remove
-//     before(function(done) {
-//         server.runServer(function() {
-//             Client.create({ contact: {
-//                     contactName: {
-//                         contactFirstName: "John",
-//                         contactLastName: "Jones"
-//                     },
-//                     contactPrimaryPhone: "555-888-5858",
-//                     contactSecondaryPhone: "888-555-8585",
-//                     contactAddress: {
-//                         contactStreet: "42 World's End Way",
-//                         contactCity: "Carver",
-//                         contactState: "MA",
-//                         contactZip: "02024"
-//                     },
-//                     contactEmail: "JohnJones@myEmail.com",
-//                     relToProspect: "adult child",
-//                     referralSource: "APFM",
-//                     referredBy: "Michelle",
-//                     dateOfFirstContact: 20170101, function() {
-//                 done();
-//                     }
-//                 }
-//             });
+describe('ALCIS', function() {
+this.timeout(3000);
+// before(function(done) {
+//     server.runServer(function() {
+//         Client.create({
+//             "contact": {
+//                 "contactName": {
+//                     "contactLastName": "Standish",
+//                     "contactFirstName": "Myles"
+//                 },
+//                 "contactPrimaryPhone": "508-866-2526",
+//                 "contactSecondaryPhone": "0",
+//                 "contactAddress": {
+//                     "contactStreet": "194 Cranberry Rd.",
+//                     "contactCity": "Carver",
+//                     "contactState": "MA",
+//                     "contactZip": "02330"
+//                 },
+//                 "contactEmail": "MStandish@gmail.com",
+//                 "relationToProspect": "friend",
+//                 "referralSource": "friend",
+//                 "referredBy": "John Smith",
+//                 "dateOfFirstContact": "2017-01-01"
+//             },
 //         });
 //     });
+// });
+
+it('should exist on GET', function(done) {
+    chai.request(app)
+        .get('/')
+        .end(function(err, res) {
+            should.equal(err, null);
+            res.should.have.status(200);
+            res.should.be.html;
+            done();
+        });
+});
+it('should add a client on post');
+it('should edit a client on put');
+it('should delete a client on delete');
+// after(function(done) {
+//     Client.remove(function() {
+//         done();
+//     });
+// });
+});
+// it('should accept correct login information', function(done) {
+//     // var data = {
+//     //     username: "testUser",
+//     //     password: "pass123"
+//     // };
+//     // chai.request(app)
+//     //     .post('/alcis/login')
+//     //     .send(data)
+//     //     .end(function(err, res) {
+//     //         should.equal(err, null);
+//     //         res.should.have.status(201);
+//     //         done();
+//     //     });
+// });
+// it('should create new client on post', function(done) {
+//     chai.request(app)
+//         .post('/alcis/clients/')
+//         .end(function(err, res) {
+//             should.equal(err, null);
+//             res.should.have.status(201);
+//             done();
+//         });
+
+// describe('alcis', function() {
+//     
+//     it('should search for clients on get', function(done) {
+//         chai.request(app)
+//             .get('/alcis/clients')
+//             .end(function(err, res) {
+//                 should.equal(err, null);
+//                 res.should.evemtually.be.json;
+//                 // res.body.should.be.a('object');
+//                 // res.body.should.have.property('firstName');
+//                 // res.body.should.have.property('lastName');
+//                 // res.body.firstName.should.be.a('string');
+//                 // res.body.lastName.should.be.a('string');
+//                 done();
+//             });
+//     });
+//     it('should add a client on post');
+//     it('should edit a client on put');
+//     it('should delete a client on delete');
 //     after(function(done) {
 //         Client.remove(function() {
 //             done();
 //         });
 //     });
 // });
-//     it('returns status 201', function(done) {
-//         chai.request(app)
-//         .get("/alcis/clients/")
-//         .end(function(err, res) {
-//             should.equal(err, null);
-//             res.should.have.status(201);
-//             res.body.should.be.a('object');
-//             done();
-//         });
-//     });
-//     it('should add an item on POST', function(done) {
-//         chai.request(app)
-//             .post('/alcis/clients/')
-//             .send({'client_id' : 'client_id'})
-//             // .send({ "contact": {
-//             //             "contactName": {
-//             //                 "contactFirstName": "John",
-//             //                 "contactLastName": "Winchester"
-//             //             },
-//             //             "contactPrimaryPhone": 2475558967,
-//             //             "contactSecondaryPhone": 7425557698,
-//             //             "contactAddress": {
-//             //                 "contactStreet": "12 Banal St.",
-//             //                 "contactCity": "Lawrence",
-//             //                 "contactState": "KS",
-//             //                 "contactZip": 74589
-//             //             },
-//             //             "contactEmail": "killItWithFire@myEmail.com",
-//             //             "relToProspect": "adult child",
-//             //             "referralSource": "APFM",
-//             //             "referredBy": "Ellen",
-//             //             "dateOfFirstContact": 20170101
-//             //             }
-//                         // })
-//             .end(function(err, res) {
-//                 should.equal(err, null);
-//                 res.should.have.status(201);
-//                 res.should.be.json;
-//                 done();
-//             });
-//         });

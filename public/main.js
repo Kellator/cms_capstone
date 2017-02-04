@@ -197,10 +197,10 @@ ClientDataPackage.prototype.add_references = function(bankName, bankNumber, llNa
     this.financials.landlordReference.landlordRefNum = llNumber;
 };
 //constructor components for medical data
-ClientDataPackage.prototype.add_initial_assessment = function(schedDate, compDate, assessor) {
+ClientDataPackage.prototype.add_initial_assessment = function(schedDate, comp, assessor) {
     this.medical.initialAssessment = {};
     this.medical.initialAssessment.assessSchedDate = schedDate;
-    this.medical.initialAssessment.assessCompDate = compDate;
+    this.medical.initialAssessment.assessComp = comp;
     this.medical.initialAssessment.assessedBy = assessor;
 };
 ClientDataPackage.prototype.add_alf_plan = function(planType, otherPlan) {
@@ -260,29 +260,29 @@ var clientContactDisplay =
     "<fieldset >" +
     "<legend>Contact Information</legend>" +
     "<label for='contact_last_name'>Last Name:  </label>" +
-    "<input type='text' disabled='' required id='contact_last_name' placeholder='Johnson'>" +
+    "<input type='text' disabled='' required id='contact_last_name'>" +
     "<label for='contact_first_name'>First Name:  </label>" +
-    "<input type='text' disabled='' required id='contact_first_name' placeholder='Milly'>" +
+    "<input type='text' disabled='' required id='contact_first_name'>" +
 
     "<legend>Contact Address</legend>" +
     "<label for='contact_street'>Street:  </label>" +
-    "<input type='text' disabled='' id='contact_street' placeholder='123 Prospect St.'>" +
+    "<input type='text' disabled='' id='contact_street'>" +
     "<label for='contact_city'>City:  </label>" +
-    "<input type='text' disabled='' id='contact_city' placeholder='Brockton'>" + "<br>" +
+    "<input type='text' disabled='' id='contact_city'>" + "<br>" +
     "<label for='contact_state'>State:  </label>" +
-    "<input type='text' disabled='' id='contact_state' placeholder='MA'>" +
+    "<input type='text' disabled='' id='contact_state'>" +
     "<label for='contact_zipcode'>Zip:  </label>" +
-    "<input type='text' disabled='' id='contact_zipcode' pattern='[0-9]{5}' placeholder='02301'>" +
+    "<input type='text' disabled='' id='contact_zipcode' pattern='[0-9]{5}'>" +
 
     "<legend>Contact Phone Numbers</legend>" +
     "<label for='contact_primary_phone'>Primary Phone:  </label>" +
-    "<input type='text' disabled='' maxlength='12' required id='contact_primary_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='5085885555'>" +
+    "<input type='text' disabled='' maxlength='12' required id='contact_primary_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='XXX-XXX-XXXX'>" +
     "<label for='contact_alt_phone'>Alternate Phone:  </label>" +
-    "<input type='text' disabled='' maxlength='12' id='contact_alt_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='5085885858'>" +
+    "<input type='text' disabled='' maxlength='12' id='contact_alt_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='XXX-XXX-XXXX'>" +
 
     "<legend>Contact Email</legend>" +
     "<label for='contact_email'>Email:  </label>" +
-    "<input type='email' disabled='' id='contact_email' placeholder='name@email.com'>" +
+    "<input type='email' disabled='' id='contact_email'>" +
     "</fieldset>" +
     "</form>" +
     "</div>" +
@@ -297,14 +297,14 @@ var clientContactDisplay =
     "<li><input type='radio' disabled='' required name='rel_to_prospect' value='Adult Child' id=rel_child'>Adult Child</> " +
     "<li><input type='radio' disabled='' required name='rel_to_prospect' value='Sibling' id=rel_sibling'>Sibling</> " +
     "<li><input type='radio' disabled='' required name='rel_to_prospect' value='Care Professional' id=rel_careProf'>Care Professional</> " +
-    "<li><input type='radio' disabled='' required name='rel_to_prospect' value='Other' id='rel_other'>Other</><br><input type='text' placeholder='Other'/>" +
+    "<li><input type='radio' disabled='' required name='rel_to_prospect' value='Other' id='rel_other'>Other</><br><input type='text'/>" +
     "</ul>" +
     "<label for='referral_source'>Referral Source</label>" +
     "<ul class=''>" +
     "<li><input type='radio' disabled='' required name='referral_source' value='Self' id='ref_self' checked>Self</>" +
     "<li><input type='radio' disabled='' required name='referral_source' value='APFM' id='ref_apfm'>A Place For Mom</>" +
-    "<li><input type='radio' disabled='' required name='referral_source' value='Word of Mouth' id='ref_wom'>Word of Mouth</><br><input type='text' placeholder='Referred by'/>" +
-    "<li><input type='radio' disabled='' required name='referral_source' value='Health Care Provider' id='ref_hcp'>Health Care Provider</><br><input type='text' id='referred_by' placeholder='Referred by'/>" +
+    "<li><input type='radio' disabled='' required name='referral_source' value='Word of Mouth' id='ref_wom'>Word of Mouth</><br><input type='text'/>" +
+    "<li><input type='radio' disabled='' required name='referral_source' value='Health Care Provider' id='ref_hcp'>Health Care Provider</><br><input type='text' id='referred_by'/>" +
     "</ul>" +
     "<label for='first_contact_date'>Date of First Contact </label>" +
     "<input type='date' disabled='' id='first_contact_date' name='first_contact_date'>" +
@@ -319,23 +319,23 @@ var clientProspectDisplay =
     "<fieldset>" +
     "<legend>Prospect Contact Information</legend>" +
     "<label for='prospect_last_name'>Last Name:  </label>" +
-    "<input type='text' disabled='' required id='prospect_last_name' placeholder='Johnson'>" +
+    "<input type='text' disabled='' required id='prospect_last_name' >" +
     "<label for='prospect_first_name'>First Name:  </label>" +
-    "<input type='text' disabled='' required id='prospect_first_name' placeholder='Joseph'>" +
+    "<input type='text' disabled='' required id='prospect_first_name' >" +
 
     "<legend>Prospect Phone Numbers</legend>" +
     "<label for='prospect_phone'>Prospect Phone:  </label>" +
-    "<input type='text' disabled='' maxlength='12' required id='prospect_primary_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='508-588-5555'>" +
+    "<input type='text' disabled='' maxlength='12' required id='prospect_primary_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='XXX-XXX-XXXX'>" +
 
     "<legend>Prospect Address</legend>" +
     "<label for='prospect_street'>Street:  </label>" +
-    "<input type='text' disabled='' id='prospect_street' placeholder='123 Prospect St.'>" +
+    "<input type='text' disabled='' id='prospect_street' >" +
     "<label for='prospect_city'>City:  </label>" +
-    "<input type='text' disabled='' id='prospect_city' placeholder='Brockton'>" + "<br>" +
+    "<input type='text' disabled='' id='prospect_city'>" + "<br>" +
     "<label for='prospect_state'>State:  </label>" +
-    "<input type='text' disabled='' id='prospect_state' placeholder='MA'>" +
+    "<input type='text' disabled='' id='prospect_state' >" +
     "<label for='prospect_zipcode'>Zip:  </label>" +
-    "<input type='text' disabled='' id='prospect_zipcode' placeholder='02301'>" +
+    "<input type='text' disabled='' id='prospect_zipcode'>" +
     "</fieldset>" +
     "</form>" +
     "</div>" +
@@ -344,15 +344,15 @@ var clientProspectDisplay =
     "<fieldset>" +
     "<legend>Prospect Identification</legend>" +
     "<label for='date_of_birth'>Date of Birth </label>" +
-    "<input type='text' disabled='' id='date_of_birth' required name='date_of_birth'>" +
+    "<input type='text' disabled='' id='date_of_birth' required name='date_of_birth'>" + "<br>" +
     "<label for='ssn'>Social Security Number </label>" +
-    "<input type='text' disabled='' id='ssn' maxlength='9' required placeholder='000112222'> " +
+    "<input type='text' disabled='' id='ssn' maxlength='9' required> " + "<br>" +
     "<label for='medicare'>Medicare Number </label>" +
-    "<input type='text' disabled='' id='medicare' required placeholder='000112222A'>" + "<br>" +
+    "<input type='text' disabled='' id='medicare' required >" + "<br>" +
     "<label for='massHealth'>MassHealth Number </label>" +
-    "<input type='text' disabled='' id='massHealth' placeholder='000111222333'>" + "<br>" +
+    "<input type='text' disabled='' id='massHealth' >" + "<br>" +
     "<label for='other_ins'>Other Insurance </label>" +
-    "<input type='text' disabled='' id='other_ins' placeholder='BCBS XX010101010'>" +
+    "<input type='text' disabled='' id='other_ins' >" +
     "</fieldset>" +
     "</form>" +
     "</div>" +
@@ -375,11 +375,11 @@ var clientProspectDisplay =
     "<label for='veteran_status'>Veteran Status</label>" +
     "<ul>" +
     "<li><input type='radio' disabled='' required name='veteran_status' value='veteran' id='veteran'>Veteran:  </>" +
-    "<label for='service_branch'>Branch of Service:  </label><input type='text' id='service_branch' placeholder='Navy'>" +
+    "<label for='service_branch'>Branch of Service:  </label><input type='text' id='service_branch' >" +
     "<li><input type='radio' disabled='' required name='veteran_status' value='Not a Veteran' id='notVet'>Not a Veteran</>" +
     "</ul>" +
     "<label id='religion'>Religion</label>" +
-    "<input type='text' disabled='' id='religion' placeholder='Lutheran'><br>" +
+    "<input type='text' disabled='' id='religion' ><br>" +
 
     "<label for='education'>Highest Level of Education</label>" +
     "<ul>" +
@@ -430,43 +430,43 @@ var clientProspectDisplay =
     "</ul>" +
     "<legend>Power of Attorney</legend>" +
     "<label for='poa_last_name'>Last Name:  </label>" +
-    "<input type='text' disabled='' required id='poa_last_name' placeholder='Johnson'>" +
+    "<input type='text' disabled='' required id='poa_last_name' >" +
     "<label for='poa_first_name'>First Name:  </label>" +
-    "<input type='text' disabled='' required id='poa_first_name' placeholder='Milly'>" +
+    "<input type='text' disabled='' required id='poa_first_name'>" + "<br>" +
     "<label for='poa_primary_phone'>Primary Phone:  </label>" +
-    "<input type='text' disabled='' maxlength='12' required id='poa_primary_phone'pattern='\d{3}[\-]\d{3}[\-]\d{4}'  placeholder='508-588-5555'>" +
+    "<input type='text' disabled='' maxlength='12' required id='poa_primary_phone'pattern='\d{3}[\-]\d{3}[\-]\d{4}'  placeholder='XXX-XXX-XXXX'>" + "<br>" +
     "<label for='poa_alt_phone'>Alternate Phone:  </label>" +
-    "<input type='text' disabled='' maxlength='12' id='poa_alt_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='508-588-5858'>" +
+    "<input type='text' disabled='' maxlength='12' id='poa_alt_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='XXX-XXX-XXXX'>" +
 
     "<legend>Health Care Proxy</legend>" +
     "<label for='hcp_last_name'>Last Name:  </label>" +
-    "<input type='text' disabled='' required id='hcp_last_name' placeholder='Johnson'>" +
+    "<input type='text' disabled='' required id='hcp_last_name' >" +
     "<label for='hcp_first_name'>First Name:  </label>" +
-    "<input type='text' disabled='' required id='hcp_first_name' placeholder='Milly'>" +
+    "<input type='text' disabled='' required id='hcp_first_name'>" + "<br>" +
     "<label for='hcp_primary_phone'>Primary Phone:  </label>" +
-    "<input type='text' disabled='' maxlength='12' required id='hcp_primary_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='508-588-5555'>" +
+    "<input type='text' disabled='' maxlength='12' required id='hcp_primary_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='XXX-XXX-XXXX'>" + "<br>" +
     "<label for='hcp_alt_phone'>Alternate Phone:  </label>" +
-    "<input type='text' disabled='' maxlength='12' id='hcp_alt_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='508-588-5858'>" +
+    "<input type='text' disabled='' maxlength='12' id='hcp_alt_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='XXX-XXX-XXXX'>" +
 
     "<legend>Primary Emergency Contact</legend>" +
     "<label for='pec_last_name'>Last Name:  </label>" +
-    "<input type='text' disabled='' required id='pec_last_name' placeholder='Johnson'>" +
+    "<input type='text' disabled='' required id='pec_last_name'>" +
     "<label for='pec_first_name'>First Name:  </label>" +
-    "<input type='text' disabled='' required id='pec_first_name' placeholder='Milly'>" +
+    "<input type='text' disabled='' required id='pec_first_name'>" + "<br>" +
     "<label for='pec_primary_phone'>Primary Phone:  </label>" +
-    "<input type='text' disabled='' maxlength='12' required id='pec_primary_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='508-588-5555'>" +
+    "<input type='text' disabled='' maxlength='12' required id='pec_primary_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='XXX-XXX-XXXX'>" + "<br>" +
     "<label for='pec_alt_phone'>Alternate Phone:  </label>" +
-    "<input type='text' disabled='' maxlength='12' id='pec_alt_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='508-588-5858'>" +
+    "<input type='text' disabled='' maxlength='12' id='pec_alt_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='XXX-XXX-XXXX'>" +
 
     "<legend>Secondary Emergency Contact</legend>" +
     "<label for='sec_last_name'>Last Name:  </label>" +
-    "<input type='text' disabled='' required id='sec_last_name' placeholder='Johnson'>" +
+    "<input type='text' disabled='' required id='sec_last_name' >" +
     "<label for='sec_first_name'>First Name:  </label>" +
-    "<input type='text' disabled='' required id='sec_first_name' placeholder='Milly'>" +
+    "<input type='text' disabled='' required id='sec_first_name' >" + "<br>" +
     "<label for='sec_primary_phone'>Primary Phone:  </label>" +
-    "<input type='text'disabled=''  maxlength='12' required id='sec_primary_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='508-588-5555'>" +
+    "<input type='text'disabled=''  maxlength='12' required id='sec_primary_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='XXX-XXX-XXXX'>" + "<br>" +
     "<label for='sec_alt_phone'>Alternate Phone:  </label>" +
-    "<input type='text' disabled='' maxlength='12' id='sec_alt_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='508-588-5858'>" +
+    "<input type='text' disabled='' maxlength='12' id='sec_alt_phone' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='XXX-XXX-XXXX'>" +
     "</fieldset>" +
     "</form>" +
     "</div>";
@@ -486,17 +486,17 @@ var clientHousingDisplay =
     "<label for='assistance_needed'>Assistance Needed</label>" +
     "<ul>" +
     "<li><input type='checkbox' name='assistance_needed' value='bathing'>Bathing: </input></li>" +
-    "<input type='text' id='bathing_detail' disabled=''  placeholder='Needs hands on assistance, lower body washing.'>" +
+    "<input type='text' id='bathing_detail' disabled=''  >" +
     "<li><input type='checkbox' name='assistance_needed' value='dressing'>Dressing: </input></li>" +
-    "<input type='text' id='dressing_detail' disabled=''  placeholder='Needs assistance with lower body dressing and buttons.'>" +
+    "<input type='text' id='dressing_detail' disabled='' >" +
     "<li><input type='checkbox' name='assistance_needed' value='grooming'>Grooming: </input></li>" +
-    "<input type='text' id='grooming_detail' disabled='' placeholder='Needs cueing to soak dentures at night.'>" +
+    "<input type='text' id='grooming_detail' disabled='' >" +
     "<li><input type='checkbox' name='assistance_needed' value='medication assistance'>Medication Assistance: </input></li>" +
-    "<input type='text' id='med_assist_detail' disabled='' placeholder='Needs SAMM reminders'>" +
+    "<input type='text' id='med_assist_detail' disabled='' >" +
     "<li><input type='checkbox' name='assistance_needed' value='ambulation'>Ambulation: </input></li>" +
-    "<input type='text' id='ambulation_detail' disabled='' placeholder='Needs escorts to meals and activities.'>" +
+    "<input type='text' id='ambulation_detail' disabled='' >" +
     "<li><input type='checkbox' name='assistance_needed' value='toileting'>Toileting: </input></li>" +
-    "<input type='text' id='toileting_detail' disabled='' placeholder='Occasional incontinence of bladder; needs cueing to change depends.'>" +
+    "<input type='text' id='toileting_detail' disabled='' >" +
     "</ul>" +
     "<label for='prim_apt_pref'>Primary Apartment Preference</label>" +
     "<ul>" +
@@ -550,25 +550,25 @@ var clientFinancialDisplay =
     "<label for='total_monthly_income'>Total Monthly Income:  $</label>" +
     "<input type='number' disabled=''  min='0.00' step='0.01' value='' id='income_monthly'></input><br>" +
     "<label for='income_social'>Monthly Social Security Income:  $</label>" +
-    "<input type='number'disabled=''  min='0.00' step='0.01' value='' id='income_social' placeholder='2000'></input><br>" +
+    "<input type='number'disabled=''  min='0.00' step='0.01' value='' id='income_social''></input><br>" +
     "<label for='income_pension'>Monthly Pension Income:  $</label>" +
-    "<input type='number' disabled='' min='0.00' step='0.01' value='' id='income_pension' placeholder='2000'></input><br>" +
+    "<input type='number' disabled='' min='0.00' step='0.01' value='' id='income_pension' ></input><br>" +
     "<label for='income_ssi'>Monthly Supplemental Security (SSI) Income:  $</label>" +
-    "<input type='number' disabled='' min='0.00' step='0.01' value='' id='income_ssi' placeholder='2000'></input><br>" +
+    "<input type='number' disabled='' min='0.00' step='0.01' value='' id='income_ssi' ></input><br>" +
     "<label for='income_va'>Monthly VA Benefits Income:  $</label>" +
-    "<input type='number' disabled='' min='0.00' step='0.01' value='' id='income_va' placeholder='2000'></input><br>" +
+    "<input type='number' disabled='' min='0.00' step='0.01' value='' id='income_va' ></input><br>" +
     "<label for='income_other'>Other Monthly Income:  $</label>" +
-    "<input type='number' disabled='' min='0.00' step='0.01' value='' id='income_other' placeholder='2000'></input><br>" +
-    "<label for='income_other_source'>Source:  </label><input type='text' id='income_other_source' placeholder='alimony'></input><br>" +
+    "<input type='number' disabled='' min='0.00' step='0.01' value='' id='income_other' ></input><br>" +
+    "<label for='income_other_source'>Source:  </label><input type='text' id='income_other_source' ></input><br>" +
     "<label for='property_value'>Estimated Property Value: $</label>" +
-    "<input type='number' disabled='' min='0.00' step='0.01' value='' id='property_value' placeholder='2000'></input><br>" +
+    "<input type='number' disabled='' min='0.00' step='0.01' value='' id='property_value' ></input><br>" +
     "<label for='bank_value'>Estimated Bank Accounts Value: $</label>" +
-    "<input type='number' disabled='' min='0.00' step='0.01' value='' id='bank_value' placeholder='2000'></input><br>" +
+    "<input type='number' disabled='' min='0.00' step='0.01' value='' id='bank_value' ></input><br>" +
     "<label for='life_ins_value'>Estimated Life Insurance Value: $</label>" +
-    "<input type='number' disabled='' min='0.00' step='0.01' value='' id='life_ins_value' placeholder='2000'></input><br>" +
+    "<input type='number' disabled='' min='0.00' step='0.01' value='' id='life_ins_value' ></input><br>" +
     "<label for='other_value'>Other Estimated Assets: $</label>" +
-    "<input type='number' disabled='' min='0.00' step='0.01' value='' id='other_value' placeholder='2000'></input><br>" +
-    "<label for='other_value_source'>Source:  </label><input type='text' id='other_value_source' placeholder='rental income'></input>" +
+    "<input type='number' disabled='' min='0.00' step='0.01' value='' id='other_value' ></input><br>" +
+    "<label for='other_value_source'>Source:  </label><input type='text' id='other_value_source' ></input>" +
     "</fieldset>" +
     "</form>" +
     "</div>" +
@@ -577,13 +577,13 @@ var clientFinancialDisplay =
     "<fieldset>" +
     "<legend>Financial References</legend>" +
     "<label for='bank_ref_name'>Bank Name:  </label>" +
-    "<input type='text' disabled='' id='bank_ref_name' placeholder='HarborOne'></input><br>" +
+    "<input type='text' disabled='' id='bank_ref_name' ></input><br>" +
     "<label for='bank_ref_text'>Bank Phone Number:  </label>" +
-    "<input type='text' disabled='' id=bank_ref_number' maxlength='12' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='5085885858'></input><br>" +
+    "<input type='text' disabled='' id=bank_ref_number' maxlength='12' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='XXX-XXX-XXXX'></input><br>" +
     "<label for='landlord_ref_name'>Landlord Name:  </label>" +
-    "<input type='text' disabled='' id='landlord_ref_name' placeholder='Jim Smith'></input><br>" +
+    "<input type='text' disabled='' id='landlord_ref_name'></input><br>" +
     "<label for='landlord_ref_number'>Landlord Phone Number:  </label>" +
-    "<input type='text' disabled='' id=landlord_ref_number' maxlength='12' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='5085885858'></input>" +
+    "<input type='text' disabled='' id=landlord_ref_number' maxlength='12' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='XXX-XXX-XXXX'></input>" +
     "</fieldset>" +
     "</form>" +
     "</div>";
@@ -596,9 +596,12 @@ var clientMedicalDisplay =
     "<label for='assess_date'>Initial Assessment Scheduled:  </label>" +
     "<input type='text' disabled='' id='assess_date'></input><br>" +
     "<label for='assess_date_completed'>Initial Assessment Completed:  </label>" +
-    "<input type='text' disabled='' id='assess_date_completed'></input><br>" +
+    "<ul>" +
+    "<li><input type='radio' disabled='' required name='assess_date_completed' value='init_assess_complete' id='init_assess_complete'>Yes</input></li>" +
+    "<li><input type='radio' disabled='' required name='assess_date_completed' value='init_assess_incomplete' id='init_assess_incomplete'>No</input></li>" +
+    "</ul>" +
     "<label for='assessed_by'>Initial Assessment Completed By:  </label>" +
-    "<input type='text' disabled='' id='assessed_by' placeholder='Jane Smith, R.N.'></input><br>" +
+    "<input type='text' disabled='' id='assessed_by'></input><br>" +
     "<label for='level_of_care'>Level Of Care</label>" +
     "<ul>" +
     "<li><input type='radio' disabled='' required name='level_of_care' id='care_ind' value='Independent'>Independent</input></li>" +
@@ -620,7 +623,7 @@ var clientMedicalDisplay =
     "<legend>Allergy Information</legend>" +
     "<input type='checkbox' disabled='' value='nkda' id='allergies_check'>No Known Drug Allergies</input><br>" +
     "<label for='allergies'>Allergies:  </label>" +
-    "<input type='text' disabled='' id='allergies' placeholder='penicillin'></input><br>" +
+    "<input type='text' disabled='' id='allergies'></input><br>" +
     "</fieldset>" +
     "</form>" +
     "</div>" +
@@ -629,9 +632,9 @@ var clientMedicalDisplay =
     "<fieldset>" +
     "<legend>Medical Information</legend>" +
     "<label for='meds_on_admit'>Medications Currently Taken:  </input>" +
-    "<input type='text' disabled='' id='meds_on_admit' placeholder='tylenol 500mg BID, lasix 40mg once daily'></input><br>" +
+    "<input type='text' disabled='' id='meds_on_admit'></input><br>" +
     "<label for='health_issues'>Major Health Issues:  </input>" +
-    "<input type='text' disabled='' id='health_issues' placeholder='h/o TIA, s/p hip replacement, COPD'></input><br>" +
+    "<input type='text' disabled='' id='health_issues'></input><br>" +
     "</fieldset>" +
     "</form>" +
     "</div>" +
@@ -646,7 +649,6 @@ var clientMedicalDisplay =
     "<li><input type='checkbox' disabled='' required name='dietary' value='House Concentrated Carbohydrate' id='dietary_hcc'>House Concentrated Carbohydrate</input></li>" +
     "<li><input type='checkbox' disabled='' required name='dietary' value='Cut Up' id='dietary_cut'>Cut Up</input></li>" +
     "<li><input type='checkbox' disabled='' required name='dietary' value='Ground' id='dietary_ground'>Ground</input></li>" +
-    "<li><input type='checkbox' disabled='' required name='dietary' value='Puree' id='dietary_puree'>Puree</input></li>" +
     "<li><input type='checkbox' disabled='' required name='dietary' value='Soft' id='dietary_soft'>Soft</input></li>" +
     "</ul>" +
     "</fieldset>" +
@@ -657,19 +659,19 @@ var clientMedicalDisplay =
     "<fieldset>" +
     "<legend>Primary Care Provider Information</legend>" +
     "<label for='pcp_name'>Primary Care Physician:  </label>" +
-    "<input type='text' disabled='' id='pcp_name' placeholder='Dr.John Smith'></input><br>" +
+    "<input type='text' disabled='' id='pcp_name'></input><br>" +
     "<label for='pcp_phone'>PCP Phone Number:  </label>" +
-    "<input type='text' disabled='' id='pcp_phone' maxlength='12' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='5085558888'></input><br>" +
+    "<input type='text' disabled='' id='pcp_phone' maxlength='12' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='XXX-XXX-XXXX'></input><br>" +
     "<label for='pcp_fax'>PCP Fax Number:  </label>" +
-    "<input type='text' disabled='' id='pcp_fax' maxlength='12' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='5088885555'></input><br>" +
+    "<input type='text' disabled='' id='pcp_fax' maxlength='12' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='XXX-XXX-XXXX'></input><br>" +
     "<label for='pcp_street'>Street:  </label>" +
-    "<input type='text' disabled='' id='pcp_street' placeholder='123 Prospect St.'>" +
+    "<input type='text' disabled='' id='pcp_street' >" +
     "<label for='pcp_city'>City:  </label>" +
-    "<input type='text' disabled='' id='pcp_city' placeholder='Brockton'>" + "<br>" +
+    "<input type='text' disabled='' id='pcp_city'>" + "<br>" +
     "<label for='pcp_state'>State:  </label>" +
-    "<input type='text' disabled='' id='pcp_state' placeholder='MA'>" +
+    "<input type='text' disabled='' id='pcp_state'>" +
     "<label for='pcp_zipcode'>Zip:  </label>" +
-    "<input type='text' disabled='' id='pcp_zipcode' placeholder='02301'>" + "<br>" +
+    "<input type='text' disabled='' id='pcp_zipcode' >" + "<br>" +
     "<label for='phys_form'>Physician Form Received</input>" + 
     "<input type='checkbox' disabled='' name='phys_form' id='phys_form_box' value='Physician Form Received'></input>" +
     "<input type='text' disabled='' name='phys_form' id='phys_form_date'></input>" +
@@ -775,7 +777,7 @@ function genFinancialPackage(client) {
 }
 
 function genMedicalPackage(client) {
-    client.add_initial_assessment($('#assess_date').val(), $('assess_date_completed').val(), $('#assessed_by').val());
+    client.add_initial_assessment($('#assess_date').val(), $('input[name="assess_date_completed"]:checked').val(), $('#assessed_by').val());
     client.add_alf_plan($('input[name="level_of_care"]:checked').val(), $('input[name="other_plans"]:checked').val());
     client.add_allergies($('#allergies').val(), $('#allergies_check'));
     client.add_oxygen();
@@ -968,11 +970,13 @@ function displayClientList(data) {
             resultElement +=
                 '<div client_id="' + client._id + '" value="' + index + '" class="search_result_return search_link">' +
                 '<ul>' +
-                '<li>Contact Name:  ' + client.contact.contactName.contactFirstName + ' ' + client.contact.contactName.contactLastName + '</li>' +
-                '<li>Contact Phone:  ' + client.contact.contactPrimaryPhone + '</li>' +
                 '<li>Prospect Name:  ' + client.prospect.prospectName.prospectFirstName + ' ' + client.prospect.prospectName.prospectLastName + '</li> ' +
                 '<li>DOB:  ' + client.prospect.dateOfBirth + '</li>' +
-                '<li>Gender:  ' + client.prospect.gender + '</li>' +
+                '<li>Contact Name:  ' + client.contact.contactName.contactFirstName + ' ' + client.contact.contactName.contactLastName + '</li>' +
+                '<li>Contact Phone:  ' + client.contact.contactPrimaryPhone + '</li>' +
+                '<li>PCP:  ' + client.medical.pcpName + '</li>' +
+                '<li>PCP Phone:  ' + client.medical.pcpNum + '</li>' +
+                '<li>PCP Fax:  ' + client.medical.pcpFax + '</li>' +
                 '<li>Housing Type:  ' + client.housingAssistance.housingType + '</li>' +
                 '</ul>' +
                 '</div></a>';
@@ -1099,7 +1103,7 @@ function displayClientData(data) {
         financialDisplay.find('#landlord_ref_number').val(data.financials.landlordReference.landlordRefNum);
 
         medicalDisplay.find('#assess_date').val(data.medical.initialAssessment.assessSchedDate);
-        medicalDisplay.find('#assess_date_comepleted').val(data.medical.initialAssessment.assessCompDate);
+        medicalDisplay.find('input[name="assess_date_completed"][value=" ' + data.medical.initialAssessment.assessComp + '"]').attr('checked', true);
         medicalDisplay.find('#assessed_by').val(data.medical.initialAssessment.assessedBy);
         medicalDisplay.find('input[name="level_of_care"][value="' + data.medical.alfPlanType + '"]').attr('checked', true);
         medicalDisplay.find('input[name="other_plans"][value="' + data.medical.otherPlan + '"]').attr('checked', true);
@@ -1272,29 +1276,9 @@ function tabNavHandler() {
         $('#manip_data_buttons').show();
     });
 }
-//for development only
-// function bypassLoginHandler() {
-//     $('body').on('click', '#bypass_login', function(event) {
-//         event.preventDefault();
-//         $('#login_page').addClass('hidden');
-//         $('#dashboard').removeClass('hidden');
-//     });
-// }
-//allows creation of user credentials
-// function devCredCreationHandler() {
-//     $('body').on('click', '#dev_create_login', function(event) {
-//         event.preventDefault();
-//         var username = $('#username').val();
-//         var password = $('#password').val();
-//         createLoginCredentials(username, password, function() {
-//             alert("user create");
-//         });
-//     });
-// }
 //ready function
 $(function() {
     loginSubmitHandler();
-    // bypassLoginHandler();
     newClientHandler();
     dataSubmitHandler();
     submitChangesHandler();
@@ -1303,7 +1287,6 @@ $(function() {
     submitClientSearchHandler();
     clientListSelectHandler();
     deleteClientHandler();
-    // devCredCreationHandler();
     tabNavHandler();
     logOutHandler();
 });
