@@ -1,7 +1,8 @@
 /*global $*/
-var databaseUrl = 'https://secret-castle-60887.herokuapp.com';
+var databaseUrl = 'https://node-unit-project-kellator.c9users.io';
 //constructor function to create client data package
 function ClientDataPackage() {
+    this.deleted = false;
     this.contact = {};
     this.prospect = {};
     this.housingAssistance = {};
@@ -128,12 +129,10 @@ ClientDataPackage.prototype.add_hospital = function(hospital) {
     this.prospect.prefHospital = hospital;
 };
 ClientDataPackage.prototype.add_followup_date = function(date) {
-    // this.prospect.followUpDate = Date.today().add(3).months();
     this.prospect.followUpDate = date;
 };
 ClientDataPackage.prototype.add_date_added = function(date) {
     this.prospect.dateAddedtoDB = date;
-    // Date.today().toString();
 };
 //constructor components for housing data
 ClientDataPackage.prototype.add_housing_type = function(housing) {
@@ -141,15 +140,7 @@ ClientDataPackage.prototype.add_housing_type = function(housing) {
 };
 ClientDataPackage.prototype.add_assistance = function(assist, bath, dress, groom, med, amb) {
     this.housingAssistance.assistanceNeeded = {};
-    // var bathing = assistArray[0].value;
-    // var dressing = assistArray[1].value;
-    // var grooming = assistArray[2].value;
-    // var medication = assistArray[3].value;
-    // var ambulation = assistArray[4].value;
-    // var toileting = assistArray[5].value;
-    // var assistance = (bathing + ', ' + dressing + ', ' + grooming + ', ' + medication + ', ' + ambulation + ', ' + toileting);
     this.housingAssistance.assistanceNeeded.assistance_needed = assist;
-    console.log(assist);
     this.housingAssistance.assistanceNeeded.bathing = bath;
     this.housingAssistance.assistanceNeeded.dressing = dress;
     this.housingAssistance.assistanceNeeded.grooming = groom;
@@ -583,7 +574,7 @@ var clientFinancialDisplay =
     "<label for='landlord_ref_name'>Landlord Name:  </label>" +
     "<input type='text' disabled='' id='landlord_ref_name'></input><br>" +
     "<label for='landlord_ref_number'>Landlord Phone Number:  </label>" +
-    "<input type='text' disabled='' id=landlord_ref_number' maxlength='12' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='XXX-XXX-XXXX'></input>" +
+    "<input type='text' disabled='' id='landlord_ref_number' maxlength='12' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='XXX-XXX-XXXX'></input>" +
     "</fieldset>" +
     "</form>" +
     "</div>";
@@ -631,7 +622,7 @@ var clientMedicalDisplay =
     "<form action='' method='post'>" +
     "<fieldset>" +
     "<legend>Medical Information</legend>" +
-    "<label for='meds_on_admit'>Medications Currently Taken:  </input>" +
+    "<label for='meds_on_admit'>Medications at time of Assessment:  </input>" +
     "<input type='text' disabled='' id='meds_on_admit'></input><br>" +
     "<label for='health_issues'>Major Health Issues:  </input>" +
     "<input type='text' disabled='' id='health_issues'></input><br>" +
@@ -754,7 +745,6 @@ function genHousingPackage(client) {
     client.add_housing_type($('input[name="type_of_housing"]:checked').val());
     client.add_assistance($('input[name="assistance_needed"]').on('change', function() {
             var values = [];
-            console.log('here');
             var items = $('input(name="assistance_needed"]');
             $.each(items, function(index, item) {
                 if ($(item).prop('checked')) {
@@ -772,7 +762,7 @@ function genHousingPackage(client) {
 function genFinancialPackage(client) {
     client.add_payer_source($('input[name="payer_source"]:checked').val());
     client.add_income($('#income_social').val(), $('#income_pension').val(), $('#income_ssi').val(), $('#income_va').val(), $('#income_other').val(), $('#income_other_source').val());
-    client.add_assets($('#property_value').val(), $('#bank_value').val(), $('#life_ins_value').val(), $('#other_value').val());
+    client.add_assets($('#property_value').val(), $('#bank_value').val(), $('#life_ins_value').val(), $('#other_value').val(), $('#other_value_source'));
     client.add_references($('#bank_ref_name').val(), $('#bank_ref_number').val(), $('#landlord_ref_name').val(), $('#landlord_ref_number').val());
 }
 
@@ -831,6 +821,7 @@ function getClientInformation(client_id, callback) {
         method: 'GET',
         success: function(data) {
             callback(data);
+            console.log(data);
         }
     };
     $.ajax(settings);
@@ -872,8 +863,6 @@ function loginRequest(username, password, callback) {
         method: 'POST',
         success: function(data) {
             callback(data);
-            $('#login_page').hide();
-            $('#dashboard').show();
         }
     };
     $.ajax(settings);
@@ -915,6 +904,7 @@ function logoutRequest(callback) {
 function logoutCallback() {
     alert("Thank you for using ALCIS");
     $('#dashboard').hide();
+    $('.display_area').hide();
     $('#login_page').show();
     $('#client_dash').empty();
     $('#manip_data_buttons').empty();
@@ -1160,11 +1150,12 @@ function loginSubmitHandler() {
         var username = $('#username').val();
         var password = $('#password').val();
         loginRequest(username, password, function() {
-            alert("Welcome to Alcis");
+            $('#login_page').hide();
+            $('#dashboard').show();
         });
     });
 }
-
+//handles log out button
 function logOutHandler() {
     $('body').on('click', '#logout_button', function(event) {
         event.preventDefault();
@@ -1187,6 +1178,7 @@ function submitClientSearchHandler() {
             lastName: $(this).find('#last_name').val()
         };
         getClientList(searchName, displayClientList);
+        $('.display_area').show();
         $('.client_search_results_list').removeClass('hidden');
     });
 }
@@ -1276,29 +1268,8 @@ function tabNavHandler() {
         $('#manip_data_buttons').show();
     });
 }
-//for development only
-// function bypassLoginHandler() {
-//     $('body').on('click', '#bypass_login', function(event) {
-//         event.preventDefault();
-//         $('#login_page').addClass('hidden');
-//         $('#dashboard').removeClass('hidden');
-//     });
-// }
-//allows creation of user credentials
-// function devCredCreationHandler() {
-//     $('body').on('click', '#dev_create_login', function(event) {
-//         event.preventDefault();
-//         var username = $('#username').val();
-//         var password = $('#password').val();
-//         createLoginCredentials(username, password, function() {
-//             alert("user create");
-//         });
-//     });
-// }
-//ready function
 $(function() {
     loginSubmitHandler();
-    // bypassLoginHandler();
     newClientHandler();
     dataSubmitHandler();
     submitChangesHandler();
@@ -1307,7 +1278,6 @@ $(function() {
     submitClientSearchHandler();
     clientListSelectHandler();
     deleteClientHandler();
-    // devCredCreationHandler();
     tabNavHandler();
     logOutHandler();
 });
