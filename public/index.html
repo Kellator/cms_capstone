@@ -1,107 +1,114 @@
 <!doctype html>
 
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta charset="utf-8">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat|Nunito+Sans" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.1.1/normalize.css" rel="stylesheet">
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <meta charset='utf-8'>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat|Nunito+Sans' rel='stylesheet'>
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/4.1.1/normalize.css' rel='stylesheet'>
     <link rel='stylesheet' href='main.css'>
-    <script src="//code.jquery.com/jquery-2.1.0.js"></script>
-    <script src="main.js"></script>
+    <script src='//code.jquery.com/jquery-2.1.0.js'></script>
+    <script src='main.js'></script>
     <title>ALCIS || Assisted Living Client Information System</title>
 </head>
 
 <body>
-    <header class="header_bar">
+    <header class='header_bar'>
         <h1 class='main_title'>ALCIS || Assisted Living Client Information System</h1>
+        <nav>
+            <ul>
+                <li><a href='https://kellator.github.io/alcis_docs/index.html'>ALCIS docs</a></li>
+                <li><a href='mailto:kmiller@emmanuelhs.org'>contact</a></li>
+                <li><a href='https://kellator.github.io/alcis_help/index.html'>help</a></li>
+            </ul>
+        </nav>
     </header>
-    <div class="main_content">
+    <div class='main_content'>
         <!--Login page contains input area for user to input credentials and link to request access-->
-        <div id="login_page" class="">
-            <form class="login_form rounded_corners">
-                <fieldset class=" rounded_corners ">
-                    <div class="raised_content">
-                        <h1 class="login_heading underline">Log in</h1>
+        <div id='login_page' class=''>
+            <form class='login_form rounded_corners'>
+                <fieldset class=' rounded_corners '>
+                    <div class='raised_content'>
+                        <h1 class='login_heading underline'>Log in</h1>
                         <p>Access to ALCIS is restricted.</p>
-                        <p class="fine_print">If you require access, <a href="mailto:kmiller@emmanuelhs.org">contact</a> Administrator to Request Access</p>
+                        <p class='fine_print'>If you require access, <a href='mailto:kmiller@emmanuelhs.org'>contact</a> Administrator to Request Access</p>
                     </div>
-                    <div class="space"></div>
-                    <legend class="hide_label">Log In</legend>
-                    <div class="raised_content">
-                        <label class="raised_content">username:</label>
-                        <input class="login_input rounded_corners" type="text" id="username" required placeholder="">
+                    <div class='space'></div>
+                    <legend class='hide_label'>Log In</legend>
+                    <div class='raised_content'>
+                        <label class='raised_content'>username:</label>
+                        <input class='login_input rounded_corners' type='text' id='username' required placeholder="">
                     </div>
-                    <div class="raised_content">
-                        <label class="raised_content">password:</label>
-                        <input class="login_input rounded_corners" type="password" id="password" required placeholder="">
+                    <div class='raised_content'>
+                        <label class='raised_content'>password:</label>
+                        <input class='login_input rounded_corners' type='password' id='password' required placeholder="">
                     </div>
-                    <div class="login_form_buttons">
-                        <label for="login_button"></label>
-                        <button name="login_button" class="rounded_corners" id="login_button" value="login">Log in</button>
+                    <div class='login_form_buttons'>
+                        <label for='login_button'></label>
+                        <button name='login_button' class='rounded_corners' id='login_button' value='login'>Log in</button>
+                    </div>
                 </fieldset>
             </form>
-            </div>
         </div>
         <!--dashboard contains main navigational menu, search field for client lookup, option to enter new client-->
-        <div id="dashboard" class="hidden">
-            <div class="flex_container">
+        <div id='dashboard' class='hidden'>
+            <div class='flex_container'>
                 <!--search entry contains the main name search input fields and the button to select to enter a new client-->
-                <div id="search_entry" class="">
-                    <form class="client_search_form">
+                <div id='search_entry' class=''>
+                    <form class='client_search_form'>
                         <fieldset>
                             <legend>Client Search</legend>
-                            <label for="last_name"></label>
-                            <input type="text" id="last_name" placeholder="Last Name"><span>, </span>
-                            <label for="first_name"></label>
-                            <input type="text" id="first_name" placeholder="First Name">
-                            <label for="submit_search_button"></label>
-                            <button type="submit" name="submit_search_button" id="submit_search">Submit</input>
+                            <label for='last_name'></label>
+                            <input type='text' id='last_name' placeholder='Last Name'><span>, </span>
+                            <label for='first_name'></label>
+                            <input type='text' id='first_name' placeholder='First Name'>
+                            <label for='submit_search_button'></label>
+                            <button type='submit' name='submit_search_button' id='submit_search'>Submit</input>
                     </fieldset>
-                </form>
-            </div>
-            <div class="dash_buttons_box">
-                <form class="logout_user_button" action="" method="post">
-                    <label for="logout_button"></label>
-                    <button class="dash_button" name="logout_button" id="logout_button" value="Logout">Logout</button>
                     </form>
-                    <form class="reset_button" action="" method="post">
-                        <label for="reset_search_button"></label>
-                        <button type="reset" class="dash_button" name="reset_search_button" id="reset_search">Reset</input>
+                </div>
+                <div class='dash_buttons_box'>
+                <form class='logout_user_button' action='' method='post'>
+                <label for='logout_button'></label>
+                <button class='dash_button' name='logout_button' id='logout_button' value='Logout'>Logout</button>
+                    </form>
+                    <form class='reset_button' action='' method='post'>
+                        <label for='reset_search_button'></label>
+                        <button type='reset' class='dash_button' name='reset_search_button' id='reset_search'>Reset</input>
                 </form>
-                <form class="create_new_button" action="" method="post">
-                    <label for="new_client_button"></label>
-                    <button class="dash_button" name="new_client_button" id="new_client_button" value="Create New Client">Create New Client</button>
+                <form class='create_new_button' action='' method='post'>
+                <label for='new_client_button'></label>
+                <button class='dash_button' name='new_client_button' id='new_client_button' value='Create New Client'>Create New Client</button>
                     </form>
                 </div>
             </div>
-            <div class="display_area">
+            <div class='display_area'>
                 <!--search display shows list of possible clients for user to select-->
-                <div class="client_search_results_list hidden"></div>
+                <div class='client_search_results_list hidden'></div>
                 <!--client_dash contains quick info including contactName & phone, prospectName & DOB, lead status, housing type, hospital-->
-                <div id="client_dash" class='hidden'></div>
+                <div id='client_dash' class='hidden'></div>
                 <!--submit, edit, and delete client buttons-->
-                <div id="manip_data_buttons"></div>
+                <div id='manip_data_buttons'></div>
                 <!--client nav bar is a horizontal navigational bar that is active for existing clients to display data and new clients to enter data-->
-                <nav id="data_nav_bar" class="hidden">
-                    <div id="holder">
+                <nav id='data_nav_bar' class='hidden'>
+                    <div id='holder'>
                         <ul>
-                            <li><span js_display='contact_block' class="tab_nav onclick">Contact Information</span></li>
-                            <li><span js_display='prospect_block' class="tab_nav">Prospect Information</span></li>
-                            <li><span js_display='housing_block' class="tab_nav">Housing & Assistance</span></li>
-                            <li><span js_display='financials_block' class="tab_nav">Financials</span></li>
-                            <li><span js_display='medical_block' class="tab_nav">Medical Information</span></li>
-                            <li><span js_display='comments_block' class="tab_nav">Comments</span></li>
+                            <li><span js_display='contact_block' class='tab_nav onclick'>Contact Information</span></li>
+                            <li><span js_display='prospect_block' class='tab_nav'>Prospect Information</span></li>
+                            <li><span js_display='housing_block' class='tab_nav'>Housing & Assistance</span></li>
+                            <li><span js_display='financials_block' class='tab_nav'>Financials</span></li>
+                            <li><span js_display='medical_block' class='tab_nav'>Medical Information</span></li>
+                            <li><span js_display='comments_block' class='tab_nav'>Comments</span></li>
                         </ul>
                     </div>
                 </nav>
                 <!--data block displays information sections selected in nav bar for existing clients and through the data entry process for new clients-->
-                <div id="data_block" class="hidden">
-                    <div id="contact_block" class='hidden info_block'></div>
-                    <div id="prospect_block" class='hidden info_block'></div>
-                    <div id="housing_block" class='hidden info_block'></div>
-                    <div id="financials_block" class='hidden info_block'></div>
-                    <div id="medical_block" class='hidden info_block'></div>
-                    <div id="comments_block" class='hidden info_block'>
+                <div id='data_block' class='hidden'>
+                    <div id='contact_block' class='hidden info_block'></div>
+                    <div id='prospect_block' class='hidden info_block'></div>
+                    <div id='housing_block' class='hidden info_block'></div>
+                    <div id='financials_block' class='hidden info_block'></div>
+                    <div id='medical_block' class='hidden info_block'></div>
+                    <div id='comments_block' class='hidden info_block'>
                         <p>This section is under development. Thank you for your patience.</p>
                     </div>
                 </div>

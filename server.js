@@ -14,7 +14,7 @@ var server = http.Server(app);
 var bcrypt = require('bcryptjs');
 
 var session = require('express-session');
-//middlewares
+
 var Client = require('./models/clients');
 var User = require('./models/users');
 //Local Authentication
@@ -29,7 +29,7 @@ var runServer = function(callback) {
             return callback(err);
         }
         app.listen(config.PORT, function() {
-            console.log('Listening on localhost:', + config.PORT);
+            console.log('Listening on localhost:', +config.PORT);
             if (callback) {
                 callback();
             }
@@ -49,10 +49,7 @@ exports.runServer = runServer;
 
 passport.use(new LocalStrategy(
     function(username, password, done) {
-        console.log('local strat pw ' + password);
         User.findByUsername(username, function(err, user) {
-            console.log(user.username);
-            console.log(user.password);
             if (err) {
                 console.log(err);
                 return done(err);
@@ -63,10 +60,11 @@ passport.use(new LocalStrategy(
                 });
             }
             user.validatePassword(password, function(err, isValid) {
-                if(err || !isValid) { return done(null, false, {
-                    message: 'Incorrect Password.'
-                });
-            }
+                if (err || !isValid) {
+                    return done(null, false, {
+                        message: 'Incorrect Password.'
+                    });
+                }
                 return done(null, user);
             });
         });
@@ -74,11 +72,11 @@ passport.use(new LocalStrategy(
 ));
 //authenticated session persistance
 passport.serializeUser(function(user, callback) {
-    console.log("serialize");
+    console.log('serialize');
     callback(null, user.id);
 });
 passport.deserializeUser(function(id, callback) {
-    console.log("deserialize");
+    console.log('deserialize');
     User.findById(id, function(err, user) {
         if (err) {
             return callback(err);
@@ -86,71 +84,69 @@ passport.deserializeUser(function(id, callback) {
         callback(null, user);
     });
 });
-
 // passport.use(strategy);
 app.use(passport.initialize());
 app.use(passport.session());
-//should this be app.use(expressSession({secret stuff})
+//for use in session for additional endpoint security
 app.use(require('express-session')({
     secret: 'pickle relish',
     resave: false,
     saveUninitialized: false
 }));
-
+//initial endpoint
 app.get('/', function(req, res) {
     return res.sendStatus(200);
 });
-
 //userName & password endpoints
-//creating a username & password (admin level)
+//creating a username & password (admin level and not available to avg user)
 app.post('/alcis/users', function(req, res) {
     if (!req.body) {
         return res.status(400).json({
-            message: "No Request Body"
+            message: 'No Request Body'
         });
     }
     if (!('username' in req.body)) {
         return res.status(422).json({
-            message: "Missing Field: username"
+            message: 'Missing Field: username'
         });
     }
     var username = req.body.username;
     console.log(username);
     if (typeof username !== 'string') {
         return res.status(422).json({
-            message: "Incorrect Field Type: username'"
+            message: 'Incorrect Field Type: username'
         });
     }
     username = username.trim();
     if (username === '') {
         return res.status(422).json({
-            message: "Incorrect Field Length: username"
+            message: 'Incorrect Field Length: username'
         });
     }
     var password = req.body.password;
     if (typeof password !== 'string') {
         return res.status(422).json({
-            message: "Incorrect Field Type: password"
+            message: 'Incorrect Field Type: password'
         });
     }
     password = password.trim();
     if (password === '') {
         return res.status(422).json({
-            message: "Incorrect Field Length: password"
+            message: 'Incorrect Field Length: password'
         });
     }
     bcrypt.genSalt(10, function(err, salt) {
         if (err) {
             console.log(err);
             return res.status(500).json({
-                message: "Internal Server Error"
+                message: 'Internal Server Error'
             });
         }
         bcrypt.hash(password, salt, function(err, hash) {
             if (err) {
                 console.log(err);
                 return res.status(500).json({
-                    message: "Internal Server Error"
+                    message: 'Internal Server Error'
                 });
             }
             var user = new User({
@@ -162,7 +158,7 @@ app.post('/alcis/users', function(req, res) {
                 if (err) {
                     console.log(err);
                     return res.status(500).json({
-                        message: "Internal Server Error"
+                        message: 'Internal Server Error'
                     });
                 }
                 return res.status(201).json({});
@@ -188,18 +184,19 @@ app.post('/alcis/clients/', function(req, res) {
     var client = req.body;
     Client.create(client, function(err, client) {
         if (err || !client) {
-            console.error("could not create client");
+            console.error('Unable to create client.');
             console.log(err);
             return res.status(500).json({
                 message: 'Internal Server Error'
             });
         }
-        console.log("created client " + client._id);
+        console.log('Client created ' + client._id);
         res.status(201).json(client);
     });
-    // console.log(res.body);
 });
 //performs initial search of collection based on search name criteria and retrieves list of clients from collection
+//allows for search of entire name, first name, last name.  Will search both contact and prospect for match
+//will return a full list of clients if no search names are entered
 app.get('/alcis/clients', function(req, res) {
     var searchFirstName = req.query.firstName;
     var searchLastName = req.query.lastName;
@@ -216,8 +213,13 @@ app.get('/alcis/clients', function(req, res) {
     }
     else {
         if (!searchLastName) {
-            Client.find( { $or: [ {'contact.contactName.contactFirstName': searchFirstName }, 
-                {'prospect.prospectName.prospectFirstName': searchFirstName} ] } ).exec(function(err, clients) {
+            Client.find({
+                $or: [{
+                    'contact.contactName.contactFirstName': searchFirstName
+                }, {
+                    'prospect.prospectName.prospectFirstName': searchFirstName
+                }]
+            }).exec(function(err, clients) {
                 if (err) {
                     console.log(err);
                     console.log('cannot search by first name');
@@ -229,8 +231,13 @@ app.get('/alcis/clients', function(req, res) {
             });
         }
         if (!searchFirstName) {
-            Client.find( { $or: [ {'contact.contactName.contactLastName': searchLastName },
-            {'prospect.prospectName.prospectLastName': searchLastName} ] } ).exec(function(err, clients) {
+            Client.find({
+                $or: [{
+                    'contact.contactName.contactLastName': searchLastName
+                }, {
+                    'prospect.prospectName.prospectLastName': searchLastName
+                }]
+            }).exec(function(err, clients) {
                 if (err) {
                     console.log(err);
                     console.log('cannot search by last name');
@@ -242,13 +249,21 @@ app.get('/alcis/clients', function(req, res) {
             });
         }
         if (searchFirstName && searchLastName) {
-            Client.find( { $or: [  {
-                $and: [{'contact.contactName.contactLastName': searchLastName},
-                {'contact.contactName.contactFirstName': searchFirstName}] }, { 
-                $and: [{'prospect.prospectName.prospectLastName': searchLastName}, 
-                {'prospect.prospectName.prospectFirstName': searchFirstName}] 
-            } ]
-            } ).exec(function(err, clients) {
+            Client.find({
+                $or: [{
+                    $and: [{
+                        'contact.contactName.contactLastName': searchLastName
+                    }, {
+                        'contact.contactName.contactFirstName': searchFirstName
+                    }]
+                }, {
+                    $and: [{
+                        'prospect.prospectName.prospectLastName': searchLastName
+                    }, {
+                        'prospect.prospectName.prospectFirstName': searchFirstName
+                    }]
+                }]
+            }).exec(function(err, clients) {
                 if (err) {
                     console.log(err);
                     return res.status(500).json({
@@ -260,7 +275,7 @@ app.get('/alcis/clients', function(req, res) {
         }
     }
 });
-//endpoint to retrieve client document from collection for search list results
+//endpoint to retrieve specific client document from collection for search list results
 app.get('/alcis/clients/:client_id', function(req, res) {
     var client_id = req.params.client_id;
     Client.findById(client_id, function(err, client) {
@@ -272,10 +287,8 @@ app.get('/alcis/clients/:client_id', function(req, res) {
         return res.send(client);
     });
 });
-//makes a change to an existing document in the collection
+//makes a change to a specific existing document in the collection
 app.put('/alcis/clients/:client_id', function(req, res) {
-    // console.log(req.params);
-    // console.log(req.body);
     var client_id = req.params.client_id;
     var update = req.body;
     Client.findByIdAndUpdate(client_id, update, function(err, clients) {
@@ -287,24 +300,15 @@ app.put('/alcis/clients/:client_id', function(req, res) {
         return res.status(201).json(clients);
     });
 });
-//deletes and item from the collection (will eventually update a key 'deleted' to TRUE so all clients remain in db but are not displayed if inactive)
+//deletes a specific client from the collection - deleted clients are not retrievable
 app.delete('/alcis/clients/:client_id', function(req, res) {
     var client_id = req.params.client_id;
     Client.findByIdAndRemove(client_id, function(err, client) {
         if (err) {
             console.log(err);
-            console.error('could not delete client');
+            console.error('Unable to delete client.');
         }
-        console.log('client deleted');
+        console.log('Client deleted');
         return res.status(204).end();
     });
 });
-
-
-// var client_id = '587ec4c2be5a2261d968b874'
-//     Client.findOneAndRemove(client_id, function(err, client) {
-//         if (err) {
-//             console.error('could not delete client');
-//         }
-//         console.log('client deleted');
-//     });

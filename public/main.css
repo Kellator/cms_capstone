@@ -1,5 +1,4 @@
 * {
-    /*font-family: 'Nunito Sans', sans-serif;*/
     font-family: 'Montserrat', sans-serif;
     background-color: #141c20;
     color: #dbdbdb;
@@ -26,7 +25,7 @@ input:focus {
 }
 
 button {
-    border-radius: 5px;
+    border-radius: 3px;
 }
 
 button:hover {
@@ -35,7 +34,7 @@ button:hover {
 }
 
 input {
-    border-radius: 5px;
+    border-radius: 3px;
 }
 
 input[type=text], input[type=email] {
@@ -46,15 +45,29 @@ header {
     background: cover;
     background-color: #4d5355;
     width: 100%;
-    height: 75px;
-    display: inline-block;
+    height: 100px;
+    display: flex;
     margin: 0;
     padding: 0;
     border: 0;
     left: 0;
     top: 0;
+    justify-content: center;
 }
 
+header nav {
+    background-color: #4d5355;
+    align-self: center;
+    margin: auto;
+}
+header nav ul {
+    background-color: #4d5355;
+    padding-left: 0;    
+}
+header nav ul li{
+    background-color: #4d5355;
+    padding-left: 0;
+}
 .contact_fields {
     background-color: #4d5355;
 }
@@ -63,13 +76,15 @@ header {
     color: #dbdbdb;
     background-color: #4d5355;
     margin: auto;
-    /*flex: none, 1, auto;*/
-    /*align-self: center;*/
     letter-spacing: 2px;
     padding: 10px;
+    padding-top: 0;
+    padding-left: 200px;
     font-size: 2em;
     max-width: 80%;
+    max-height: 90px;
     text-align: center;
+    flex-basis: 75%;
 }
 
 #dashboard {
@@ -123,7 +138,6 @@ fieldset {
     top: 50%;
     position: relative;
     transform: translateY(33%);
-    /*align-self: center;*/
 }
 
 div p {
@@ -137,14 +151,13 @@ div p {
 }
 
 .rounded_corners {
-    border-radius: 5px;
+    border-radius: 3px;
 }
 
 .login_form {
     flex-basis: 100%;
     padding: 20px;
     margin: auto;
-    /*background-color: #4d5355;*/
     position: relative;
     max-width: 400px;
     min-width: 400px;
@@ -211,7 +224,7 @@ h1 {
     /*width: 500px;*/
     font-size: 150%;
     /*height: 100%;*/
-    border-radius: 5px;
+    border-radius: 3px;
     background-color: #4d5355;
 }
 
@@ -261,8 +274,8 @@ a {
     text-align: center;
     display: block;
     height: 55px;
-    border-top-right-radius: 5px;
-    border-top-left-radius: 5px;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
     padding: 10px;
 }
 
@@ -292,8 +305,8 @@ a {
 }
 
 #data_block {
-    border-top-right-radius: 5px;
-    border-top-left-radius: 5px
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px
 }
 
 .info_block {
@@ -302,8 +315,8 @@ a {
     flex-wrap: wrap;
     justify-content: center;
     background-color: #4d5355;
-    border-top-right-radius: 5px;
-    border-top-left-radius: 5px;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
     padding-top: 20px;
 }
 
@@ -364,7 +377,7 @@ a {
 }
 
 #data_block div {
-    border-radius: 5px;
+    border-radius: 3px;
 }
 
 #manip_data_buttons {
@@ -400,7 +413,7 @@ a {
 
 #client_dash {
     border: 1px solid #f79425;
-    border-radius: 5px;
+    border-radius: 3px;
     margin: 12px 0 12px 0;
 }
 

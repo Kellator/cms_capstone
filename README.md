@@ -1,6 +1,7 @@
 # ALCIS | Assisted Living Client Information System 
 
 ### Documentation:
+https://kellator.github.io/alcis_docs/index.html
 
 ### Screenshots:
 #### ALCIS Login screen:
@@ -15,4 +16,4 @@
 Users are able to add prospective client data including contact information, basic demographic information, financial information, physical care needs, and housing preferences.  Users are also able to edit that information and remove clients from the database as needed.  
 
 ### Technology:
->ALCIS was developed using the Node.js platform with Express.js framework along with Passport.js authentication middleware and Bcrypt password hashing function for security.  The database is built using MongoDB and Mongoose.js.  Languages used are HTML, CSS, Javascript as well as the jQuery library.  ALCIS is a single-page appliation built to run on desktop devices.
+>ALCIS was developed using the Node.js platform with Express.js framework along with Passport.js authentication middleware and Bcrypt password hashing function for security.  The database is built using MongoDB and Mongoose.js.  Languages used are HTML, CSS, Javascript as well as the jQuery library.  ALCIS is a single-page application built to run on desktop devices.
