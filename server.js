@@ -293,6 +293,7 @@ app.put('/alcis/clients/:client_id', function(req, res) {
     var update = req.body;
     Client.findByIdAndUpdate(client_id, update, function(err, clients) {
         if (err) {
+            console.log(err)
             return res.status(500).json({
                 message: 'Internal Server Error'
             });

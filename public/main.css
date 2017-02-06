@@ -41,6 +41,23 @@ input[type=text], input[type=email] {
     min-width: 280px;
 }
 
+input[type=radio] {
+    width: 1.5em;
+    height: 1.5em;
+    color: #141c20;
+    vertical-align: middle;
+}
+
+input[type=radio]:checked {
+    border: 1px solid #141c20;
+}
+
+input[type=radio]:disabled {
+    color: #141c20;
+    background-color: #f79425;
+    
+}
+
 header {
     background: cover;
     background-color: #4d5355;
@@ -60,6 +77,13 @@ header nav {
     align-self: center;
     margin: auto;
 }
+.header_space {
+    background-color: #4d5355;
+    padding-left: 0;
+    max-width: 100px;
+    align-self: center;
+    margin: auto
+}
 header nav ul {
     background-color: #4d5355;
     padding-left: 0;    
@@ -67,6 +91,12 @@ header nav ul {
 header nav ul li{
     background-color: #4d5355;
     padding-left: 0;
+}
+header nav ul li a {
+    text-decoration: none;
+}
+header nav ul li a:hover {
+    text-decoration: underline;
 }
 .contact_fields {
     background-color: #4d5355;
@@ -79,7 +109,6 @@ header nav ul li{
     letter-spacing: 2px;
     padding: 10px;
     padding-top: 0;
-    padding-left: 200px;
     font-size: 2em;
     max-width: 80%;
     max-height: 90px;
