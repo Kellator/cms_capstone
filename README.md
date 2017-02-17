@@ -17,3 +17,4 @@ Users are able to add prospective client data including contact information, bas
 
 ### Technology:
 >ALCIS was developed using the Node.js platform with Express.js framework along with Passport.js authentication middleware and Bcrypt password hashing function for security.  The database is built using MongoDB and Mongoose.js.  Languages used are HTML, CSS, Javascript as well as the jQuery library.  ALCIS is a single-page application built to run on desktop devices.
+

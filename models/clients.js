@@ -36,13 +36,13 @@ var clientSchema = new mongoose.Schema({
         dateOfBirth: String,
         socialSecurityNum: String,
         insuranceNums: {
-            medicareNum: String, //9 digit number with one or two letters
+            medicareNum: String,
             massHealth: String,
             insuranceNum: String
         },
-        gender: String, //radio male female
+        gender: String,
         maritalStatus: String,
-        veteranStatus: String, //radio yes vet - text input service
+        veteranStatus: String,
         serviceBranch: String,
         religion: String,
         levelOfEducation: String,
@@ -64,7 +64,7 @@ var clientSchema = new mongoose.Schema({
             hcpPhone: String,
             hcpSecPhone: String
         },
-        dnr: String, //should this be boolean?  then if dnr == true make display box?
+        dnr: String,
         eContact: {
             eContactName: {
                 eContactLastName: String,
@@ -86,7 +86,7 @@ var clientSchema = new mongoose.Schema({
         dateAddedtoDB: Date,
     },
     housingAssistance: {
-        housingType: String, 
+        housingType: String,
         assistanceNeeded: {
             assistance_needed: Object,
             bathing: String,
@@ -97,19 +97,19 @@ var clientSchema = new mongoose.Schema({
         },
         primaryAptPref: String,
         secondaryAptPref: String,
-        estimatedMoveDate: String, 
-        additionalServices: Array 
+        estimatedMoveDate: String,
+        additionalServices: Array
     },
     financials: {
         payerSource: String,
         income: {
-            monthlyIncome: Number, //should generate from other entries
-            pension: Number, 
+            monthlyIncome: Number,
+            pension: Number,
             socSecMonthly: Number,
             ssi: Number,
             vaBenefits: Number,
             otherIncome: Number,
-            otherIncomeSource: String     
+            otherIncomeSource: String
         },
         assets: {
             propertyValue: Number,
@@ -169,7 +169,7 @@ var clientSchema = new mongoose.Schema({
             },
             hcpPhone: String
         },
-        dnr: String, //should this be boolean?  then if dnr == true make display box?
+        dnr: String,
         eContact: {
             eContactName: {
                 eContactFirstName: String,
@@ -188,7 +188,7 @@ var clientSchema = new mongoose.Schema({
     },
     comments: {
         user: String,
-        commentDate: Date, //8 digit date comment entered
+        commentDate: Date,
         commentText: String
     }
 });

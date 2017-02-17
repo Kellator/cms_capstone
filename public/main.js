@@ -2,6 +2,7 @@
 var databaseUrl = 'https://secret-castle-60887.herokuapp.com';
 //constructor function to create client data package
 function ClientDataPackage() {
+    this.deleted = false;
     this.contact = {};
     this.prospect = {};
     this.housingAssistance = {};
@@ -89,38 +90,38 @@ ClientDataPackage.prototype.add_current_housing = function(current) {
 ClientDataPackage.prototype.add_lead_status = function(lead) {
     this.prospect.leadStatus = lead;
 };
-ClientDataPackage.prototype.add_poa = function(firstName, lastName, phone, secPhone) {
+ClientDataPackage.prototype.add_poa = function(lastName, firstName, phone, secPhone) {
     this.prospect.poa = {};
     this.prospect.poa.poaName = {};
-    this.prospect.poa.poaName.poaFirstName = firstName;
     this.prospect.poa.poaName.poaLastName = lastName;
+    this.prospect.poa.poaName.poaFirstName = firstName;
     this.prospect.poa.poaPhone = phone;
     this.prospect.poa.poaSecPhone = secPhone;
 };
-ClientDataPackage.prototype.add_hcp = function(firstName, lastName, phone, secPhone) {
+ClientDataPackage.prototype.add_hcp = function(lastName, firstName, phone, secPhone) {
     this.prospect.hcp = {};
     this.prospect.hcp.hcpName = {};
-    this.prospect.hcp.hcpName.hcpFirstName = firstName;
     this.prospect.hcp.hcpName.hcpLastName = lastName;
+    this.prospect.hcp.hcpName.hcpFirstName = firstName;
     this.prospect.hcp.hcpPhone = phone;
     this.prospect.hcp.hcpSecPhone = secPhone;
 };
 ClientDataPackage.prototype.add_dnr = function(dnr) {
     this.prospect.dnr = dnr;
 };
-ClientDataPackage.prototype.add_emergency_contact = function(firstName, lastName, phone, secPhone) {
+ClientDataPackage.prototype.add_emergency_contact = function(lastName, firstName, phone, secPhone) {
     this.prospect.eContact = {};
     this.prospect.eContact.eContactName = {};
-    this.prospect.eContact.eContactName.eContactFirstName = firstName;
     this.prospect.eContact.eContactName.eContactLastName = lastName;
+    this.prospect.eContact.eContactName.eContactFirstName = firstName;
     this.prospect.eContact.eContactPhone = phone;
     this.prospect.eContact.eContactAltPhone = secPhone;
 };
-ClientDataPackage.prototype.add_alt_contact = function(firstName, lastName, phone, secPhone) {
+ClientDataPackage.prototype.add_alt_contact = function(lastName, firstName, phone, secPhone) {
     this.prospect.altEmergContact = {};
     this.prospect.altEmergContact.altContactName = {};
-    this.prospect.altEmergContact.altContactName.altContactFirstName = firstName;
     this.prospect.altEmergContact.altContactName.altContactLastName = lastName;
+    this.prospect.altEmergContact.altContactName.altContactFirstName = firstName;
     this.prospect.altEmergContact.altContactPhone = phone;
     this.prospect.altEmergContact.altContactAltPhone = secPhone;
 };
@@ -128,12 +129,10 @@ ClientDataPackage.prototype.add_hospital = function(hospital) {
     this.prospect.prefHospital = hospital;
 };
 ClientDataPackage.prototype.add_followup_date = function(date) {
-    // this.prospect.followUpDate = Date.today().add(3).months();
     this.prospect.followUpDate = date;
 };
 ClientDataPackage.prototype.add_date_added = function(date) {
     this.prospect.dateAddedtoDB = date;
-    // Date.today().toString();
 };
 //constructor components for housing data
 ClientDataPackage.prototype.add_housing_type = function(housing) {
@@ -141,15 +140,7 @@ ClientDataPackage.prototype.add_housing_type = function(housing) {
 };
 ClientDataPackage.prototype.add_assistance = function(assist, bath, dress, groom, med, amb) {
     this.housingAssistance.assistanceNeeded = {};
-    // var bathing = assistArray[0].value;
-    // var dressing = assistArray[1].value;
-    // var grooming = assistArray[2].value;
-    // var medication = assistArray[3].value;
-    // var ambulation = assistArray[4].value;
-    // var toileting = assistArray[5].value;
-    // var assistance = (bathing + ', ' + dressing + ', ' + grooming + ', ' + medication + ', ' + ambulation + ', ' + toileting);
     this.housingAssistance.assistanceNeeded.assistance_needed = assist;
-    console.log(assist);
     this.housingAssistance.assistanceNeeded.bathing = bath;
     this.housingAssistance.assistanceNeeded.dressing = dress;
     this.housingAssistance.assistanceNeeded.grooming = groom;
@@ -378,7 +369,7 @@ var clientProspectDisplay =
     "<label for='service_branch'>Branch of Service:  </label><input type='text' id='service_branch' >" +
     "<li><input type='radio' disabled='' required name='veteran_status' value='Not a Veteran' id='notVet'>Not a Veteran</>" +
     "</ul>" +
-    "<label id='religion'>Religion</label>" +
+    "<label for='religion'>Religion</label>" +
     "<input type='text' disabled='' id='religion' ><br>" +
 
     "<label for='education'>Highest Level of Education</label>" +
@@ -400,11 +391,11 @@ var clientProspectDisplay =
     "</ul>" +
     "<label for='lead_status'>Lead Status</label>" +
     "<ul>" +
-    "<li><input type='radio' disabled='' name='lead_status' value='hot' id='lead_hot'>Hot</>" +
+    "<li><input type='radio' disabled='' name='lead_status' value='HOT' id='lead_hot'>Hot</>" +
     "<p class='text_left' >Move-in within 1-3 months.</p>" +
-    "<li><input type='radio' disabled='' name='lead_status' value='warm' id='lead_warm'>Warm</>" +
+    "<li><input type='radio' disabled='' name='lead_status' value='WARM' id='lead_warm'>Warm</>" +
     "<p class='text_left'>Move-in within 3-6 months.</p>" +
-    "<li><input type='radio' disabled='' name='lead_status' value='cool' id='lead_cool'>Cool</>" +
+    "<li><input type='radio' disabled='' name='lead_status' value='COOL' id='lead_cool'>Cool</>" +
     "<p class='text_left'>Move-in after 6 months.</p>" +
     "</ul>" +
     "<label for='date_to_alcis'>Date Entered in ALCIS:  </label>" +
@@ -420,13 +411,13 @@ var clientProspectDisplay =
     "<legend>Emergency Information</legend>" +
     "<label id='pref_hospital'>Preferred Hospital</label>" +
     "<ul>" +
-    "<li><input type='radio' disabled='' required name='pref_hospital' value='Brockton' id='hospital_brockton'>Signature Healthcare | Brockton Hospital</input>" +
+    "<li><input type='radio' disabled='' required name='pref_hospital' value='Brockton Hospital' id='hospital_brockton'>Signature Healthcare | Brockton Hospital</input>" +
     "<li><input type='radio' disabled='' required name='pref_hospital' value='Good Samaritan' id='hospital_goodsam'>Steward Healthcare | Good Samaritan Hospital</input>" +
     "</ul>" +
     "<legend>DNR Status</legend>" +
     "<ul>" +
-    "<li><input type='radio' disabled='' name='dnr_status' value='DNR Present' id='dnr_present'>DNR</input>" +
-    "<li><input type='radio' disabled='' name='dnr_status' value='DNR Not Present' id='dnr_not_present'>No DNR</input>" +
+    "<li><input type='radio' disabled='' name='dnr_status' value='YES' id='dnr_present'>DNR</input>" +
+    "<li><input type='radio' disabled='' name='dnr_status' value='NO' id='dnr_not_present'>No DNR</input>" +
     "</ul>" +
     "<legend>Power of Attorney</legend>" +
     "<label for='poa_last_name'>Last Name:  </label>" +
@@ -478,24 +469,24 @@ var clientHousingDisplay =
     "<legend>Housing Type and Assistance Needed</legend>" +
     "<label for='type_of_housing'>Type of Housing</label>" +
     "<ul>" +
-    "<li><input type='radio' required name='type_of_housing' value='Independent' id='housing_ind'>Independent</input></li>" +
-    "<li><input type='radio' required name='type_of_housing' value='Assisted Living' id='housing_al'>Assisted Living</input></li>" +
-    "<li><input type='radio' required name='type_of_housing' value='Memory Care' id='housing_mc'>Memory Care</input></li>" +
-    "<li><input type='radio' required name='type_of_housing' value='GAFC' id='housing_gafc'>GAFC</input></li>" +
+    "<li><input type='radio' disabled='' required name='type_of_housing' value='Independent' id='housing_ind'>Independent</input></li>" +
+    "<li><input type='radio' disabled='' required name='type_of_housing' value='Assisted Living' id='housing_al'>Assisted Living</input></li>" +
+    "<li><input type='radio' disabled='' required name='type_of_housing' value='Memory Care' id='housing_mc'>Memory Care</input></li>" +
+    "<li><input type='radio' disabled='' required name='type_of_housing' value='GAFC' id='housing_gafc'>GAFC</input></li>" +
     "</ul>" +
     "<label for='assistance_needed'>Assistance Needed</label>" +
     "<ul>" +
-    "<li><input type='checkbox' name='assistance_needed' value='bathing'>Bathing: </input></li>" +
+    "<li><input type='checkbox' name='assistance_bathing' value='bathing'>Bathing: </input></li>" +
     "<input type='text' id='bathing_detail' disabled=''  >" +
-    "<li><input type='checkbox' name='assistance_needed' value='dressing'>Dressing: </input></li>" +
+    "<li><input type='checkbox' name='assistance_dressing' value='dressing'>Dressing: </input></li>" +
     "<input type='text' id='dressing_detail' disabled='' >" +
-    "<li><input type='checkbox' name='assistance_needed' value='grooming'>Grooming: </input></li>" +
+    "<li><input type='checkbox' name='assistance_grooming' value='grooming'>Grooming: </input></li>" +
     "<input type='text' id='grooming_detail' disabled='' >" +
-    "<li><input type='checkbox' name='assistance_needed' value='medication assistance'>Medication Assistance: </input></li>" +
+    "<li><input type='checkbox' name='assistance_meds' value='medication assistance'>Medication Assistance: </input></li>" +
     "<input type='text' id='med_assist_detail' disabled='' >" +
-    "<li><input type='checkbox' name='assistance_needed' value='ambulation'>Ambulation: </input></li>" +
+    "<li><input type='checkbox' name='assistance_ambulation' value='ambulation'>Ambulation: </input></li>" +
     "<input type='text' id='ambulation_detail' disabled='' >" +
-    "<li><input type='checkbox' name='assistance_needed' value='toileting'>Toileting: </input></li>" +
+    "<li><input type='checkbox' name='assistance_toilet' value='toileting'>Toileting: </input></li>" +
     "<input type='text' id='toileting_detail' disabled='' >" +
     "</ul>" +
     "<label for='prim_apt_pref'>Primary Apartment Preference</label>" +
@@ -583,7 +574,7 @@ var clientFinancialDisplay =
     "<label for='landlord_ref_name'>Landlord Name:  </label>" +
     "<input type='text' disabled='' id='landlord_ref_name'></input><br>" +
     "<label for='landlord_ref_number'>Landlord Phone Number:  </label>" +
-    "<input type='text' disabled='' id=landlord_ref_number' maxlength='12' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='XXX-XXX-XXXX'></input>" +
+    "<input type='text' disabled='' id='landlord_ref_number' maxlength='12' pattern='\d{3}[\-]\d{3}[\-]\d{4}' placeholder='XXX-XXX-XXXX'></input>" +
     "</fieldset>" +
     "</form>" +
     "</div>";
@@ -595,10 +586,10 @@ var clientMedicalDisplay =
     "<legend>Assessment Information</legend>" +
     "<label for='assess_date'>Initial Assessment Scheduled:  </label>" +
     "<input type='text' disabled='' id='assess_date'></input><br>" +
-    "<label for='assess_date_completed'>Initial Assessment Completed:  </label>" +
+    "<label for='assess_completed'>Initial Assessment Completed:  </label>" +
     "<ul>" +
-    "<li><input type='radio' disabled='' required name='assess_date_completed' value='init_assess_complete' id='init_assess_complete'>Yes</input></li>" +
-    "<li><input type='radio' disabled='' required name='assess_date_completed' value='init_assess_incomplete' id='init_assess_incomplete'>No</input></li>" +
+    "<li><input type='radio' disabled='' required name='assess_completed' value='init_assess_complete' id='init_assess_complete'>Yes</input></li>" +
+    "<li><input type='radio' disabled='' required name='assess_completed' value='init_assess_incomplete' id='init_assess_incomplete'>No</input></li>" +
     "</ul>" +
     "<label for='assessed_by'>Initial Assessment Completed By:  </label>" +
     "<input type='text' disabled='' id='assessed_by'></input><br>" +
@@ -631,7 +622,7 @@ var clientMedicalDisplay =
     "<form action='' method='post'>" +
     "<fieldset>" +
     "<legend>Medical Information</legend>" +
-    "<label for='meds_on_admit'>Medications Currently Taken:  </input>" +
+    "<label for='meds_on_admit'>Medications at time of Assessment:  </input>" +
     "<input type='text' disabled='' id='meds_on_admit'></input><br>" +
     "<label for='health_issues'>Major Health Issues:  </input>" +
     "<input type='text' disabled='' id='health_issues'></input><br>" +
@@ -754,7 +745,6 @@ function genHousingPackage(client) {
     client.add_housing_type($('input[name="type_of_housing"]:checked').val());
     client.add_assistance($('input[name="assistance_needed"]').on('change', function() {
             var values = [];
-            console.log('here');
             var items = $('input(name="assistance_needed"]');
             $.each(items, function(index, item) {
                 if ($(item).prop('checked')) {
@@ -772,12 +762,12 @@ function genHousingPackage(client) {
 function genFinancialPackage(client) {
     client.add_payer_source($('input[name="payer_source"]:checked').val());
     client.add_income($('#income_social').val(), $('#income_pension').val(), $('#income_ssi').val(), $('#income_va').val(), $('#income_other').val(), $('#income_other_source').val());
-    client.add_assets($('#property_value').val(), $('#bank_value').val(), $('#life_ins_value').val(), $('#other_value').val());
+    client.add_assets($('#property_value').val(), $('#bank_value').val(), $('#life_ins_value').val(), $('#other_value').val(), $('#other_value_source').val());
     client.add_references($('#bank_ref_name').val(), $('#bank_ref_number').val(), $('#landlord_ref_name').val(), $('#landlord_ref_number').val());
 }
 
 function genMedicalPackage(client) {
-    client.add_initial_assessment($('#assess_date').val(), $('input[name="assess_date_completed"]:checked').val(), $('#assessed_by').val());
+    client.add_initial_assessment($('#assess_date').val(), $('input[name="assess_completed"]:checked').val(), $('#assessed_by').val());
     client.add_alf_plan($('input[name="level_of_care"]:checked').val(), $('input[name="other_plans"]:checked').val());
     client.add_allergies($('#allergies').val(), $('#allergies_check'));
     client.add_oxygen();
@@ -831,6 +821,7 @@ function getClientInformation(client_id, callback) {
         method: 'GET',
         success: function(data) {
             callback(data);
+            console.log(data);
         }
     };
     $.ajax(settings);
@@ -872,8 +863,6 @@ function loginRequest(username, password, callback) {
         method: 'POST',
         success: function(data) {
             callback(data);
-            $('#login_page').hide();
-            $('#dashboard').show();
         }
     };
     $.ajax(settings);
@@ -915,6 +904,7 @@ function logoutRequest(callback) {
 function logoutCallback() {
     alert("Thank you for using ALCIS");
     $('#dashboard').hide();
+    $('.display_area').hide();
     $('#login_page').show();
     $('#client_dash').empty();
     $('#manip_data_buttons').empty();
@@ -974,9 +964,9 @@ function displayClientList(data) {
                 '<li>DOB:  ' + client.prospect.dateOfBirth + '</li>' +
                 '<li>Contact Name:  ' + client.contact.contactName.contactFirstName + ' ' + client.contact.contactName.contactLastName + '</li>' +
                 '<li>Contact Phone:  ' + client.contact.contactPrimaryPhone + '</li>' +
-                '<li>PCP:  ' + client.medical.pcpName + '</li>' +
-                '<li>PCP Phone:  ' + client.medical.pcpNum + '</li>' +
-                '<li>PCP Fax:  ' + client.medical.pcpFax + '</li>' +
+                '<li>PCP:  ' + client.medical.pcp.pcpName + '</li>' +
+                '<li>PCP Phone:  ' + client.medical.pcp.pcpNum + '</li>' +
+                '<li>PCP Fax:  ' + client.medical.pcp.pcpFax + '</li>' +
                 '<li>Housing Type:  ' + client.housingAssistance.housingType + '</li>' +
                 '</ul>' +
                 '</div></a>';
@@ -1010,7 +1000,7 @@ function displayClientData(data) {
             "<ul class='dash_5 dash'>" +
             "<li id='dash_lead_status'>Lead Status:  " + data.prospect.leadStatus + "</li>" +
             "<li id='dash_hospital'>Hospital:  " + data.prospect.prefHospital + "</li>" +
-            "<li id='dash_dnr_status'>DNR Status:  " + data.prospect.dnr + "</li>" +
+            "<li id='dash_dnr_status'>DNR:  " + data.prospect.dnr + "</li>" +
             "</ul>" +
             "</div>" +
             "<form action='' method='post' id='dash_delete'>" +
@@ -1055,6 +1045,8 @@ function displayClientData(data) {
         prospectDisplay.find('input[name="education"][value="' + data.prospect.levelOfEducation + '"]').attr('checked', true);
         prospectDisplay.find('input[name="current_housing"][value="' + data.prospect.currentHousing + '"]').attr('checked', true);
         prospectDisplay.find('input[name="lead_status"][value="' + data.prospect.leadStatus + '"]').attr('checked', true);
+        prospectDisplay.find('input[name="dnr_status"][value="' + data.prospect.dnr + '"]').attr('checked', true);
+        prospectDisplay.find('input[name="pref_hospital"][value="' + data.prospect.prefHospital + '"]').attr('checked', true);
         prospectDisplay.find('#poa_first_name').val(data.prospect.poa.poaName.poaFirstName);
         prospectDisplay.find('#poa_last_name').val(data.prospect.poa.poaName.poaLastName);
         prospectDisplay.find('#poa_primary_phone').val(data.prospect.poa.poaPhone);
@@ -1065,7 +1057,7 @@ function displayClientData(data) {
         prospectDisplay.find('#hcp_alt_phone').val(data.prospect.hcp.hcpSecPhone);
         prospectDisplay.find('#pec_first_name').val(data.prospect.eContact.eContactName.eContactFirstName);
         prospectDisplay.find('#pec_last_name').val(data.prospect.eContact.eContactName.eContactLastName);
-        prospectDisplay.find('#pec_primary_phone').val(data.prospect.eContact.eContacPhone);
+        prospectDisplay.find('#pec_primary_phone').val(data.prospect.eContact.eContactPhone);
         prospectDisplay.find('#pec_alt_phone').val(data.prospect.eContact.eContactAltPhone);
         prospectDisplay.find('#sec_first_name').val(data.prospect.altEmergContact.altContactName.altContactFirstName);
         prospectDisplay.find('#sec_last_name').val(data.prospect.altEmergContact.altContactName.altContactLastName);
@@ -1082,9 +1074,9 @@ function displayClientData(data) {
         housingDisplay.find('input[name="prim_apt_pref"][value="' + data.housingAssistance.primaryAptPref + '"]').attr('checked', true);
         housingDisplay.find('input[name="sec_apt_pref"][value="' + data.housingAssistance.secondaryAptPref + '"]').attr('checked', true);
         housingDisplay.find('input[name="additional_services"][value="' + data.housingAssistance.additionalServices + '"]').attr('checked', true);
-        housingDisplay.find('#est_move_date');
+        housingDisplay.find('#est_move_date').val(data.housingAssistance.estimatedMoveDate);
 
-        financialDisplay.find('input[name="payer_source"][value=" ' + data.financials.payerSource + '"]').attr('checked', true);
+        financialDisplay.find('input[name="payer_source"][value="' + data.financials.payerSource + '"]').attr('checked', true);
         financialDisplay.find('#income_monthly').val(data.financials.income.monthlyIncome);
         financialDisplay.find('#income_social').val(data.financials.income.socSecMonthly);
         financialDisplay.find('#income_pension').val(data.financials.income.pension);
@@ -1103,7 +1095,7 @@ function displayClientData(data) {
         financialDisplay.find('#landlord_ref_number').val(data.financials.landlordReference.landlordRefNum);
 
         medicalDisplay.find('#assess_date').val(data.medical.initialAssessment.assessSchedDate);
-        medicalDisplay.find('input[name="assess_date_completed"][value=" ' + data.medical.initialAssessment.assessComp + '"]').attr('checked', true);
+        medicalDisplay.find('input[name="assess_completed"][value="' + data.medical.initialAssessment.assessComp + '"]').attr('checked', true);
         medicalDisplay.find('#assessed_by').val(data.medical.initialAssessment.assessedBy);
         medicalDisplay.find('input[name="level_of_care"][value="' + data.medical.alfPlanType + '"]').attr('checked', true);
         medicalDisplay.find('input[name="other_plans"][value="' + data.medical.otherPlan + '"]').attr('checked', true);
@@ -1160,11 +1152,12 @@ function loginSubmitHandler() {
         var username = $('#username').val();
         var password = $('#password').val();
         loginRequest(username, password, function() {
-            alert("Welcome to Alcis");
+            $('#login_page').hide();
+            $('#dashboard').show();
         });
     });
 }
-
+//handles log out button
 function logOutHandler() {
     $('body').on('click', '#logout_button', function(event) {
         event.preventDefault();
@@ -1187,6 +1180,7 @@ function submitClientSearchHandler() {
             lastName: $(this).find('#last_name').val()
         };
         getClientList(searchName, displayClientList);
+        $('.display_area').show();
         $('.client_search_results_list').removeClass('hidden');
     });
 }
@@ -1234,6 +1228,7 @@ function submitChangesHandler() {
         $('#manip_data_buttons').empty();
         $('#manip_data_buttons').html(editButtonDisplay);
         $('#client_dash').removeClass('hidden');
+        getAndDisplayClientData(client_id);
     });
 }
 //handler for delete client document button
@@ -1276,7 +1271,6 @@ function tabNavHandler() {
         $('#manip_data_buttons').show();
     });
 }
-//ready function
 $(function() {
     loginSubmitHandler();
     newClientHandler();
